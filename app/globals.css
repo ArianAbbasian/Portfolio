@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
+/* ─── Light Theme ─────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base:     #eef2ff;
+  --bg-surface:  rgba(255, 255, 255, 0.55);
+  --bg-elevated: rgba(255, 255, 255, 0.80);
+
+  --text-primary:   #0a0a14;
+  --text-secondary: #4a5568;
+  --text-muted:     #94a3b8;
+
+  --glass-bg:     rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-blur:   24px;
+
+  --accent:      #007AFF;
+  --accent-hover:#0063CC;
+  --accent-glow: rgba(0, 122, 255, 0.25);
+
+  --border: rgba(0, 0, 0, 0.07);
 }
 
+/* ─── Dark Theme ──────────────────────────────── */
+.dark {
+  --bg-base:     #07070f;
+  --bg-surface:  rgba(255, 255, 255, 0.04);
+  --bg-elevated: rgba(255, 255, 255, 0.07);
+
+  --text-primary:   #eff0ff;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+
+  --glass-bg:     rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --glass-blur:   24px;
+
+  --accent:      #0A84FF;
+  --accent-hover:#409CFF;
+  --accent-glow: rgba(10, 132, 255, 0.35);
+
+  --border: rgba(255, 255, 255, 0.07);
+}
+
+/* ─── Tailwind bridge ─────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans, Arial, sans-serif);
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Glassmorphism utility class ─────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }

@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About"
+  },
+  "home": {
+    "title": "My Work",
+    "description": "Selected projects and designs"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Who I am and what I do"
+  },
+  "header": { "name": "Arian Abbasian" }
+}
