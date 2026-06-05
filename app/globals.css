@@ -48,8 +48,8 @@
 @theme inline {
   --color-background: var(--bg-base);
   --color-foreground: var(--text-primary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-satoshi);
+  --font-fa: var(--font-iran-yekan);
 }
 
 /* ─── Base ────────────────────────────────────── */
@@ -60,7 +60,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg-base);
   color: var(--text-primary);
-  font-family: var(--font-geist-sans, Arial, sans-serif);
+  font-family: var(--font-satoshi), sans-serif;
   min-height: 100vh;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -72,4 +72,8 @@ body {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-iran-yekan), sans-serif;
 }
