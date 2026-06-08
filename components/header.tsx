@@ -1,149 +1,131 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import { useTheme } from "@/components/providers";
-import { useEffect, useState } from "react";
-
-const SunIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="5" />
-    <line x1="12" y1="1" x2="12" y2="3" />
-    <line x1="12" y1="21" x2="12" y2="23" />
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-    <line x1="1" y1="12" x2="3" y2="12" />
-    <line x1="21" y1="12" x2="23" y2="12" />
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-  </svg>
-);
-
-const MoonIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-  </svg>
-);
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/components/providers';
 
 export function Header() {
-  const t = useTranslations("nav");
+  const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme, setTheme } = useTheme();
+  
   const [mounted, setMounted] = useState(false);
-  const tHeader = useTranslations("header");
+  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const switchLocale = () => {
-    const newLocale = locale === "en" ? "fa" : "en";
-    const segments = pathname.split("/");
+    const newLocale = locale === 'en' ? 'fa' : 'en';
+    const segments = pathname.split('/');
     segments[1] = newLocale;
-    router.push(segments.join("/") || "/");
+    router.push(segments.join('/') || '/');
   };
 
   const isActive = (href: string) => {
-    const full = href === "" ? `/${locale}` : `/${locale}${href}`;
+    const full = href === '' ? `/${locale}` : `/${locale}${href}`;
     return pathname === full;
   };
 
-  return (
-    <header
-      className="fixed top-0 inset-x-0 z-50 h-16"
-      style={{
-        background: "rgba(255,255,255,0.08)",
-        backdropFilter: "blur(40px) saturate(180%)",
-        WebkitBackdropFilter: "blur(40px) saturate(180%)",
-        borderBottom: "1px solid rgba(255,255,255,0.18)",
-        boxShadow: "0 1px 24px rgba(0,0,0,0.08)",
-      }}
-    >
-      <div className="max-w-6xl mx-auto h-full px-6 flex items-center justify-between gap-6">
-        {/* Logo */}
-        <Link
-          href={`/${locale}`}
-          className="text-lg font-bold tracking-tight shrink-0"
-          style={{ color: "var(--text-primary)" }}
-        >
-          {tHeader("name")}
-          <span style={{ color: "var(--accent)" }}>.</span>
-        </Link>
+  const navItems = [
+    { href: '', label: t('work') },
+    { href: '/about', label: t('about') },
+  ];
 
-        {/* Nav */}
-        <nav className="flex items-center gap-1">
-          {(["", "/about"] as const).map((href) => {
-            const active = isActive(href);
+  return (
+    <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+      <header
+        className={`
+          pointer-events-auto w-full max-w-[850px] h-[56px] rounded-full 
+          flex items-center justify-between px-3 gap-2 
+          bg-[var(--header-bg)] shadow-[var(--header-shadow)]
+          backdrop-blur-3xl backdrop-saturate-200 border border-white/10 dark:border-white/5
+          transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)]
+          ${scrolled ? 'scale-[0.98] shadow-lg' : 'scale-100'}
+        `}
+      >
+        {/* ۱. بخش اسم (لوگوتایپ) */}
+        <div className="flex-1 flex items-center pl-2 rtl:pr-2">
+          <Link href={`/${locale}`} className="text-sm font-bold tracking-wide text-[var(--text-primary)] hover:opacity-80 transition-opacity">
+            {locale === 'en' ? 'Arian Abbasian' : 'آرین عباسیان'}
+          </Link>
+        </div>
+
+        {/* ۲. بخش نویگیشن (وسط) */}
+        <nav className="flex-shrink-0 flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-full border border-black/5 dark:border-white/5">
+          {navItems.map((item) => {
+            const active = isActive(item.href);
             return (
               <Link
-                key={href}
-                href={`/${locale}${href}`}
-                className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
-                style={{
-                  color: active ? "var(--accent)" : "var(--text-secondary)",
-                  background: active ? "var(--glass-bg)" : "transparent",
-                  border: active
-                    ? "1px solid var(--glass-border)"
-                    : "1px solid transparent",
-                }}
+                key={item.href}
+                href={`/${locale}${item.href}`}
+                className={`
+                  px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300
+                  ${
+                    active
+                      ? 'text-[var(--text-primary)] bg-white/60 dark:bg-white/10 shadow-sm backdrop-blur-md border border-black/5 dark:border-white/10'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
+                  }
+                `}
               >
-                {href === "" ? t("work") : t("about")}
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Controls */}
-        <div className="flex items-center gap-2 shrink-0">
-          {/* Language toggle */}
+        {/* ۳. بخش دکمه‌های کنترل (راست) - استایل Ultra Glass iOS */}
+        <div className="flex-1 flex items-center justify-end gap-2 pr-1 rtl:pl-1">
           <button
             onClick={switchLocale}
-            className="h-9 px-4 rounded-xl text-sm font-semibold tracking-widest transition-all duration-200"
-            style={{
-              color: "var(--text-secondary)",
-              background: "var(--glass-bg)",
-              border: "1px solid var(--glass-border)",
-            }}
+            className="
+              h-9 px-3 rounded-full text-xs font-bold tracking-widest
+              text-[var(--text-secondary)] 
+              bg-white/40 dark:bg-white/5 
+              backdrop-blur-xl backdrop-saturate-150
+              border border-white/50 dark:border-white/10 shadow-sm
+              transition-all duration-300 cursor-pointer
+              hover:text-[var(--text-primary)] hover:bg-white/60 dark:hover:bg-white/10 hover:scale-105 active:scale-95
+            "
           >
-            {locale === "en" ? "FA" : "EN"}
+            {locale === 'en' ? 'FA' : 'EN'}
           </button>
 
-          {/* Theme toggle */}
           <button
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-            className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
-            style={{
-              color: "var(--text-secondary)",
-              background: "var(--glass-bg)",
-              border: "1px solid var(--glass-border)",
-            }}
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
             aria-label="toggle theme"
+            className="
+              w-9 h-9 flex items-center justify-center rounded-full
+              text-[var(--text-secondary)] 
+              bg-white/40 dark:bg-white/5 
+              backdrop-blur-xl backdrop-saturate-150
+              border border-white/50 dark:border-white/10 shadow-sm
+              transition-all duration-300 cursor-pointer
+              hover:text-[var(--text-primary)] hover:bg-white/60 dark:hover:bg-white/10 hover:scale-105 active:scale-95
+            "
           >
-            {mounted && (resolvedTheme === "dark" ? <SunIcon /> : <MoonIcon />)}
+            {mounted && (
+              resolvedTheme === 'dark' ? (
+                <Sun className="w-4 h-4" strokeWidth={2.5} />
+              ) : (
+                <Moon className="w-4 h-4" strokeWidth={2.5} />
+              )
+            )}
           </button>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 }
