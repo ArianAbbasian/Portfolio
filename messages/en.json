@@ -1,15 +1,23 @@
 {
   "nav": {
     "work": "Work",
-    "about": "About"
+    "about": "Info"
+  },
+  "header": { 
+    "name": "Arian Abbasian" 
   },
   "home": {
     "title": "My Work",
-    "description": "Selected projects and designs"
+    "description": "Selected projects and designs",
+    "hero": {
+      "status": "Available for freelance projects",
+      "title": "Crafting Premium Digital Experiences",
+      "subtitle": "Hi, I'm Arian. A Frontend Engineer focusing on high-performance interfaces, sleek animations, and professional software design."
+    },
+    "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase."
   },
   "about": {
     "title": "About Me",
     "description": "Who I am and what I do"
-  },
-  "header": { "name": "Arian Abbasian" }
+  }
 }
