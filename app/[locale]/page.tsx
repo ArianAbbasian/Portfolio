@@ -1,15 +1,14 @@
-import { getTranslations } from 'next-intl/server';
+import Hero from "@/components/hero";
+import ProjectsList from "@/components/projects-list";
 
-export default async function HomePage() {
-  const t = await getTranslations('home');
+export default function HomePage() {
   return (
-    <section className="min-h-screen p-8 md:p-16 flex flex-col items-center justify-center text-center">
-      <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-        {t('title')}
-      </h1>
-      <p className="mt-6 text-lg text-zinc-600 dark:text-zinc-400 max-w-xl">
-        {t('description')}
-      </p>
-    </section>
+    <main className="min-h-screen bg-background-main pb-24">
+      {/* بخش هیرو و وضعیت NDA */}
+      <Hero />
+      
+      {/* بخش کارت‌های لوکس پروژه‌ها */}
+      <ProjectsList />
+    </main>
   );
 }
