@@ -1,128 +1,128 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
-import { Sun, Moon } from 'lucide-react';
-import { useTheme } from '@/components/providers';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useTheme } from "@/components/providers";
+import { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
+import { motion } from "framer-motion"; // ۱. اضافه کردن فریمور موشن
+
+const NAV_ITEMS = [
+  { href: "", labelKey: "work" },
+  { href: "/about", labelKey: "about" },
+] as const;
 
 export function Header() {
-  const t = useTranslations('nav');
+  const t = useTranslations("nav");
+  const tHeader = useTranslations("header");
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme, setTheme } = useTheme();
-  
+
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const switchLocale = () => {
-    const newLocale = locale === 'en' ? 'fa' : 'en';
-    const segments = pathname.split('/');
-    segments[1] = newLocale;
-    router.push(segments.join('/') || '/');
+    const next = locale === "en" ? "fa" : "en";
+    const segments = pathname.split("/");
+    segments[1] = next;
+    router.push(segments.join("/") || "/");
   };
 
-  const isActive = (href: string) => {
-    const full = href === '' ? `/${locale}` : `/${locale}${href}`;
-    return pathname === full;
-  };
-
-  const navItems = [
-    { href: '', label: t('work') },
-    { href: '/about', label: t('about') },
-  ];
+  const isActive = (href: string) =>
+    pathname === (href === "" ? `/${locale}` : `/${locale}${href}`);
 
   return (
     <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
       <header
-        className={`
-          pointer-events-auto w-full max-w-[850px] h-[56px] rounded-full 
-          flex items-center justify-between px-3 gap-2 
-          bg-[var(--header-bg)] shadow-[var(--header-shadow)]
-          backdrop-blur-3xl backdrop-saturate-200 border border-white/10 dark:border-white/5
-          transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)]
-          ${scrolled ? 'scale-[0.98] shadow-lg' : 'scale-100'}
-        `}
+        className={[
+          "header-pill pointer-events-auto",
+          "w-full max-w-[720px] h-14 rounded-full",
+          "flex items-center justify-between pl-5 pr-2 gap-4",
+          "border border-glass-border",
+          "transition-transform duration-300 ease-out",
+          scrolled ? "scale-[0.97]" : "scale-100",
+        ].join(" ")}
       >
-        {/* ۱. بخش اسم (لوگوتایپ) */}
-        <div className="flex-1 flex items-center pl-2 rtl:pr-2">
-          <Link href={`/${locale}`} className="text-sm font-bold tracking-wide text-[var(--text-primary)] hover:opacity-80 transition-opacity">
-            {locale === 'en' ? 'Arian Abbasian' : 'آرین عباسیان'}
-          </Link>
-        </div>
+        {/* ── Logo ─────────────────────────────── */}
+        <Link
+          href={`/${locale}`}
+          className="shrink-0 text-[15px] font-bold tracking-tight text-text-primary no-underline"
+        >
+          {tHeader("name")}
+          <span className="text-accent">.</span>
+        </Link>
+        {/* ── Segmented Control (Liquid Animated) ── */}
+        <nav className="seg-pill relative">
+          {NAV_ITEMS.map(({ href, labelKey }) => {
+            const active = isActive(href);
+            // اصلاح اصلی: متن دکمه را مستقیم از t(labelKey) می‌گیریم
+            const label = t(labelKey);
 
-        {/* ۲. بخش نویگیشن (وسط) */}
-        <nav className="flex-shrink-0 flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-full border border-black/5 dark:border-white/5">
-          {navItems.map((item) => {
-            const active = isActive(item.href);
             return (
               <Link
-                key={item.href}
-                href={`/${locale}${item.href}`}
-                className={`
-                  px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300
-                  ${
-                    active
-                      ? 'text-[var(--text-primary)] bg-white/60 dark:bg-white/10 shadow-sm backdrop-blur-md border border-black/5 dark:border-white/10'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
-                  }
-                `}
+                key={href}
+                href={`/${locale}${href}`}
+                className={[
+                  "seg-item relative z-10 block",
+                  active
+                    ? "text-text-primary font-bold"
+                    : "text-text-secondary font-medium",
+                ].join(" ")}
               >
-                {item.label}
+                {label}
+
+                {/* لایه انیمیشنی شیشه‌ای داینامیک */}
+                {active && (
+                  <motion.div
+                    layoutId="active-liquid-glass"
+                    className="seg-item-active absolute inset-0 -z-10"
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 26,
+                    }}
+                  >
+                    {/* خط نوری بالای دکمه */}
+                    <div className="seg-top-glow" />
+                  </motion.div>
+                )}
               </Link>
             );
           })}
         </nav>
-
-        {/* ۳. بخش دکمه‌های کنترل (راست) - استایل Ultra Glass iOS */}
-        <div className="flex-1 flex items-center justify-end gap-2 pr-1 rtl:pl-1">
+        {/* ── Controls ─────────────────────────── */}
+        <div className="flex items-center gap-1.5">
           <button
             onClick={switchLocale}
-            className="
-              h-9 px-3 rounded-full text-xs font-bold tracking-widest
-              text-[var(--text-secondary)] 
-              bg-white/40 dark:bg-white/5 
-              backdrop-blur-xl backdrop-saturate-150
-              border border-white/50 dark:border-white/10 shadow-sm
-              transition-all duration-300 cursor-pointer
-              hover:text-[var(--text-primary)] hover:bg-white/60 dark:hover:bg-white/10 hover:scale-105 active:scale-95
-            "
+            className="lg-btn h-9 px-4 rounded-full text-xs font-semibold tracking-widest cursor-pointer text-text-secondary hover:text-text-primary"
           >
-            {locale === 'en' ? 'FA' : 'EN'}
+            {locale === "en" ? "فارسی" : "EN"}
           </button>
 
           <button
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            aria-label="toggle theme"
-            className="
-              w-9 h-9 flex items-center justify-center rounded-full
-              text-[var(--text-secondary)] 
-              bg-white/40 dark:bg-white/5 
-              backdrop-blur-xl backdrop-saturate-150
-              border border-white/50 dark:border-white/10 shadow-sm
-              transition-all duration-300 cursor-pointer
-              hover:text-[var(--text-primary)] hover:bg-white/60 dark:hover:bg-white/10 hover:scale-105 active:scale-95
-            "
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
+            aria-label="Toggle theme"
+            className="lg-btn size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
           >
-            {mounted && (
-              resolvedTheme === 'dark' ? (
-                <Sun className="w-4 h-4" strokeWidth={2.5} />
+            {mounted &&
+              (resolvedTheme === "dark" ? (
+                <Sun size={15} strokeWidth={2} />
               ) : (
-                <Moon className="w-4 h-4" strokeWidth={2.5} />
-              )
-            )}
+                <Moon size={15} strokeWidth={2} />
+              ))}
           </button>
         </div>
       </header>
