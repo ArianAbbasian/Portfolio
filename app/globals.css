@@ -2,78 +2,342 @@
 
 /* ─── Light Theme ─────────────────────────────── */
 :root {
-  --bg-base:     #eef2ff;
-  --bg-surface:  rgba(255, 255, 255, 0.55);
-  --bg-elevated: rgba(255, 255, 255, 0.80);
+  --bg-base: #eef2ff;
+  --bg-surface: rgba(255, 255, 255, 0.55);
+  --bg-elevated: rgba(255, 255, 255, 0.8);
 
-  --text-primary:   #0a0a14;
+  --text-primary: #0a0a14;
   --text-secondary: #4a5568;
-  --text-muted:     #94a3b8;
+  --text-muted: #94a3b8;
 
-  --glass-bg:     rgba(255, 255, 255, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.18);
   --glass-border: rgba(255, 255, 255, 0.35);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  --glass-blur:   24px;
 
-  --accent:      #007AFF;
-  --accent-hover:#0063CC;
+  --accent: #007aff;
+  --accent-hover: #0063cc;
   --accent-glow: rgba(0, 122, 255, 0.25);
 
   --border: rgba(0, 0, 0, 0.07);
+
+  --header-bg: rgba(255, 255, 255, 0.6);
+  --header-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.7), 0 8px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ─── Dark Theme ──────────────────────────────── */
 .dark {
-  --bg-base:     #07070f;
-  --bg-surface:  rgba(255, 255, 255, 0.04);
+  --bg-base: #07070f;
+  --bg-surface: rgba(255, 255, 255, 0.04);
   --bg-elevated: rgba(255, 255, 255, 0.07);
 
-  --text-primary:   #eff0ff;
+  --text-primary: #eff0ff;
   --text-secondary: #94a3b8;
-  --text-muted:     #64748b;
+  --text-muted: #64748b;
 
-  --glass-bg:     rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --glass-blur:   24px;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
 
-  --accent:      #0A84FF;
-  --accent-hover:#409CFF;
+  --accent: #0a84ff;
+  --accent-hover: #409cff;
   --accent-glow: rgba(10, 132, 255, 0.35);
 
   --border: rgba(255, 255, 255, 0.07);
+
+  --header-bg: rgba(10, 10, 16, 0.7);
+  --header-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.08), 0 8px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-/* ─── Tailwind bridge ─────────────────────────── */
+/* ─── Tailwind Tokens ─────────────────────────── */
 @theme inline {
   --color-background: var(--bg-base);
   --color-foreground: var(--text-primary);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
   --font-sans: var(--font-satoshi);
   --font-fa: var(--font-iran-yekan);
 }
 
 /* ─── Base ────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-satoshi), sans-serif;
   min-height: 100vh;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* ─── Glassmorphism utility class ─────────────── */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 html[dir="rtl"] body {
   font-family: var(--font-iran-yekan), sans-serif;
+}
+
+/* ─── Header Pill Base ─────────────────────────── */
+.header-pill {
+  background: var(--header-bg);
+  box-shadow: var(--header-shadow);
+  backdrop-filter: blur(48px) saturate(180%);
+  -webkit-backdrop-filter: blur(48px) saturate(180%);
+}
+
+/* ═══════════════════════════════════════════════
+   PREMIUM LIQUID GLASS STYLES (Tailwind Override Protected)
+   ═══════════════════════════════════════════════ */
+@layer utilities {
+  /* ─── Segmented Control Outer Trough ─── */
+  .seg-pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 100px;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.06),
+      0 4px 20px rgba(0, 0, 0, 0.02) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  }
+
+  .dark .seg-pill {
+    background: rgba(26, 26, 26, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.4),
+      0 1px 0px rgba(255, 255, 255, 0.03) !important;
+  }
+
+  /* ─── Base Tab Item ─── */
+  .seg-item {
+    position: relative;
+    padding: 8px 24px !important;
+    border-radius: 100px;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .seg-item:hover:not(.seg-item-active) {
+    color: var(--text-primary) !important;
+  }
+
+  /* ─── Active Thumb (Light Mode) ─── */
+  .seg-item-active {
+    border-radius: 100px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0.45)
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(10px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(190%) !important;
+    box-shadow:
+      inset 0 1.5px 1px rgba(255, 255, 255, 1),
+      inset 0 -1.5px 2px rgba(0, 0, 0, 0.03),
+      0 3px 8px rgba(0, 0, 0, 0.07),
+      0 0 0 0.5px rgba(0, 0, 0, 0.02) !important;
+  }
+
+  .seg-item-active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 50%
+    ) !important;
+  }
+
+  /* ─── Active Thumb (Dark Mode) ─── */
+  .dark .seg-item-active {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    box-shadow:
+      inset 0 1px 0px rgba(255, 255, 255, 0.18),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+      0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .dark .seg-item-active::before {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 40%
+    ) !important;
+  }
+
+  /* ─── Top Glowing Indicator ─── */
+  .seg-top-glow {
+    position: absolute;
+    top: -5.5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 100px;
+    filter: blur(0.5px) !important; /* Fixed: 'blur' corrected to 'filter' */
+    box-shadow:
+      0 0 6px 1.5px rgba(255, 255, 255, 0.9),
+      0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .dark .seg-top-glow {
+    background: #ffffff !important;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.85) !important;
+  }
+
+  /* ─── Controls: Liquid Buttons (.lg-btn Light Mode) ─── */
+  .lg-btn {
+    position: relative;
+    overflow: hidden;
+
+    /* تغییر مهم: ترکیب مشکی فوق‌العاده شفاف با سفید برای ایجاد تضاد روی هدر سفید */
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.05)),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.3)
+      ) !important;
+
+    /* مرز شیشه‌ای متمایز و ضخیم‌تر در حالت لایت */
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+
+    /* اشباع رنگ بالا برای عبور دادن رنگ‌های پشتی */
+    backdrop-filter: blur(14px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+
+    box-shadow:
+      inset 0 1.5px 0.5px rgba(255, 255, 255, 1),
+      /* لبه نوری درخشان بالا */ inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+      /* سایه داخلی تیره برای ایجاد بعد و ضخامت شیشه */ 0 3px 8px
+        rgba(0, 0, 0, 0.04),
+      /* سایه نرم بیرونی برای معلق شدن */ 0 0 0 0.5px rgba(0, 0, 0, 0.03) !important;
+
+    /* رنگ متن و آیکون‌ها برای خوانایی بیشتر در شیشه روشن */
+    color: #2e3542 !important;
+
+    transition:
+      background 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+      color 0.2s ease !important;
+  }
+
+  /* رفلکس شدید نوری در بالا سمت چپ دکمه */
+  .lg-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 40%
+    ) !important;
+  }
+
+  /* هاور دکمه در حالت لایت (شیشه کاملاً براق و فشرده می‌شود) */
+  .lg-btn:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.6)
+    ) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    color: #0a0a14 !important;
+    box-shadow:
+      inset 0 1.5px 0.5px rgba(255, 255, 255, 1),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.06),
+      0 6px 16px rgba(0, 0, 0, 0.07),
+      0 0 0 0.5px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .lg-btn:active {
+    transform: scale(0.94) !important;
+  }
+
+  /* ─── Controls: Liquid Buttons (.lg-btn Dark Mode) ─── */
+  .dark .lg-btn {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.03)
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow:
+      inset 0 1px 0px rgba(255, 255, 255, 0.15),
+      inset 0 -1.5px 3px rgba(0, 0, 0, 0.2),
+      0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    color: var(--text-secondary) !important;
+  }
+
+  .dark .lg-btn::before {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 45%
+    ) !important;
+  }
+
+  .dark .lg-btn:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.06)
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-primary) !important;
+    box-shadow:
+      inset 0 1px 0px rgba(255, 255, 255, 0.22),
+      inset 0 -1.5px 3px rgba(0, 0, 0, 0.25),
+      0 4px 14px rgba(0, 0, 0, 0.35) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-btn {
+    transition: none !important;
+  }
+  .lg-btn:active {
+    transform: none !important;
+  }
 }
