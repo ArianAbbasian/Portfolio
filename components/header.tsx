@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "@/components/providers";
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
-import { motion } from "framer-motion"; // ۱. اضافه کردن فریمور موشن
+import { motion } from "framer-motion";
 
 const NAV_ITEMS = [
   { href: "", labelKey: "work" },
@@ -43,30 +43,39 @@ export function Header() {
     pathname === (href === "" ? `/${locale}` : `/${locale}${href}`);
 
   return (
-    <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
-      <header
-        className={[
-          "header-pill pointer-events-auto",
-          "w-full max-w-[720px] h-14 rounded-full",
-          "flex items-center justify-between pl-5 pr-2 gap-4",
-          "border border-glass-border",
-          "transition-transform duration-300 ease-out",
-          scrolled ? "scale-[0.97]" : "scale-100",
-        ].join(" ")}
-      >
-        {/* ── Logo ─────────────────────────────── */}
+    <div
+      className={[
+        "fixed top-0 inset-x-0 z-50 w-full h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 transition-all duration-300 pointer-events-none",
+        scrolled
+          ? "backdrop-blur-md bg-background/40"
+          : "",
+      ].join(" ")}
+    >
+      
+      {/* ── ۱. نام برند شخصی (بسیار بزرگ‌تر، خواناتر با لود وزن واقعی فونت فارسی) ── */}
+      <div className="pointer-events-auto flex flex-col justify-center">
         <Link
           href={`/${locale}`}
-          className="shrink-0 text-[15px] font-bold tracking-tight text-text-primary no-underline"
+          className={[
+            "text-[20px] sm:text-[24px] md:text-[25px] no-underline leading-none transition-all duration-300 hover:opacity-80",
+            locale === "fa"
+              ? "font-extrabold tracking-normal text-text-primary" // لود تمیز وزن ۸۰۰ و رفع فشرده‌سازی برای خوانایی خط فارسی
+              : "font-black tracking-tight text-text-primary"      // لود تمیز وزن ۹۰۰ برای ساتوشی انگلیسی
+          ].join(" ")}
         >
           {tHeader("name")}
           <span className="text-accent">.</span>
         </Link>
-        {/* ── Segmented Control (Liquid Animated) ── */}
-        <nav className="seg-pill relative">
+        <span className="hidden sm:block text-[10px] sm:text-[12px] text-text-muted mt-2 font-bold tracking-widest uppercase opacity-80">
+          {locale === "fa" ? "توسعه‌دهنده فرانت‌اند" : "Frontend Engineer"}
+        </span>
+      </div>
+
+      {/* ── ۲. منوی ناوبری ── */}
+      <div className="absolute left-1/2 -translate-x-1/2 pointer-events-auto">
+        <nav className="seg-pill h-11 sm:h-12 flex items-center px-1">
           {NAV_ITEMS.map(({ href, labelKey }) => {
             const active = isActive(href);
-            // اصلاح اصلی: متن دکمه را مستقیم از t(labelKey) می‌گیریم
             const label = t(labelKey);
 
             return (
@@ -80,7 +89,7 @@ export function Header() {
                     : "text-text-secondary font-medium",
                 ].join(" ")}
               >
-                {label}
+                <span className="relative z-10 px-1">{label}</span>
 
                 {/* لایه انیمیشنی شیشه‌ای داینامیک */}
                 {active && (
@@ -101,31 +110,33 @@ export function Header() {
             );
           })}
         </nav>
-        {/* ── Controls ─────────────────────────── */}
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={switchLocale}
-            className="lg-btn h-9 px-4 rounded-full text-xs font-semibold tracking-widest cursor-pointer text-text-secondary hover:text-text-primary"
-          >
-            {locale === "en" ? "فارسی" : "EN"}
-          </button>
+      </div>
 
-          <button
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-            aria-label="Toggle theme"
-            className="lg-btn size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
-          >
-            {mounted &&
-              (resolvedTheme === "dark" ? (
-                <Sun size={15} strokeWidth={2} />
-              ) : (
-                <Moon size={15} strokeWidth={2} />
-              ))}
-          </button>
-        </div>
-      </header>
+      {/* ── ۳. کنترل‌ها ── */}
+      <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2">
+        <button
+          onClick={switchLocale}
+          className="lg-btn h-8 sm:h-9 px-3 sm:px-4 rounded-full text-[10px] sm:text-xs font-semibold tracking-widest cursor-pointer text-text-secondary hover:text-text-primary"
+        >
+          {locale === "en" ? "فارسی" : "EN"}
+        </button>
+
+        <button
+          onClick={() =>
+            setTheme(resolvedTheme === "dark" ? "light" : "dark")
+          }
+          aria-label="Toggle theme"
+          className="lg-btn size-8 sm:size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
+        >
+          {mounted &&
+            (resolvedTheme === "dark" ? (
+              <Sun size={14} className="sm:size-[15px]" strokeWidth={2} />
+            ) : (
+              <Moon size={14} className="sm:size-[15px]" strokeWidth={2} />
+            ))}
+        </button>
+      </div>
+
     </div>
   );
 }
