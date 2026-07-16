@@ -10,6 +10,46 @@ import ProjectModal from "./project-modal";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// تم‌های رنگی مجزا به همراه سایه‌های نئونی هاور اختصاصی
+const PROJECT_THEMES = [
+  {
+    accent: "text-purple-600 dark:text-purple-400",
+    badgeBg: "bg-purple-500/8 dark:bg-purple-500/12",
+    badgeBorder: "border-purple-500/15 dark:border-purple-500/25",
+    cardBorder: "border-purple-500/35 dark:border-purple-500/25", 
+    glowColor: "rgba(147, 51, 234, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:hover:shadow-[0_30px_70px_rgba(147,51,234,0.3)]",
+    tech: "bg-purple-500/5 dark:bg-purple-500/8 border-purple-500/10 dark:border-purple-500/20 text-purple-700 dark:text-purple-300"
+  },
+  {
+    accent: "text-blue-600 dark:text-blue-400",
+    badgeBg: "bg-blue-500/8 dark:bg-blue-500/12",
+    badgeBorder: "border-blue-500/15 dark:border-blue-500/25",
+    cardBorder: "border-blue-500/35 dark:border-blue-500/25",
+    glowColor: "rgba(37, 99, 235, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.18)] dark:hover:shadow-[0_30px_70px_rgba(37,99,235,0.3)]",
+    tech: "bg-blue-500/5 dark:bg-blue-500/8 border-blue-500/10 dark:border-blue-500/20 text-blue-700 dark:text-blue-300"
+  },
+  {
+    accent: "text-emerald-600 dark:text-emerald-400",
+    badgeBg: "bg-emerald-500/8 dark:bg-emerald-500/12",
+    badgeBorder: "border-emerald-500/15 dark:border-emerald-500/25",
+    cardBorder: "border-emerald-500/35 dark:border-emerald-500/25",
+    glowColor: "rgba(5, 150, 105, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(5,150,105,0.18)] dark:hover:shadow-[0_30px_70px_rgba(5,150,105,0.3)]",
+    tech: "bg-emerald-500/5 dark:bg-emerald-500/8 border-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+  },
+  {
+    accent: "text-red-600 dark:text-red-400",
+    badgeBg: "bg-red-500/8 dark:bg-red-500/12",
+    badgeBorder: "border-red-500/15 dark:border-red-500/25",
+    cardBorder: "border-red-500/35 dark:border-red-500/25",
+    glowColor: "rgba(220, 38, 38, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(220,38,38,0.18)] dark:hover:shadow-[0_30px_70px_rgba(220,38,38,0.3)]",
+    tech: "bg-red-500/5 dark:bg-red-500/8 border-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-300"
+  }
+];
+
 export default function ProjectsList() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -75,7 +115,7 @@ export default function ProjectsList() {
           "w-full flex",
           isDesktop 
             ? "flex-row h-screen items-center flex-nowrap gap-0 py-0" 
-            : "flex-col gap-10 py-8 px-4 sm:px-6"
+            : "flex-col gap-14 py-10 px-4 sm:px-8"
         ].join(" ")}
         style={{
           width: isDesktop ? `${totalProjects * 100}vw` : "100%",
@@ -89,22 +129,7 @@ export default function ProjectsList() {
             ? project.image.replace("/public", "")
             : project.image;
 
-          const glowColors = [
-            "rgba(147, 51, 234, 0.12)",
-            "rgba(37, 99, 235, 0.12)",
-            "rgba(5, 150, 105, 0.12)",
-            "rgba(220, 38, 38, 0.12)",
-          ];
-
-          const hoverBorders = [
-            "hover:border-purple-500/30",
-            "hover:border-blue-500/30",
-            "hover:border-emerald-500/30",
-            "hover:border-red-500/30",
-          ];
-
-          const projectGlowColor = glowColors[index % glowColors.length];
-          const projectHoverBorder = hoverBorders[index % hoverBorders.length];
+          const theme = PROJECT_THEMES[index % PROJECT_THEMES.length];
 
           return (
             <section
@@ -113,14 +138,13 @@ export default function ProjectsList() {
                 "relative flex items-center justify-center select-none overflow-hidden",
                 isDesktop 
                   ? "w-screen h-full flex-shrink-0 px-20" 
-                  : "w-full h-auto py-1"
+                  : "w-full h-auto py-2"
               ].join(" ")}
             >
-              {/* هاله رنگی پس‌زمینه */}
               <div
                 className="absolute left-1/2 top-1/2 -z-10 h-[280px] w-[280px] sm:h-[500px] sm:w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] sm:blur-[160px] opacity-70 animate-pulse"
                 style={{
-                  backgroundColor: projectGlowColor,
+                  backgroundColor: theme.glowColor,
                   animationDuration: "8s",
                 }}
               />
@@ -128,22 +152,33 @@ export default function ProjectsList() {
               {/* کارت اصلی پروژه‌ها */}
               <div
                 className={[
-                  "group relative flex w-full max-w-6xl flex-col justify-between overflow-hidden border border-border bg-surface/80 dark:bg-white/[0.02] p-5 sm:p-10 md:p-12 backdrop-blur-3xl transition-all duration-700",
-                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto gap-6 rounded-3xl",
-                  projectHoverBorder
+                  "group relative flex w-full max-w-6xl flex-col justify-between overflow-hidden border p-5 sm:p-10 md:p-12 backdrop-blur-3xl transition-all duration-700",
+                  "bg-white/65 dark:bg-white/[0.015]", 
+                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto rounded-3xl", // حذف افکت جابجایی بالا به Y برای جلوگیری از اورلپ با هدر
+                  theme.cardBorder, 
+                  theme.cardShadow 
                 ].join(" ")}
                 style={{
-                  boxShadow: "0 30px 70px rgba(0, 0, 0, 0.08), dark:0 40px 90px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.1)",
+                  boxShadow: "0 20px 50px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
                 }}
               >
+                {/* ─── افکت درخشش نوری شیشه‌ای متحرک تقویت شده در لایت‌مد (۴۵٪ نفوذ رفلکس) ─── */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out bg-gradient-to-r from-transparent via-white/45 dark:via-white/12 to-transparent pointer-events-none z-20" />
+
                 {/* هدر کارت */}
-                <div className="flex items-center justify-between z-10 w-full mb-4">
+                <div className="flex items-center justify-between z-10 w-full mb-6">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <span className="rounded-full border border-border bg-black/5 dark:bg-black/40 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-bold uppercase tracking-widest text-text-secondary">
+                    <span className={[
+                      "rounded-full border px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-bold uppercase tracking-widest transition-colors duration-300",
+                      theme.badgeBg,
+                      theme.badgeBorder,
+                      theme.accent
+                    ].join(" ")}>
                       {t("selectedCase")} / 0{index + 1}
                     </span>
+                    
                     {project.isCommercial && (
-                      <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[10px] font-semibold tracking-wide text-amber-500 dark:text-amber-400">
+                      <span className="rounded-full border border-amber-500/20 bg-amber-500/8 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[10px] font-bold tracking-wide text-amber-600 dark:text-amber-400">
                         COMMERCIAL
                       </span>
                     )}
@@ -153,8 +188,8 @@ export default function ProjectsList() {
                       {project.year}
                     </span>
                     <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ backgroundColor: projectGlowColor }} />
-                      <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: projectGlowColor }} />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ backgroundColor: theme.glowColor }} />
+                      <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: theme.glowColor }} />
                     </span>
                   </div>
                 </div>
@@ -166,36 +201,44 @@ export default function ProjectsList() {
                     className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1"
                     style={{ direction: locale === "fa" ? "rtl" : "ltr" }}
                   >
-                    <span className="text-[10px] sm:text-xs font-bold tracking-wider text-accent uppercase opacity-75 mb-1 sm:mb-2 block">
+                    <span className={[
+                      "text-[10px] sm:text-xs font-bold tracking-wider uppercase mb-1.5 block",
+                      theme.accent
+                    ].join(" ")}>
                       {pData.category}
                     </span>
                     <h2 className="text-xl sm:text-2xl md:text-5xl font-black text-text-primary tracking-tight leading-tight">
                       {pData.title}
                     </h2>
-                    <p className="mt-2.5 text-xs sm:text-sm md:text-base text-text-secondary leading-relaxed opacity-85 group-hover:opacity-95 transition-opacity duration-500">
+                    <p className="mt-3 text-xs sm:text-sm md:text-base text-text-secondary leading-relaxed opacity-85 group-hover:opacity-95 transition-opacity duration-500">
                       {pData.shortDescription}
                     </p>
                   </div>
 
-                  {/* بخش تصویر */}
-                  <div className="lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-black/5 dark:bg-black/40 order-1 lg:order-2">
+                  {/* بخش تصویر با مرز هماهنگ با تم پروژه */}
+                  <div className={[
+                    "lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 order-1 lg:order-2",
+                    theme.badgeBorder
+                  ].join(" ")}>
                     <img
                       src={cleanImagePath}
                       alt={pData.title}
-                      className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-1000 ease-out"
+                      className="w-full h-full object-cover object-top opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-1000 ease-out"
                       loading="lazy"
                     />
                   </div>
                 </div>
 
                 {/* فوتر کارت */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-5 z-10 w-full mt-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-6 z-10 w-full mt-6">
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {pData.technologies.map((tag, idx) => (
                       <span
                         key={idx}
-                        // تغییر بک‌گراند و مرز تگ‌ها برای نمایش منظم و باکیفیت در هر دو تم لایت و دارک
-                        className="font-mono text-[9px] sm:text-xs tracking-wider text-text-secondary bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.06] px-2.5 py-1 rounded-xl"
+                        className={[
+                          "font-mono text-[9px] sm:text-xs tracking-wider px-2.5 py-1 rounded-xl border",
+                          theme.tech
+                        ].join(" ")}
                       >
                         {tag}
                       </span>
@@ -204,7 +247,7 @@ export default function ProjectsList() {
 
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-foreground text-background px-4 py-3 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold transition-all duration-300 hover:opacity-90 active:scale-95 shadow-lg group/btn whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-foreground text-background px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold transition-all duration-300 hover:opacity-90 active:scale-95 shadow-lg group/btn whitespace-nowrap"
                   >
                     {t("viewProject")}
                     <span className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1 rotate-180" : "group-hover/btn:translate-x-1"}`}>
