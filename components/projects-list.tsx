@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS_DATA, ProjectLangData, Project } from "@/constants/projects";
 import ProjectModal from "./project-modal";
-import Lightbox from "./lightbox"; // وارد کردن لایت‌باکس مستقل جدید
+import Lightbox from "./lightbox";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +21,6 @@ const PROJECT_THEMES = [
     glowColor: "rgba(147, 51, 234, 0.15)",
     cardShadow: "hover:shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:hover:shadow-[0_30px_70px_rgba(147,51,234,0.3)]",
     tech: "bg-purple-500/5 dark:bg-purple-500/8 border-purple-500/10 dark:border-purple-500/20 text-purple-700 dark:text-purple-300",
-    // استایل پویای هاور دکمه (تغییر پس‌زمینه به رنگ بنفش پروژه، با سایه نئونی بنفش)
     btnHover: "hover:bg-purple-600 dark:hover:bg-purple-500 hover:text-white hover:shadow-[0_10px_25px_rgba(147,51,234,0.25)] hover:border-purple-500/40"
   },
   {
@@ -158,10 +157,11 @@ export default function ProjectsList() {
 
               {/* کارت اصلی پروژه‌ها */}
               <div
+                onClick={() => !isDesktop && setSelectedProject(project)}
                 className={[
                   "group relative flex w-full max-w-6xl flex-col justify-between overflow-hidden border p-5 sm:p-10 md:p-12 backdrop-blur-3xl transition-all duration-700",
                   "bg-white/65 dark:bg-white/[0.015]", 
-                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto rounded-3xl",
+                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto rounded-3xl cursor-pointer active:scale-[0.98]", 
                   theme.cardBorder, 
                   theme.cardShadow 
                 ].join(" ")}
@@ -224,9 +224,17 @@ export default function ProjectsList() {
 
                   {/* بخش تصویر */}
                   <div 
-                    onClick={() => setActiveLightboxImage(cleanImagePath)}
+                    onClick={(e) => {
+                      if (!isDesktop) {
+                        e.stopPropagation();
+                        setSelectedProject(project);
+                      } else {
+                        setActiveLightboxImage(cleanImagePath);
+                      }
+                    }}
                     className={[
-                      "lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 order-1 lg:order-2 cursor-zoom-in pointer-events-auto",
+                      "lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border pointer-events-auto",
+                      isDesktop ? "cursor-zoom-in" : "cursor-pointer",
                       theme.badgeBorder
                     ].join(" ")}
                   >
@@ -239,9 +247,13 @@ export default function ProjectsList() {
                   </div>
                 </div>
 
-                {/* فوتر کارت */}
+                {/* 
+                  ─── فوتر کارت (کاملاً اصلاح شده و پویا) ───
+                  تگ‌های تکنولوژی در موبایل مخفی می‌شوند، اما دکمه CTA به صورت تمام‌عرض (w-full) برای راهنمایی دقیق کاربر باقی می‌ماند!
+                */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-6 z-10 w-full mt-6">
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {/* پنهان‌سازی مینی‌مال فقط کپسول‌های تکنولوژی در موبایل */}
+                  <div className="hidden lg:flex flex-wrap gap-1.5 sm:gap-2">
                     {pData.technologies.map((tag, idx) => (
                       <span
                         key={idx}
@@ -255,18 +267,18 @@ export default function ProjectsList() {
                     ))}
                   </div>
 
-                  {/* دکمه با هاور پویای تغییر رنگ، انبساط کشسانی فاصله و پرش عریض فلش */}
+                  {/* دکمه ناوبری که در موبایل به صورت تمام‌عرض (w-full) برای راهنمایی ۱۰۰٪ کلاینت لمسی ظاهر می‌شود */}
                   <button
                     onClick={() => setSelectedProject(project)}
                     className={[
                       "inline-flex items-center justify-center rounded-xl bg-foreground text-background px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap cursor-pointer",
                       "transition-all duration-300 ease-out",
-                      "gap-2 group/btn hover:gap-3.5 active:scale-95", // افزایش فاصله متنی به ۳.۵ واحد در هاور
-                      theme.btnHover // رنگ هاور داینامیک اختصاصی و درخشش نئونی دکمه
+                      "gap-2 group/btn hover:gap-3.5 active:scale-95", 
+                      "w-full lg:w-auto", // تمام عرض در موبایل، خودکار در دسکتاپ
+                      theme.btnHover 
                     ].join(" ")}
                   >
                     {t("viewProject")}
-                    {/* جهش عریض‌تر ۱.۵ واحدی فلش روی هاور */}
                     <span className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1.5 rotate-180" : "group-hover/btn:translate-x-1.5"}`}>
                       →
                     </span>
@@ -278,7 +290,6 @@ export default function ProjectsList() {
         })}
       </div>
 
-      {/* ۳. فراخوانی لایت‌باکس ماژولار و مستقل کلاینت */}
       <Lightbox src={activeLightboxImage} onClose={() => setActiveLightboxImage(null)} />
 
       <ProjectModal 
