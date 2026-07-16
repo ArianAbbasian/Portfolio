@@ -19,7 +19,9 @@
       "title": "Selected Works",
       "subtitle": "A collection of premium web applications and interactive products crafted with performance, accessibility, and high-end aesthetics in mind.",
       "selectedCase": "SELECTED CASE",
-      "viewProject": "View Case Study"
+      "viewProject": "View Case Study",
+      "clientLabel": "CLIENT: ",
+      "yearLabel": "YEAR: "
     }
   },
   "about": {

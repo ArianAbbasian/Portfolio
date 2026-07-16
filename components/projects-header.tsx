@@ -31,7 +31,7 @@ export default function ProjectsHeader() {
       </div>
 
       {/* ─── ۲. بلوک اصلی عنوان هدر ─── */}
-      <div className="border-b border-border/50 py-16 sm:py-20 bg-gradient-to-b from-white/[0.01] dark:from-white/[0.005] to-transparent">
+      <div className="py-16 sm:py-20 bg-gradient-to-b from-white/[0.01] dark:from-white/[0.005] to-transparent">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8">
           
           {/* عنوان پروژه */}
@@ -50,33 +50,39 @@ export default function ProjectsHeader() {
             </h2>
           </motion.div>
 
-          {/* توضیحات پروژه به همراه راهنمای اسکرول افقی دسکتاپ (مخفی در موبایل) */}
+          {/* توضیحات پروژه */}
           <motion.div
             initial={{ opacity: 0, x: locale === "fa" ? -40 : 40 }}
             whileInView={{ opacity: 0.7, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-            className="max-w-md border-r-2 border-accent/20 pr-4 ltr:border-r-0 ltr:pr-0 ltr:border-l-2 ltr:pl-4 flex flex-col gap-4"
+            className="max-w-md border-r-2 border-accent/20 pr-4 ltr:border-r-0 ltr:pr-0 ltr:border-l-2 ltr:pl-4"
           >
             <p className="text-xs sm:text-sm md:text-base text-text-secondary leading-relaxed">
               {t("subtitle")}
             </p>
-
-            {/* راهنمای اسکرول انیمیشنی (فقط روی دسکتاپ برای راهنمایی مخاطب نمایش داده می‌شود) */}
-            <div className="hidden lg:flex items-center gap-2 text-xs font-mono font-black text-accent tracking-widest mt-2">
-              <span className="animate-pulse">
-                {locale === "fa" ? "برای کاوش، اسکرول کنید" : "EXPLORE CASE STUDIES"}
-              </span>
-              <motion.span
-                animate={{ x: locale === "fa" ? [-4, 4, -4] : [4, -4, 4] }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="text-base"
-              >
-                {locale === "fa" ? "←" : "→"}
-              </motion.span>
-            </div>
           </motion.div>
 
+        </div>
+      </div>
+
+      {/* ─── ۳. راهنمای اسکرول بزرگ، لوکس و انیمیشنی (Sleek Explore Guide) ─── */}
+      <div className="hidden lg:flex w-full border-t border-b border-border/60 py-5 bg-white/[0.005] justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-[9px] sm:text-[10px] font-mono font-black text-text-muted tracking-[0.25em] uppercase animate-pulse">
+            {locale === "fa" ? "جهت کاوش پروژه‌ها، اسکرول کنید" : "SCROLL DOWN TO EXPLORE WORKS"}
+          </span>
+          <motion.div
+            animate={locale === "fa" ? { x: [0, -14, 0] } : { x: [0, 14, 0] }}
+            transition={{
+              repeat: Infinity,
+              duration: 1.6,
+              ease: "easeInOut",
+            }}
+            className="text-accent text-2xl font-black cursor-default"
+          >
+            {locale === "fa" ? "←" : "→"}
+          </motion.div>
         </div>
       </div>
       

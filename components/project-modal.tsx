@@ -1,15 +1,63 @@
+"use html";
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations, useLocale } from "next-intl";
-import { Project, ProjectLangData } from "@/constants/projects";
+import { PROJECTS_DATA, Project, ProjectLangData } from "@/constants/projects";
 import Link from "next/link";
+import Lightbox from "./lightbox";
+import { motion } from "framer-motion"; // وارد کردن موشن برای انیمیشن‌های تعاملی مودال
 
 interface ProjectModalProps {
   project: Project;
   isOpen: boolean;
   onClose: () => void;
 }
+
+// تم‌های رنگی مجزا جهت همگام‌سازی بصری مودال با رنگ امضای هر پروژه
+const PROJECT_THEMES = [
+  {
+    accent: "text-purple-600 dark:text-purple-400",
+    badgeBg: "bg-purple-500/8 dark:bg-purple-500/12",
+    badgeBorder: "border-purple-500/15 dark:border-purple-500/25",
+    cardBorder: "border-purple-500/35 dark:border-purple-500/25", 
+    glowColor: "rgba(147, 51, 234, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:hover:shadow-[0_30px_70px_rgba(147,51,234,0.3)]",
+    tech: "bg-purple-500/5 dark:bg-purple-500/8 border-purple-500/10 dark:border-purple-500/20 text-purple-700 dark:text-purple-300",
+    btnHover: "hover:bg-purple-600 dark:hover:bg-purple-500 hover:text-white hover:shadow-[0_10px_25px_rgba(147,51,234,0.25)] hover:border-purple-500/40"
+  },
+  {
+    accent: "text-blue-600 dark:text-blue-400",
+    badgeBg: "bg-blue-500/8 dark:bg-blue-500/12",
+    badgeBorder: "border-blue-500/15 dark:border-blue-500/25",
+    cardBorder: "border-blue-500/35 dark:border-blue-500/25",
+    glowColor: "rgba(37, 99, 235, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.18)] dark:hover:shadow-[0_30px_70px_rgba(37,99,235,0.3)]",
+    tech: "bg-blue-500/5 dark:bg-blue-500/8 border-blue-500/10 dark:border-blue-500/20 text-blue-700 dark:text-blue-300",
+    btnHover: "hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white hover:shadow-[0_10px_25px_rgba(37,99,235,0.25)] hover:border-blue-500/40"
+  },
+  {
+    accent: "text-emerald-600 dark:text-emerald-400",
+    badgeBg: "bg-emerald-500/8 dark:bg-emerald-500/12",
+    badgeBorder: "border-emerald-500/15 dark:border-emerald-500/25",
+    cardBorder: "border-emerald-500/35 dark:border-emerald-500/25",
+    glowColor: "rgba(5, 150, 105, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(5,150,105,0.18)] dark:hover:shadow-[0_30px_70px_rgba(5,150,105,0.3)]",
+    tech: "bg-emerald-500/5 dark:bg-emerald-500/8 border-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-300",
+    btnHover: "hover:bg-emerald-600 dark:hover:bg-emerald-500 hover:text-white hover:shadow-[0_10px_25px_rgba(5,150,105,0.25)] hover:border-emerald-500/40"
+  },
+  {
+    accent: "text-red-600 dark:text-red-400",
+    badgeBg: "bg-red-500/8 dark:bg-red-500/12",
+    badgeBorder: "border-red-500/15 dark:border-red-500/25",
+    cardBorder: "border-red-500/35 dark:border-red-500/25",
+    glowColor: "rgba(220, 38, 38, 0.15)",
+    cardShadow: "hover:shadow-[0_20px_50px_rgba(220,38,38,0.18)] dark:hover:shadow-[0_30px_70px_rgba(220,38,38,0.3)]",
+    tech: "bg-red-500/5 dark:bg-red-500/8 border-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-300",
+    btnHover: "hover:bg-red-600 dark:hover:bg-red-500 hover:text-white hover:shadow-[0_10px_25px_rgba(220,38,38,0.25)] hover:border-red-500/40"
+  }
+];
 
 export default function ProjectModal({
   project,
@@ -19,6 +67,12 @@ export default function ProjectModal({
   const t = useTranslations("home.projects");
   const locale = useLocale();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -43,15 +97,18 @@ export default function ProjectModal({
       attributeFilter: ["class"],
     });
 
-    document.body.style.overflow = "hidden";
+    // قفل همزمان اسکرول تگ html و body با دستور قدرتمند setProperty و اولویت important برای مهار قطعی اسکرول پس‌زمینه
+    document.documentElement.style.setProperty("overflow", "hidden", "important");
+    document.body.style.setProperty("overflow", "hidden", "important");
 
     return () => {
       observer.disconnect();
-      document.body.style.overflow = "unset";
+      document.documentElement.style.removeProperty("overflow");
+      document.body.style.removeProperty("overflow");
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const pData = project[locale as keyof typeof project] as ProjectLangData;
 
@@ -75,18 +132,27 @@ export default function ProjectModal({
     ? getCleanPath(project.desktopImages[2])
     : mainImage;
 
-  return (
-    <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 backdrop-blur-xl transition-colors duration-500 ${
+  // استخراج تم رنگی پروژه فعال بر اساس ایندکس آن
+  const realIndex = PROJECTS_DATA.findIndex((p) => p.id === project.id);
+  const theme = PROJECT_THEMES[realIndex % PROJECT_THEMES.length];
+
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 backdrop-blur-xl transition-colors duration-500 ${
         isDarkMode ? "bg-black/75" : "bg-zinc-900/25"
       }`}
+      style={{ transform: "translate3d(0, 0, 10000px)" }} 
     >
-      {/* لایه کلیک بیرونی */}
-      <div className="absolute inset-0" onClick={onClose} />
+      <div className="absolute inset-0 cursor-default" onClick={onClose} />
 
-      {/* باکس اصلی مودال با اصلاح رنگ دارک و اسکرول‌بار فوق مینیمال داخلی */}
-      <div
-        className={`relative w-full max-w-6xl h-[85vh] rounded-[2.5rem] overflow-y-auto p-6 sm:p-10 md:p-12 transition-all duration-300 animate-in fade-in zoom-in-95 border shadow-[0_50px_100px_rgba(0,0,0,0.5)] ${
+      <motion.div
+        initial={{ scale: 0.95, y: 15, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        transition={{ type: "spring", damping: 30, stiffness: 220 }}
+        className={`relative w-full max-w-6xl h-[85vh] overflow-x-hidden overflow-y-auto p-6 sm:p-10 md:p-12 border shadow-[0_50px_100px_rgba(0,0,0,0.5)] overscroll-contain rounded-3xl sm:rounded-[2.5rem] ${
           isDarkMode
             ? "bg-gradient-to-b from-zinc-900/90 to-zinc-950/95 border-white/[0.06] text-zinc-100 ring-1 ring-white/[0.05]"
             : "bg-gradient-to-b from-white/95 to-zinc-50/95 border-zinc-200/80 text-zinc-800"
@@ -98,10 +164,19 @@ export default function ProjectModal({
         `}
         style={{ direction: locale === "fa" ? "rtl" : "ltr" }}
       >
-        {/* دکمه بستن مدرن و شیک */}
+        
+        {/* هاله‌ی نوری ظریف و اختصاصی تم پروژه در پس‌زمینه مودال جزئیات */}
+        <div 
+          className="absolute top-[10%] left-1/4 -z-10 h-[250px] w-[500px] rounded-full blur-[130px] opacity-40 pointer-events-none animate-pulse" 
+          style={{ 
+            backgroundColor: theme.glowColor,
+            animationDuration: "10s"
+          }} 
+        />
+
         <button
           onClick={onClose}
-          className={`absolute top-6 ${locale === "fa" ? "left-6" : "right-6"} z-20 flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 active:scale-90 ${
+          className={`absolute top-6 ${locale === "fa" ? "left-6" : "right-6"} z-20 flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 active:scale-90 cursor-pointer ${
             isDarkMode
               ? "border-white/[0.08] bg-white/[0.03] text-zinc-300 hover:bg-white hover:text-black"
               : "border-zinc-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-900 hover:text-white"
@@ -110,40 +185,62 @@ export default function ProjectModal({
           ✕
         </button>
 
-        {/* هدر مودال */}
+        {/* هدر مودال مجهز به تراز رنگی اختصاصی تم فعال و انیمیشن‌های ورودی فوق‌العاده شیک */}
         <div
           className={`mb-10 border-b pb-6 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
-          <span
-            className={`text-xs font-black uppercase tracking-wider block mb-2 ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
+          {/* انیمیشن ورود عنوان دسته‌بندی */}
+          <motion.span
+            initial={{ opacity: 0, x: locale === "fa" ? 15 : -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className={["text-xs font-black uppercase tracking-wider block mb-2", theme.accent].join(" ")}
           >
             {pData.category}
-          </span>
-          <h2
-            className={`text-3xl sm:text-5xl font-black tracking-tight ${isDarkMode ? "text-white" : "text-zinc-900"}`}
+          </motion.span>
+
+          {/* انیمیشن ماسک سنیمایی اسلایدآپ نام پروژه (H2) */}
+          <div className="overflow-hidden py-1">
+            <motion.h2
+              initial={{ filter: "blur(12px)", scale: 0.95, y: 15, opacity: 0 }}
+              animate={{ filter: "blur(0px)", scale: 1, y: 0, opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className={`text-3xl sm:text-5xl font-black tracking-tight ${isDarkMode ? "text-white" : "text-zinc-900"}`}
+            >
+              {pData.title}
+            </motion.h2>
+          </div>
+
+          {/* انیمیشن ورود اطلاعات کلاینت و سال و بومی‌سازی کامل برچسب‌های متادیتا */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            className={[
+              "mt-4 flex flex-wrap gap-3 items-center text-xs font-bold",
+              locale === "fa" 
+                ? "tracking-normal text-text-secondary" // استفاده از فونت اصلی ایران‌یکان با کنتراست عالی برای زبان فارسی
+                : "font-mono tracking-wider text-zinc-400 dark:text-zinc-500" // حفظ فونت مونو با فواصل حروف مناسب برای انگلیسی
+            ].join(" ")}
           >
-            {pData.title}
-          </h2>
-          <div
-            className={`mt-4 flex flex-wrap gap-3 items-center text-xs font-mono ${isDarkMode ? "text-zinc-400" : "text-zinc-500"}`}
-          >
-            <span>CLIENT: {pData.client}</span>
+            <span>{t("clientLabel")}{pData.client}</span>
             <span
               className={`h-1 w-1 rounded-full ${isDarkMode ? "bg-white/10" : "bg-zinc-300"}`}
             />
-            <span>YEAR: {project.year}</span>
-          </div>
+            <span>{t("yearLabel")}{project.year}</span>
+          </motion.div>
         </div>
 
-        {/* گالری تصاویر با تراز هندسی و قفل بر اساس نسبت‌های 16:9 و 9:16 واقعی */}
+        {/* گالری تصاویر مجهز به مرزهای شیک و همگام با تم پروژه */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 mb-12 items-start">
-          {/* تصویر عمودی موبایل - کاملاً هماهنگ با نسبت 9:16 */}
+          {/* تصویر موبایل */}
           <div
-            className={`md:col-span-4 aspect-[9/16] w-full rounded-2xl overflow-hidden border ${
-              isDarkMode
-                ? "border-white/[0.06] bg-zinc-900"
-                : "border-zinc-200 bg-zinc-100"
-            }`}
+            onClick={() => setActiveLightboxImage(imgMobile)}
+            className={[
+              "md:col-span-4 aspect-[9/16] w-full rounded-2xl overflow-hidden border cursor-zoom-in pointer-events-auto",
+              theme.badgeBorder,
+              isDarkMode ? "bg-zinc-900" : "bg-zinc-100"
+            ].join(" ")}
           >
             <img
               src={imgMobile}
@@ -152,15 +249,15 @@ export default function ProjectModal({
             />
           </div>
 
-          {/* تصاویر افقی دسکتاپ - کاملاً قفل روی نسبت سنمایی 16:9 (Aspect Video) */}
           <div className="md:col-span-8 flex flex-col gap-5 sm:gap-6 w-full">
-            {/* تصویر اصلی دسکتاپ */}
+            {/* تصویر دسکتاپ اصلی */}
             <div
-              className={`aspect-video w-full rounded-2xl overflow-hidden border ${
-                isDarkMode
-                  ? "border-white/[0.06] bg-zinc-900"
-                  : "border-zinc-200 bg-zinc-100"
-              }`}
+              onClick={() => setActiveLightboxImage(img1)}
+              className={[
+                "aspect-video w-full rounded-2xl overflow-hidden border cursor-zoom-in pointer-events-auto",
+                theme.badgeBorder,
+                isDarkMode ? "bg-zinc-900" : "bg-zinc-100"
+              ].join(" ")}
             >
               <img
                 src={img1}
@@ -169,14 +266,15 @@ export default function ProjectModal({
               />
             </div>
 
-            {/* دو تصویر فرعی دسکتاپ در کنار هم با رعایت نسبت ویدیو */}
+            {/* دو تصویر فرعی دسکتاپ */}
             <div className="grid grid-cols-2 gap-5 sm:gap-6 w-full">
               <div
-                className={`aspect-video w-full rounded-2xl overflow-hidden border ${
-                  isDarkMode
-                    ? "border-white/[0.06] bg-zinc-900"
-                    : "border-zinc-200 bg-zinc-100"
-                }`}
+                onClick={() => setActiveLightboxImage(img2)}
+                className={[
+                  "aspect-video w-full rounded-2xl overflow-hidden border cursor-zoom-in pointer-events-auto",
+                  theme.badgeBorder,
+                  isDarkMode ? "bg-zinc-900" : "bg-zinc-100"
+                ].join(" ")}
               >
                 <img
                   src={img2}
@@ -185,11 +283,12 @@ export default function ProjectModal({
                 />
               </div>
               <div
-                className={`aspect-video w-full rounded-2xl overflow-hidden border ${
-                  isDarkMode
-                    ? "border-white/[0.06] bg-zinc-900"
-                    : "border-zinc-200 bg-zinc-100"
-                }`}
+                onClick={() => setActiveLightboxImage(img3)}
+                className={[
+                  "aspect-video w-full rounded-2xl overflow-hidden border cursor-zoom-in pointer-events-auto",
+                  theme.badgeBorder,
+                  isDarkMode ? "bg-zinc-900" : "bg-zinc-100"
+                ].join(" ")}
               >
                 <img
                   src={img3}
@@ -234,7 +333,7 @@ export default function ProjectModal({
           </div>
         </div>
 
-        {/* فوتر مودال */}
+        {/* فوتر مودال مجهز به تگ‌های رنگی هماهنگ و دکمه لینک پویای نئونی */}
         <div
           className={`mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t pt-8 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
@@ -242,11 +341,10 @@ export default function ProjectModal({
             {pData.technologies.map((tag, idx) => (
               <span
                 key={idx}
-                className={`font-mono text-xs px-3 py-1.5 rounded-xl border ${
-                  isDarkMode
-                    ? "bg-white/[0.02] border-white/[0.06] text-zinc-400"
-                    : "bg-zinc-100 border-zinc-200 text-zinc-600"
-                }`}
+                className={[
+                  "font-mono text-xs px-3 py-1.5 rounded-xl border",
+                  theme.tech
+                ].join(" ")}
               >
                 {tag}
               </span>
@@ -258,30 +356,34 @@ export default function ProjectModal({
               <Link
                 href={project.githubUrl}
                 target="_blank"
-                className={`text-sm font-medium transition-colors ${
-                  isDarkMode
-                    ? "text-zinc-400 hover:text-white"
-                    : "text-zinc-500 hover:text-zinc-900"
-                }`}
+                className={["text-sm font-medium transition-colors cursor-pointer text-text-secondary", theme.accent].join(" ")}
               >
                 {locale === "fa" ? "کد منبع" : "Source Code"}
               </Link>
             )}
+            
             <Link
               href={pData.liveUrl}
               target="_blank"
-              className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-xs sm:text-sm font-bold transition-all duration-300 active:scale-95 shadow-lg ${
-                isDarkMode
-                  ? "bg-white text-black hover:bg-zinc-100"
-                  : "bg-zinc-900 text-white hover:bg-zinc-800"
-              }`}
+              className={[
+                "inline-flex items-center justify-center rounded-xl bg-foreground text-background px-6 py-3.5 text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap cursor-pointer",
+                "transition-all duration-300 ease-out",
+                "gap-2 group/btn hover:gap-3.5 active:scale-95", 
+                theme.btnHover 
+              ].join(" ")}
             >
               {locale === "fa" ? "ورود به سایت زنده" : "Launch Live Site"}
-              <span className={locale === "fa" ? "rotate-180" : ""}>→</span>
+              <span className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1.5 rotate-180" : "group-hover/btn:translate-x-1.5"}`}>
+                →
+              </span>
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+
+      {/* فراخوانی لایت‌باکس مستقل برای تصاویر فرعی گالری مودال */}
+      <Lightbox src={activeLightboxImage} onClose={() => setActiveLightboxImage(null)} />
+    </motion.div>,
+    document.body
   );
 }
