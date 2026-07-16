@@ -344,3 +344,20 @@ html[dir="rtl"] body {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   HIDE SCROLLBAR COMPLETELY (Invisible Native Scroll)
+   ═══════════════════════════════════════════════ */
+
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+}
