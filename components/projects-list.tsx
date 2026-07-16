@@ -7,10 +7,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS_DATA, ProjectLangData, Project } from "@/constants/projects";
 import ProjectModal from "./project-modal";
+import Lightbox from "./lightbox"; // وارد کردن لایت‌باکس مستقل جدید
 
 gsap.registerPlugin(ScrollTrigger);
 
-// تم‌های رنگی مجزا به همراه سایه‌های نئونی هاور اختصاصی
+// تم‌های رنگی مجزا به همراه استایل دکمه‌های هاور اختصاصی
 const PROJECT_THEMES = [
   {
     accent: "text-purple-600 dark:text-purple-400",
@@ -19,7 +20,9 @@ const PROJECT_THEMES = [
     cardBorder: "border-purple-500/35 dark:border-purple-500/25", 
     glowColor: "rgba(147, 51, 234, 0.15)",
     cardShadow: "hover:shadow-[0_20px_50px_rgba(147,51,234,0.18)] dark:hover:shadow-[0_30px_70px_rgba(147,51,234,0.3)]",
-    tech: "bg-purple-500/5 dark:bg-purple-500/8 border-purple-500/10 dark:border-purple-500/20 text-purple-700 dark:text-purple-300"
+    tech: "bg-purple-500/5 dark:bg-purple-500/8 border-purple-500/10 dark:border-purple-500/20 text-purple-700 dark:text-purple-300",
+    // استایل پویای هاور دکمه (تغییر پس‌زمینه به رنگ بنفش پروژه، با سایه نئونی بنفش)
+    btnHover: "hover:bg-purple-600 dark:hover:bg-purple-500 hover:text-white hover:shadow-[0_10px_25px_rgba(147,51,234,0.25)] hover:border-purple-500/40"
   },
   {
     accent: "text-blue-600 dark:text-blue-400",
@@ -28,7 +31,8 @@ const PROJECT_THEMES = [
     cardBorder: "border-blue-500/35 dark:border-blue-500/25",
     glowColor: "rgba(37, 99, 235, 0.15)",
     cardShadow: "hover:shadow-[0_20px_50px_rgba(37,99,235,0.18)] dark:hover:shadow-[0_30px_70px_rgba(37,99,235,0.3)]",
-    tech: "bg-blue-500/5 dark:bg-blue-500/8 border-blue-500/10 dark:border-blue-500/20 text-blue-700 dark:text-blue-300"
+    tech: "bg-blue-500/5 dark:bg-blue-500/8 border-blue-500/10 dark:border-blue-500/20 text-blue-700 dark:text-blue-300",
+    btnHover: "hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white hover:shadow-[0_10px_25px_rgba(37,99,235,0.25)] hover:border-blue-500/40"
   },
   {
     accent: "text-emerald-600 dark:text-emerald-400",
@@ -37,7 +41,8 @@ const PROJECT_THEMES = [
     cardBorder: "border-emerald-500/35 dark:border-emerald-500/25",
     glowColor: "rgba(5, 150, 105, 0.15)",
     cardShadow: "hover:shadow-[0_20px_50px_rgba(5,150,105,0.18)] dark:hover:shadow-[0_30px_70px_rgba(5,150,105,0.3)]",
-    tech: "bg-emerald-500/5 dark:bg-emerald-500/8 border-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+    tech: "bg-emerald-500/5 dark:bg-emerald-500/8 border-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-300",
+    btnHover: "hover:bg-emerald-600 dark:hover:bg-emerald-500 hover:text-white hover:shadow-[0_10px_25px_rgba(5,150,105,0.25)] hover:border-emerald-500/40"
   },
   {
     accent: "text-red-600 dark:text-red-400",
@@ -46,12 +51,14 @@ const PROJECT_THEMES = [
     cardBorder: "border-red-500/35 dark:border-red-500/25",
     glowColor: "rgba(220, 38, 38, 0.15)",
     cardShadow: "hover:shadow-[0_20px_50px_rgba(220,38,38,0.18)] dark:hover:shadow-[0_30px_70px_rgba(220,38,38,0.3)]",
-    tech: "bg-red-500/5 dark:bg-red-500/8 border-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-300"
+    tech: "bg-red-500/5 dark:bg-red-500/8 border-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-300",
+    btnHover: "hover:bg-red-600 dark:hover:bg-red-500 hover:text-white hover:shadow-[0_10px_25px_rgba(220,38,38,0.25)] hover:border-red-500/40"
   }
 ];
 
 export default function ProjectsList() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const t = useTranslations("home.projects");
   const locale = useLocale();
@@ -154,7 +161,7 @@ export default function ProjectsList() {
                 className={[
                   "group relative flex w-full max-w-6xl flex-col justify-between overflow-hidden border p-5 sm:p-10 md:p-12 backdrop-blur-3xl transition-all duration-700",
                   "bg-white/65 dark:bg-white/[0.015]", 
-                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto rounded-3xl", // حذف افکت جابجایی بالا به Y برای جلوگیری از اورلپ با هدر
+                  isDesktop ? "h-[78vh] rounded-[2.5rem]" : "h-auto rounded-3xl",
                   theme.cardBorder, 
                   theme.cardShadow 
                 ].join(" ")}
@@ -162,7 +169,7 @@ export default function ProjectsList() {
                   boxShadow: "0 20px 50px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
                 }}
               >
-                {/* ─── افکت درخشش نوری شیشه‌ای متحرک تقویت شده در لایت‌مد (۴۵٪ نفوذ رفلکس) ─── */}
+                {/* افکت درخشش نوری شیشه‌ای متحرک */}
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out bg-gradient-to-r from-transparent via-white/45 dark:via-white/12 to-transparent pointer-events-none z-20" />
 
                 {/* هدر کارت */}
@@ -215,11 +222,14 @@ export default function ProjectsList() {
                     </p>
                   </div>
 
-                  {/* بخش تصویر با مرز هماهنگ با تم پروژه */}
-                  <div className={[
-                    "lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 order-1 lg:order-2",
-                    theme.badgeBorder
-                  ].join(" ")}>
+                  {/* بخش تصویر */}
+                  <div 
+                    onClick={() => setActiveLightboxImage(cleanImagePath)}
+                    className={[
+                      "lg:col-span-7 w-full aspect-video relative rounded-xl sm:rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 order-1 lg:order-2 cursor-zoom-in pointer-events-auto",
+                      theme.badgeBorder
+                    ].join(" ")}
+                  >
                     <img
                       src={cleanImagePath}
                       alt={pData.title}
@@ -245,12 +255,19 @@ export default function ProjectsList() {
                     ))}
                   </div>
 
+                  {/* دکمه با هاور پویای تغییر رنگ، انبساط کشسانی فاصله و پرش عریض فلش */}
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-foreground text-background px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold transition-all duration-300 hover:opacity-90 active:scale-95 shadow-lg group/btn whitespace-nowrap"
+                    className={[
+                      "inline-flex items-center justify-center rounded-xl bg-foreground text-background px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap cursor-pointer",
+                      "transition-all duration-300 ease-out",
+                      "gap-2 group/btn hover:gap-3.5 active:scale-95", // افزایش فاصله متنی به ۳.۵ واحد در هاور
+                      theme.btnHover // رنگ هاور داینامیک اختصاصی و درخشش نئونی دکمه
+                    ].join(" ")}
                   >
                     {t("viewProject")}
-                    <span className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1 rotate-180" : "group-hover/btn:translate-x-1"}`}>
+                    {/* جهش عریض‌تر ۱.۵ واحدی فلش روی هاور */}
+                    <span className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1.5 rotate-180" : "group-hover/btn:translate-x-1.5"}`}>
                       →
                     </span>
                   </button>
@@ -260,6 +277,9 @@ export default function ProjectsList() {
           );
         })}
       </div>
+
+      {/* ۳. فراخوانی لایت‌باکس ماژولار و مستقل کلاینت */}
+      <Lightbox src={activeLightboxImage} onClose={() => setActiveLightboxImage(null)} />
 
       <ProjectModal 
         project={selectedProject!} 
