@@ -3,21 +3,33 @@
     "work": "Work",
     "about": "Info"
   },
-  "header": { 
-    "name": "Arian Abbasian" 
+  "header": {
+    "name": "Arian Abbasian"
   },
   "home": {
     "title": "My Work",
     "description": "Selected projects and designs",
     "hero": {
-      "status": "Available for freelance projects",
-      "title": "Crafting Premium Digital Experiences",
-      "subtitle": "Hi, I'm Arian. A Frontend Engineer focusing on high-performance interfaces, sleek animations, and professional software design."
+      "status": "Available for premium freelance projects",
+      "title": "Crafting Web Interfaces with Native Precision.",
+      "subtitle": "Hi, I'm Arian. A Frontend Engineer crafted around performance, seamless animations, and clean architecture. I turn complex logic into fluid, premium web experiences."
     },
-    "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase."
+    "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase.",
+    "projects": {
+      "title": "Selected Works",
+      "subtitle": "A collection of premium web applications and interactive products crafted with performance, accessibility, and high-end aesthetics in mind.",
+      "selectedCase": "SELECTED CASE",
+      "viewProject": "View Case Study"
+    }
   },
   "about": {
     "title": "About Me",
     "description": "Who I am and what I do"
+  },
+  "footer": {
+    "ctaTitle": "Let's build something amazing together",
+    "ctaSubtitle": "Looking for a frontend engineer to bring your ideas to life? Let's connect and talk about your project.",
+    "copyRight": "© 2026 Arian Abbasian. All rights reserved.",
+    "resumeBtn": "Download Resume"
   }
 }

@@ -1,3 +1,4 @@
+"use html";
 "use client";
 
 import Link from "next/link";
@@ -45,34 +46,35 @@ export function Header() {
   return (
     <div
       className={[
-        "fixed top-0 inset-x-0 z-50 w-full h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 transition-all duration-300 pointer-events-none",
+        "fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 transition-all duration-300 pointer-events-none",
         scrolled
           ? "backdrop-blur-md bg-background/40"
           : "",
       ].join(" ")}
+      style={{ transform: "translate3d(0, 0, 999px)" }} 
     >
       
-      {/* ── ۱. نام برند شخصی (بسیار بزرگ‌تر، خواناتر با لود وزن واقعی فونت فارسی) ── */}
-      <div className="pointer-events-auto flex flex-col justify-center">
+      {/* ── ۱. نام برند شخصی (اصلاح کلاس تکراری flex برای مخفی شدن قطعی ۱۰۰٪ در موبایل) ── */}
+      <div className="hidden sm:flex flex-col justify-center pointer-events-auto">
         <Link
           href={`/${locale}`}
           className={[
-            "text-[20px] sm:text-[24px] md:text-[25px] no-underline leading-none transition-all duration-300 hover:opacity-80",
+            "text-[15px] sm:text-[22px] md:text-[25px] no-underline leading-none transition-all duration-300 hover:opacity-80",
             locale === "fa"
-              ? "font-extrabold tracking-normal text-text-primary" // لود تمیز وزن ۸۰۰ و رفع فشرده‌سازی برای خوانایی خط فارسی
-              : "font-black tracking-tight text-text-primary"      // لود تمیز وزن ۹۰۰ برای ساتوشی انگلیسی
+              ? "font-extrabold tracking-normal text-text-primary" 
+              : "font-black tracking-tight text-text-primary"      
           ].join(" ")}
         >
           {tHeader("name")}
           <span className="text-accent">.</span>
         </Link>
-        <span className="hidden sm:block text-[10px] sm:text-[12px] text-text-muted mt-2 font-bold tracking-widest uppercase opacity-80">
+        <span className="hidden sm:block text-[10px] sm:text-[12px] text-text-muted mt-2 font-bold tracking-widest uppercase opacity-85">
           {locale === "fa" ? "توسعه‌دهنده فرانت‌اند" : "Frontend Engineer"}
         </span>
       </div>
 
       {/* ── ۲. منوی ناوبری ── */}
-      <div className="absolute left-1/2 -translate-x-1/2 pointer-events-auto">
+      <div className="pointer-events-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2">
         <nav className="seg-pill h-11 sm:h-12 flex items-center px-1">
           {NAV_ITEMS.map(({ href, labelKey }) => {
             const active = isActive(href);
