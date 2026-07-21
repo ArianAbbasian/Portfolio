@@ -25,24 +25,73 @@
     }
   },
   "about": {
-    "title": "About Me",
-    "description": "Who I am and what I do",
+    "title": "Info & Journey",
+    "description": "About me, my professional experience, and technical skills.",
     "sections": {
       "aboutMe": "About Me",
       "experience": "Experience",
       "skills": "Technical Skills",
+      "education": "Education",
       "interests": "Interests",
       "futureGoals": "Future Goals"
     },
+    "bio": "I am Arian, 21 years old, a software engineering student. With several years of experience in solving challenges, I help you elevate your digital business to the next level and create a powerful online experience.",
+    "experienceItems": {
+      "kanda": {
+        "role": "Frontend Developer",
+        "company": "Kanda Idea",
+        "type": "Full-time",
+        "duration": "Feb 2026 — Present",
+        "desc": "Working as a Frontend Developer, designing and implementing modern web interfaces. Collaborating with technical teams to deliver scalable features, optimize user experience, and maintain robust component-based architectures using modern frontend patterns."
+      },
+      "isiran": {
+        "role": "Frontend Developer",
+        "company": "ISIRAN",
+        "type": "Full-time",
+        "duration": "Oct 2025 — Feb 2026",
+        "desc": "Motamayez Group operates in the field of large-scale national initiatives such as the Ministry of Education. I was active as a Frontend Developer, contributing to several key enterprise projects and platforms within this group."
+      },
+      "mosbatesabz": {
+        "role": "Frontend Developer",
+        "company": "Mosbatesabz",
+        "type": "Internship",
+        "duration": "Aug 2023 — Jan 2024",
+        "desc": "During my 6-month internship at Mosbatesabz, I took my first steps into the world of programming. I explored both frontend and backend development, mastered the core technologies of web development (HTML, CSS, JavaScript), and built a solid professional foundation in frontend engineering."
+      }
+    },
+    "educationItem": {
+      "degree": "Associate's Degree, Computer Software Engineering",
+      "school": "Shamsipour Technical and Vocational College",
+      "duration": "Oct 2024 — Present",
+      "desc": "Software engineering associate student at STVC, focusing on core computer science foundations, algorithm design, and software engineering methodologies."
+    },
+    "skills": {
+      "cat1": {
+        "title": "Frontend Core",
+        "quote": "\"Building bridges between frontend magic and clean, maintainable logic.\""
+      },
+      "cat2": {
+        "title": "Modern Frameworks",
+        "quote": "\"Perfection is achieved not when there is nothing to add, but when there is nothing to take away.\""
+      },
+      "cat3": {
+        "title": "UI & Styling",
+        "quote": "\"Design is not just what it looks like and feels like. Design is how it works.\""
+      },
+      "cat4": {
+        "title": "Backend & DB",
+        "quote": "\"From database queries to server logic, every layer of the architecture matters.\""
+      },
+      "cat5": {
+        "title": "API & Networking",
+        "quote": "\"Creating reliable channels for data to flow seamlessly across distributed systems.\""
+      },
+      "cat6": {
+        "title": "Workflow & Team",
+        "quote": "\"Great software is not built by individuals, but by aligned minds playing in harmony.\""
+      }
+    },
     "placeholders": {
-      "aboutMeText": "Hi, I'm Arian Abbasian. A Frontend Engineer crafted around performance, seamless animations, and clean architecture. I turn complex logic into fluid, premium web experiences.",
-      "expTitle": "Frontend Engineer",
-      "expCompany": "Freelance & Creative Projects",
-      "expDuration": "2024 — Present",
-      "expDesc": "Developing premium interactive interfaces and highly responsive web applications using React, Next.js, and GSAP.",
-      "skillsCategory1": "Development",
-      "skillsCategory2": "Animation / UX",
-      "skillsCategory3": "Tools / Workflow",
       "interest1": "Interactive Design",
       "interest1Desc": "Creating interfaces that react beautifully to user behavior.",
       "interest2": "Creative Coding",
