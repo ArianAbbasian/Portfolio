@@ -274,7 +274,7 @@ export default function ProjectsList() {
                       "inline-flex items-center justify-center rounded-xl bg-foreground text-background px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap cursor-pointer",
                       "transition-all duration-300 ease-out",
                       "gap-2 group/btn hover:gap-3.5 active:scale-95", 
-                      "w-full lg:w-auto", // تمام عرض در موبایل، خودکار در دسکتاپ
+                      "w-full lg:w-auto",
                       theme.btnHover 
                     ].join(" ")}
                   >
