@@ -26,7 +26,29 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Who I am and what I do"
+    "description": "Who I am and what I do",
+    "sections": {
+      "aboutMe": "About Me",
+      "experience": "Experience",
+      "skills": "Technical Skills",
+      "interests": "Interests",
+      "futureGoals": "Future Goals"
+    },
+    "placeholders": {
+      "aboutMeText": "Hi, I'm Arian Abbasian. A Frontend Engineer crafted around performance, seamless animations, and clean architecture. I turn complex logic into fluid, premium web experiences.",
+      "expTitle": "Frontend Engineer",
+      "expCompany": "Freelance & Creative Projects",
+      "expDuration": "2024 — Present",
+      "expDesc": "Developing premium interactive interfaces and highly responsive web applications using React, Next.js, and GSAP.",
+      "skillsCategory1": "Development",
+      "skillsCategory2": "Animation / UX",
+      "skillsCategory3": "Tools / Workflow",
+      "interest1": "Interactive Design",
+      "interest1Desc": "Creating interfaces that react beautifully to user behavior.",
+      "interest2": "Creative Coding",
+      "interest2Desc": "Experimenting with mathematics and physics-based animations.",
+      "goalsText": "My future roadmap focuses on mastering creative development, exploring WebGL/Three.js, advanced performance optimization, and systems architecture."
+    }
   },
   "footer": {
     "ctaTitle": "Let's build something amazing together",
