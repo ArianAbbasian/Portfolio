@@ -13,17 +13,13 @@ export default function AboutHero() {
     setMounted(true);
   }, []);
 
-  const words = t("titleBase").split(" ");
-
   return (
     <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 select-none flex justify-center w-full">
       {/* هاله‌ی پس‌زمینه بزرگ برای پر کردن بهینه خلاء صفحه */}
       <div className="absolute top-[10%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-accent/5 blur-[120px] opacity-60 pointer-events-none" />
 
       {/* کانتینر اصلی هدر بدون کادر خارجی تکراری */}
-      <div
-        className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pointer-events-auto"
-      >
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pointer-events-auto">
         {/* سمت چپ (یا راست در فارسی): عنوان متنی بزرگ و کاملاً مینی‌مال و ایستا */}
         <div className="lg:col-span-7 flex flex-col gap-6 order-2 lg:order-1">
           {/* ● ABOUT ME بالت نوری سفید فعال */}
@@ -34,7 +30,7 @@ export default function AboutHero() {
             </span>
           </div>
 
-          {/* عنوان بزرگ کاملاً ایستا و مینی‌مال */}
+          {/* عنوان بزرگ مجهز به هایلایت متمرکز و مینی‌مال جدید */}
           <div
             className={[
               "flex flex-col gap-2 max-w-3xl",
@@ -44,10 +40,12 @@ export default function AboutHero() {
             ].join(" ")}
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-text-primary tracking-tight leading-[1.3] sm:leading-[1.2]">
-              {t("titleBase")}
+              {/* بخش پیشوند متن هدر */}
+              {t("titlePrefix")}
+              {/* بخش هایلایت گرادیانی رنگ که منحصراً کلمات کلیدی مد نظر شما را پوشش می‌دهد */}
               <span
                 className={[
-                  "bg-gradient-to-r from-accent via-accent-hover to-purple-500 bg-clip-text text-transparent",
+                  "bg-gradient-to-r from-accent via-accent-hover to-purple-500 bg-clip-text text-transparent select-text",
                   locale === "fa"
                     ? "font-black"
                     : "italic font-serif font-medium",
@@ -55,7 +53,8 @@ export default function AboutHero() {
               >
                 {t("titleHighlight")}
               </span>
-              .
+              {/* بخش پسوند متن هدر */}
+              {t("titleSuffix")}.
             </h1>
 
             {/* زیرعنوان مینی‌مال */}
@@ -65,10 +64,6 @@ export default function AboutHero() {
           </div>
         </div>
 
-        {/* 
-          سمت راست (یا چپ در فارسی): کارت هویت دیجیتال شیشه‌ای لوکس (Bespoke Glass ID Card)
-          کارت و آواتار اکنون ۱۰۰٪ ایستا، پایدار و بدون هیچگونه لرزش یا محاسبات سنگین کلاینت‌ساید رندر می‌شوند
-        */}
         <div
           className={[
             "lg:col-span-5 flex justify-center order-1 lg:order-2",
@@ -77,7 +72,6 @@ export default function AboutHero() {
         >
           {mounted && (
             <div className="w-full max-w-[320px] h-[380px] rounded-[2.25rem] border border-border bg-slate-200/60 dark:bg-white/[0.015] backdrop-blur-3xl pt-6 px-6 pb-4 relative flex flex-col justify-between shadow-[0_30px_70px_rgba(0,0,0,0.03)] dark:shadow-[0_40px_90px_rgba(0,0,0,0.5)]">
-              
               {/* هدر کارت هویت با فونت شکیل سانس */}
               <div className="flex items-center justify-between text-[10px] font-sans text-text-muted font-bold tracking-[0.2em] select-none border-b border-border/40 pb-3 z-20">
                 <span>LOC: TEHRAN, IRN</span>
@@ -111,7 +105,6 @@ export default function AboutHero() {
                   <source src="/video/charakter.mp4" type="video/mp4" />
                 </video>
               </div>
-
             </div>
           )}
         </div>
