@@ -1,4 +1,3 @@
-"use html";
 "use client";
 
 import Link from "next/link";
@@ -23,15 +22,8 @@ export function Header() {
   const { resolvedTheme, setTheme } = useTheme();
 
   const [mounted, setMounted] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const switchLocale = () => {
     const next = locale === "en" ? "fa" : "en";
@@ -44,38 +36,35 @@ export function Header() {
     pathname === (href === "" ? `/${locale}` : `/${locale}${href}`);
 
   return (
-    <div
-      className={[
-        "fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 transition-all duration-300 pointer-events-none",
-        scrolled
-          ? "backdrop-blur-md bg-background/40"
-          : "",
-      ].join(" ")}
-      style={{ transform: "translate3d(0, 0, 999px)" }} 
-    >
-      
-      {/* ── ۱. نام برند شخصی (اصلاح کلاس تکراری flex برای مخفی شدن قطعی ۱۰۰٪ در موبایل) ── */}
-      <div className="hidden sm:flex flex-col justify-center pointer-events-auto">
+    <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none">
+      {/* ── ۱. نام برند و عنوان شخصی ── */}
+      <div className="hidden sm:flex flex-col justify-center pointer-events-auto select-none">
         <Link
           href={`/${locale}`}
           className={[
-            "text-[15px] sm:text-[22px] md:text-[25px] no-underline leading-none transition-all duration-300 hover:opacity-80",
+            "text-base sm:text-lg md:text-xl no-underline leading-none transition-all duration-300 hover:opacity-80",
             locale === "fa"
-              ? "font-extrabold tracking-normal text-text-primary" 
-              : "font-black tracking-tight text-text-primary"      
+              ? "font-extrabold tracking-normal text-text-primary"
+              : "font-black tracking-tight text-text-primary",
           ].join(" ")}
         >
           {tHeader("name")}
           <span className="text-accent">.</span>
         </Link>
-        <span className="hidden sm:block text-[10px] sm:text-[12px] text-text-muted mt-2 font-bold tracking-widest uppercase opacity-85">
+        <span className="text-[10px] sm:text-[11px] text-text-muted mt-1 font-medium tracking-wider uppercase opacity-80">
           {locale === "fa" ? "توسعه‌دهنده فرانت‌اند" : "Frontend Engineer"}
         </span>
       </div>
 
-      {/* ── ۲. منوی ناوبری ── */}
+      {/* ── ۲. کپسول ناوبری وسط با بلور شیشه‌ای غلیظ و دقیق ── */}
       <div className="pointer-events-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2">
-        <nav className="seg-pill h-11 sm:h-12 flex items-center px-1">
+        <nav
+          className="seg-pill h-11 sm:h-12 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/75 dark:bg-[#0a0a10]/85 shadow-2xl shadow-black/40"
+          style={{
+            backdropFilter: "blur(8px) saturate(227%)",
+            WebkitBackdropFilter: "blur(8px) saturate(227%)",
+          }}
+        >
           {NAV_ITEMS.map(({ href, labelKey }) => {
             const active = isActive(href);
             const label = t(labelKey);
@@ -114,19 +103,17 @@ export function Header() {
         </nav>
       </div>
 
-      {/* ── ۳. کنترل‌ها ── */}
-      <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2">
+      {/* ── ۳. دکمه‌های کنترل سمت راست/چپ ── */}
+      <div className="pointer-events-auto flex items-center gap-2 sm:gap-3">
         <button
           onClick={switchLocale}
-          className="lg-btn h-8 sm:h-9 px-3 sm:px-4 rounded-full text-[10px] sm:text-xs font-semibold tracking-widest cursor-pointer text-text-secondary hover:text-text-primary"
+          className="lg-btn h-8 sm:h-9 px-3.5 sm:px-4 rounded-full text-[10px] sm:text-xs font-semibold tracking-widest cursor-pointer text-text-secondary hover:text-text-primary"
         >
           {locale === "en" ? "فارسی" : "EN"}
         </button>
 
         <button
-          onClick={() =>
-            setTheme(resolvedTheme === "dark" ? "light" : "dark")
-          }
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
           className="lg-btn size-8 sm:size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
         >
@@ -138,7 +125,6 @@ export function Header() {
             ))}
         </button>
       </div>
-
-    </div>
+    </header>
   );
 }
