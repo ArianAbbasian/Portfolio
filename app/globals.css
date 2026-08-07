@@ -108,6 +108,7 @@ html[dir="rtl"] body {
    ═══════════════════════════════════════════════ */
 @layer utilities {
   /* ─── Segmented Control Outer Trough ─── */
+  /* ─── Segmented Control Outer Trough (کپسول شیشه‌ای وسط) ─── */
   .seg-pill {
     position: relative;
     display: flex;
@@ -115,21 +116,107 @@ html[dir="rtl"] body {
     gap: 4px;
     padding: 4px;
     border-radius: 100px;
-    background: rgba(0, 0, 0, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
     box-shadow:
-      inset 0 1px 3px rgba(0, 0, 0, 0.06),
-      0 4px 20px rgba(0, 0, 0, 0.02) !important;
-    backdrop-filter: blur(20px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      inset 0 1px 2px rgba(255, 255, 255, 0.9),
+      0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(8px) saturate(227%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(227%) !important;
   }
 
   .dark .seg-pill {
-    background: rgba(26, 26, 26, 0.75) !important;
-    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    background: rgba(10, 10, 16, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow:
-      inset 0 1px 3px rgba(0, 0, 0, 0.4),
-      0 1px 0px rgba(255, 255, 255, 0.03) !important;
+      inset 0 1px 0px rgba(255, 255, 255, 0.18),
+      0 12px 40px rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px) saturate(227%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(227%) !important;
+  }
+
+  .lg-btn {
+    position: relative;
+    overflow: hidden;
+
+    /* پس‌زمینه شیشه‌ای اپل */
+    background: rgba(255, 255, 255, 0.75) !important;
+
+    /* مرز متمایز و مشهود در حالت روشن (Apple Border Style) */
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+    backdrop-filter: blur(8px) saturate(227%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(227%) !important;
+
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.9),
+      0 2px 8px rgba(0, 0, 0, 0.05),
+      0 0 0 0.5px rgba(0, 0, 0, 0.04) !important;
+
+    /* رنگ متن و آیکون پرکنتراست */
+    color: #0f172a !important;
+
+    transition:
+      background 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+      color 0.2s ease !important;
+  }
+
+  .lg-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 50%
+    ) !important;
+  }
+
+  /* هاور دکمه در حالت لایت */
+  .lg-btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(0, 0, 0, 0.18) !important;
+    color: #000000 !important;
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 1),
+      0 4px 14px rgba(0, 0, 0, 0.09),
+      0 0 0 0.5px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .lg-btn:active {
+    transform: scale(0.94) !important;
+  }
+
+  /* ─── Controls: Liquid Buttons (.lg-btn حالت دارک مود) ─── */
+  .dark .lg-btn {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.03)
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(8px) saturate(227%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(227%) !important;
+    box-shadow:
+      inset 0 1px 0px rgba(255, 255, 255, 0.18),
+      inset 0 -1.5px 3px rgba(0, 0, 0, 0.2),
+      0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .dark .lg-btn:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.08)
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
   }
 
   /* ─── Base Tab Item ─── */
@@ -360,4 +447,12 @@ html::-webkit-scrollbar {
 
 ::-webkit-scrollbar {
   display: none !important;
+}
+
+@media (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
 }
