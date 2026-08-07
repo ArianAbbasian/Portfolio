@@ -25,7 +25,9 @@
     }
   },
   "about": {
-    "title": "Info & Journey",
+    "titlePrefix": "Get to know ",
+    "titleHighlight": "me and my journey",
+    "titleSuffix": " next",
     "description": "About me, my professional experience, and technical skills.",
     "sections": {
       "aboutMe": "About Me",
@@ -35,7 +37,7 @@
       "interests": "Interests",
       "futureGoals": "Future Goals"
     },
-    "bio": "I am Arian, 21 years old, a software engineering student. With several years of experience in solving challenges, I help you elevate your digital business to the next level and create a powerful online experience.",
+    "bio": "Hey, I'm Arian, a Software Engineering student and Web Developer. I love solving problems and building digital experiences that look great, feel right, and actually bring value to users and businesses.",
     "experienceItems": {
       "kanda": {
         "role": "Frontend Developer",

@@ -8,21 +8,38 @@ import AboutGoals from "@/components/about-goals";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-background-main pb-32 pt-28 sm:pt-36">
+    // تغییر لایوت به block و حذف flex-col تداخل‌آمیز با GSAP
+    <main className="min-h-screen bg-background-main pb-32 pt-16 sm:pt-24 block relative">
+      
+      {/* هدر بزرگ درباره من به سبک Perry Wang */}
       <AboutHero />
 
-      <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 flex flex-col gap-24 sm:gap-32">
-        <AboutMe />
+      {/* متن بیوگرافی غول‌آسای اسکرول‌محور افقی (قفل شدن کامل صفحه و ۳ اسلاید افقی مستقل) */}
+      <AboutMe />
+
+      {/* سوابق شغلی ۳ گانه با فاصله تراز شده مستقل */}
+      <div className="py-20">
         <AboutExperience />
       </div>
 
+      {/* بخش مهارتی پین اسکرول تعاملی */}
       <AboutSkills />
 
-      <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 flex flex-col gap-24 sm:gap-32">
+      {/* بخش تحصیلات آکادمیک */}
+      <div className="py-20">
         <AboutEducation />
+      </div>
+
+      {/* بخش علاقه‌مندی‌ها */}
+      <div className="py-20">
         <AboutInterests />
+      </div>
+
+      {/* بخش اهداف آینده */}
+      <div className="py-20">
         <AboutGoals />
       </div>
+
     </main>
   );
 }

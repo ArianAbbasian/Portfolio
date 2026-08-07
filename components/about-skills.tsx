@@ -72,10 +72,11 @@ export default function AboutSkills() {
         {
           scrollTrigger: {
             trigger: skillsTriggerRef.current,
-            pin: true,
+            pin: skillsSectionRef.current, // اصلاح پین: قفل کردن دقیق کانتینر h-screen به جای کل اسپیسر
             scrub: 0.5,
             start: "top top",
             end: "bottom bottom",
+            invalidateOnRefresh: true,
             onUpdate: (self) => {
               const progress = self.progress;
               const totalSectors = SKILL_CATEGORIES.length;
@@ -98,7 +99,7 @@ export default function AboutSkills() {
 
   return (
     <>
-      {/* نسخه دسکتاپ: پین انیمیشنی با اسکرول تراز */}
+      {/* نسخه دسکتاپ */}
       <div ref={skillsTriggerRef} className="relative w-full h-[350vh] hidden lg:block my-16">
         <div ref={skillsSectionRef} className="h-screen w-full flex items-center overflow-hidden">
           
@@ -185,7 +186,7 @@ export default function AboutSkills() {
         </div>
       </div>
 
-      {/* نسخه موبایل و تبلت با فلو مینی‌مال عمودی */}
+      {/* نسخه موبایل و تبلت */}
       <div className="lg:hidden mx-auto max-w-5xl px-6 sm:px-8 flex flex-col gap-12 my-16">
         <div className="border-b border-border/30 pb-4">
           <span className="font-mono text-xs font-black text-accent tracking-[0.2em] uppercase">
