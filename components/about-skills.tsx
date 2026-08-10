@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 interface Skill {
   name: string;
   logo: string;
-  pos: string;
   floatSpeed: number;
 }
 
@@ -19,6 +18,7 @@ interface SkillCategory {
   id: string;
   titleFa: string;
   titleEn: string;
+  categoryImage: string;
   accentColor: string;
   accentText: string;
   skills: Skill[];
@@ -29,41 +29,44 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     id: "frontend",
     titleFa: "فرانت‌اند و جاوااسکریپت",
     titleEn: "Frontend Development",
+    categoryImage: "/images/skills/frontend.png",
     accentColor: "rgba(0, 122, 255, 0.25)",
     accentText: "text-blue-500",
     skills: [
-      { name: "JavaScript", logo: "/images/skills/javaScript.png", pos: "-mt-2 -ml-3 lg:-mt-4 lg:-ml-6", floatSpeed: 3.2 },
-      { name: "TypeScript", logo: "/images/skills/Typescript.png", pos: "mt-4 mr-2 lg:mt-8 lg:mr-4", floatSpeed: 4.1 },
-      { name: "React.js", logo: "/images/skills/react.png", pos: "mt-2 ml-3 lg:mt-4 lg:ml-6", floatSpeed: 3.7 },
-      { name: "Next.js", logo: "/images/skills/next.png", pos: "-mt-3 mr-4 lg:-mt-6 lg:mr-8", floatSpeed: 4.5 },
+      { name: "JavaScript", logo: "/images/skills/javaScript.png", floatSpeed: 3.2 },
+      { name: "TypeScript", logo: "/images/skills/Typescript.png", floatSpeed: 4.1 },
+      { name: "React.js", logo: "/images/skills/react.png", floatSpeed: 3.7 },
+      { name: "Next.js", logo: "/images/skills/next.png", floatSpeed: 4.5 },
     ],
   },
   {
     id: "backend",
     titleFa: "بک‌اند و پایگاه داده",
     titleEn: "Backend & Data",
+    categoryImage: "/images/skills/backend.png",
     accentColor: "rgba(147, 51, 234, 0.25)",
     accentText: "text-purple-500",
     skills: [
-      { name: "ASP.NET", logo: "/images/skills/asp-net-core.png", pos: "-mt-3 -ml-4 lg:-mt-6 lg:-ml-8", floatSpeed: 3.5 },
-      { name: "REST APIs", logo: "/images/skills/api.png", pos: "mt-6 ml-3 lg:mt-10 lg:ml-6", floatSpeed: 4.3 },
-      { name: "SQL Server", logo: "/images/skills/sql-server.png", pos: "mt-1 mr-5 lg:mt-2 lg:mr-10", floatSpeed: 3.8 },
-      { name: "MongoDB", logo: "/images/skills/mongodb.png", pos: "-mt-4 mr-2 lg:-mt-8 lg:mr-4", floatSpeed: 4.6 },
+      { name: "ASP.NET", logo: "/images/skills/asp-net-core.png", floatSpeed: 3.5 },
+      { name: "REST APIs", logo: "/images/skills/api.png", floatSpeed: 4.3 },
+      { name: "SQL Server", logo: "/images/skills/sql-server.png", floatSpeed: 3.8 },
+      { name: "MongoDB", logo: "/images/skills/mongodb.png", floatSpeed: 4.6 },
     ],
   },
   {
     id: "ui",
     titleFa: "طراحی رابط کاربری و واکنش‌گرا",
     titleEn: "UI & Responsive Design",
+    categoryImage: "/images/skills/ui.png",
     accentColor: "rgba(16, 185, 129, 0.25)",
     accentText: "text-emerald-500",
     skills: [
-      { name: "HTML5", logo: "/images/skills/html.png", pos: "-mt-3 -ml-2 lg:-mt-6 lg:-ml-4", floatSpeed: 3.3 },
-      { name: "CSS3", logo: "/images/skills/css.png", pos: "mt-4 mr-3 lg:mt-8 lg:mr-6", floatSpeed: 4.2 },
-      { name: "Tailwind CSS", logo: "/images/skills/tailwind.png", pos: "mt-1 ml-4 lg:mt-2 lg:ml-8", floatSpeed: 3.6 },
-      { name: "Bootstrap", logo: "/images/skills/bootStrap.png", pos: "-mt-4 mr-4 lg:-mt-8 lg:mr-8", floatSpeed: 4.8 },
-      { name: "Material UI", logo: "/images/skills/MUI.png", pos: "mt-6 -ml-3 lg:mt-12 lg:-ml-6", floatSpeed: 3.9 },
-      { name: "Responsive UI", logo: "/images/skills/Responsive UI.png", pos: "mt-2 mr-2 lg:mt-4 lg:mr-4", floatSpeed: 4.4 },
+      { name: "HTML5", logo: "/images/skills/html.png", floatSpeed: 3.3 },
+      { name: "CSS3", logo: "/images/skills/css.png", floatSpeed: 4.2 },
+      { name: "Tailwind CSS", logo: "/images/skills/tailwind.png", floatSpeed: 3.6 },
+      { name: "Bootstrap", logo: "/images/skills/bootStrap.png", floatSpeed: 4.8 },
+      { name: "Material UI", logo: "/images/skills/MUI.png", floatSpeed: 3.9 },
+      { name: "Responsive UI", logo: "/images/skills/Responsive UI.png", floatSpeed: 4.4 },
     ],
   },
 ];
@@ -80,36 +83,44 @@ export default function AboutSkills() {
   const isRTL = locale === "fa";
 
   useEffect(() => {
-    const scrollTween = gsap.fromTo(
-      skillsSectionRef.current,
-      {},
-      {
-        scrollTrigger: {
-          trigger: skillsTriggerRef.current,
-          pin: skillsSectionRef.current,
-          scrub: 0.5,
-          start: "top top",
-          end: "bottom bottom",
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            if (gearRef.current) {
-              gsap.set(gearRef.current, { rotation: progress * 360 });
-            }
+    const mm = gsap.matchMedia();
 
-            const totalSectors = SKILL_CATEGORIES.length;
-            const index = Math.min(
-              Math.floor(progress * totalSectors),
-              totalSectors - 1
-            );
-            setActiveIndex(index);
+    mm.add("(min-width: 1024px)", () => {
+      const scrollTween = gsap.fromTo(
+        skillsSectionRef.current,
+        {},
+        {
+          scrollTrigger: {
+            trigger: skillsTriggerRef.current,
+            pin: skillsSectionRef.current,
+            scrub: 0.5,
+            start: "top top",
+            end: "bottom bottom",
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              const progress = self.progress;
+              if (gearRef.current) {
+                gsap.set(gearRef.current, { rotation: progress * 360 });
+              }
+
+              const totalSectors = SKILL_CATEGORIES.length;
+              const index = Math.min(
+                Math.floor(progress * totalSectors),
+                totalSectors - 1
+              );
+              setActiveIndex(index);
+            },
           },
-        },
-      }
-    );
+        }
+      );
+
+      return () => {
+        scrollTween.scrollTrigger?.kill();
+      };
+    });
 
     return () => {
-      scrollTween.scrollTrigger?.kill();
+      mm.revert();
     };
   }, []);
 
@@ -120,7 +131,7 @@ export default function AboutSkills() {
       <style jsx global>{`
         @keyframes organicFloat {
           0% { transform: translate3d(0, 0, 0) rotate(0deg); }
-          50% { transform: translate3d(0, -10px, 0) rotate(3deg); }
+          50% { transform: translate3d(0, -10px, 0) rotate(2deg); }
           100% { transform: translate3d(0, 0, 0) rotate(0deg); }
         }
       `}</style>
@@ -146,14 +157,13 @@ export default function AboutSkills() {
             <div className="lg:col-span-5 flex flex-col items-center justify-center text-center gap-4 sm:gap-6 relative shrink-0">
               
               <div className="relative size-44 sm:size-64 lg:size-80 flex items-center justify-center p-2 sm:p-4">
-                {/* SVG سکان با دایره‌های مشکی کاملاً جامد و بدون هیچ کادر/هاله سفید */}
+                {/* SVG سکان با دایره‌های مشکی کاملاً جامد */}
                 <svg
                   ref={gearRef}
                   viewBox="0 0 200 200"
                   className="w-full h-full transition-colors duration-300 drop-shadow-md overflow-visible"
                   fill="none"
                 >
-                  {/* دایره نقطه‌چین بیرونی */}
                   <circle
                     cx="100"
                     cy="100"
@@ -162,7 +172,6 @@ export default function AboutSkills() {
                     strokeWidth="4"
                     strokeDasharray="8 6"
                   />
-                  {/* دایره میانی */}
                   <circle
                     cx="100"
                     cy="100"
@@ -170,7 +179,6 @@ export default function AboutSkills() {
                     stroke="var(--text-primary)"
                     strokeWidth="4.5"
                   />
-                  {/* مرکز جامد سکان - کاملاً جامد بدون هیچ کادر/هاله سفید */}
                   <circle
                     cx="100"
                     cy="100"
@@ -179,7 +187,6 @@ export default function AboutSkills() {
                     stroke="none"
                   />
 
-                  {/* دسته‌های سکان کشتی - دایره‌های کاملاً جامد بدون هیچ کادر/هاله سفید */}
                   {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
                     <g key={angle} transform={`rotate(${angle} 100 100)`}>
                       <line
@@ -202,9 +209,28 @@ export default function AboutSkills() {
                   ))}
                 </svg>
 
+                {/* 🖼️ تصویر کاور دسته فعال در مرکز سکان */}
+                <div className="absolute size-16 sm:size-24 lg:size-28 rounded-full border border-white/80 dark:border-white/20 bg-white/90 dark:bg-[#0a0a14]/90 backdrop-blur-md shadow-xl flex items-center justify-center p-3 sm:p-4 overflow-hidden z-20">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentCat.id}
+                      src={currentCat.categoryImage}
+                      alt={currentCat.titleEn}
+                      initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                      transition={{ duration: 0.35, ease: "backOut" }}
+                      className="w-full h-full object-contain filter drop-shadow-md"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </AnimatePresence>
+                </div>
+
                 {/* مرکز درخشان سکان */}
                 <div
-                  className="absolute size-16 sm:size-24 lg:size-28 rounded-full blur-xl sm:blur-2xl opacity-70 transition-colors duration-700 pointer-events-none"
+                  className="absolute size-20 sm:size-28 lg:size-32 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
                   style={{ backgroundColor: currentCat.accentColor }}
                 />
               </div>
@@ -230,74 +256,93 @@ export default function AboutSkills() {
 
             </div>
 
-            {/* ۲. بخش حباب‌های شیشه‌ای شناور و متحرک تکنولوژی‌ها */}
-            <div className="lg:col-span-7 relative min-h-[220px] sm:min-h-[320px] lg:min-h-[440px] flex items-center justify-center w-full">
+            {/* ۲. کانتینر آکواریوم شیشه‌ای با گرادیان درخشان و دقیق #570882e6 */}
+            <div className="lg:col-span-7 relative flex items-center justify-center w-full">
               
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentCat.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-7 max-w-sm sm:max-w-md lg:max-w-xl w-full"
-                >
-                  {currentCat.skills.map((skill, sIdx) => {
-                    const hasError = imageErrors[skill.name];
+              <div className="w-full max-w-xl min-h-[320px] sm:min-h-[400px] lg:min-h-[460px] rounded-3xl sm:rounded-[2.5rem] border border-accent/40 dark:border-purple-500/40 bg-gradient-to-br from-accent/20 via-purple-500/20 to-accent/10 dark:from-accent/30 dark:via-purple-500/25 dark:to-[#570882]/90 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,122,255,0.18)] dark:shadow-[0_30px_80px_rgba(147,51,234,0.3)] relative overflow-hidden p-6 sm:p-10 flex items-center justify-center">
+                
+                {/* لبه نوری شیشه‌ای درخشان بالای آکواریوم */}
+                <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-400 dark:via-purple-400 to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-white/5 to-transparent pointer-events-none rounded-3xl sm:rounded-[2.5rem]" />
 
-                    return (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: sIdx * 0.05 }}
-                        whileHover={{ scale: 1.12, zIndex: 50 }}
-                        className={["relative group cursor-pointer", skill.pos].join(" ")}
-                      >
-                        {/* 🔮 حباب شیشه‌ای متحرک لکوئید */}
-                        <div
-                          className={[
-                            "size-22 sm:size-28 lg:size-32 rounded-full border transition-all duration-300 flex flex-col items-center justify-center p-2 sm:p-3 relative overflow-hidden shadow-md sm:shadow-lg",
-                            "bg-white/90 dark:bg-white/[0.06] backdrop-blur-md",
-                            "border-white dark:border-white/20 hover:border-accent hover:shadow-[0_0_30px_rgba(0,122,255,0.4)]",
-                          ].join(" ")}
-                          style={{
-                            animation: `organicFloat ${skill.floatSpeed}s ease-in-out infinite`,
-                            animationDelay: `${sIdx * 0.3}s`,
-                            willChange: "transform",
-                          }}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentCat.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={
+                      currentCat.skills.length === 4
+                        ? "grid grid-cols-2 gap-6 sm:gap-8 justify-items-center items-center max-w-md w-full z-10 py-4"
+                        : "grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-6 justify-items-center items-center max-w-lg w-full z-10 py-4"
+                    }
+                  >
+                    {currentCat.skills.map((skill, sIdx) => {
+                      const hasError = imageErrors[skill.name];
+
+                      return (
+                        <motion.div
+                          key={skill.name}
+                          initial={{ opacity: 0, scale: 0.85 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: sIdx * 0.05 }}
+                          whileHover={{ scale: 1.12, zIndex: 50 }}
+                          className="relative group cursor-pointer flex justify-center items-center"
                         >
-                          <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent opacity-70 pointer-events-none rounded-full" />
+                          {/* 🔮 حباب شیشه‌ای کریستالی گلسمورفیسم */}
+                          <div
+                            className={[
+                              "size-28 sm:size-34 lg:size-38 rounded-full border transition-all duration-300 flex flex-col items-center justify-center p-3 sm:p-4 relative overflow-hidden",
+                              "bg-white/70 dark:bg-white/[0.08] backdrop-blur-xl",
+                              "border-white/90 dark:border-white/20",
+                              "shadow-[0_8px_25px_rgba(0,122,255,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)]",
+                              "hover:border-accent hover:bg-white/90 dark:hover:bg-white/[0.15] hover:shadow-[0_0_35px_rgba(0,122,255,0.5)]",
+                            ].join(" ")}
+                            style={{
+                              animation: `organicFloat ${skill.floatSpeed}s ease-in-out infinite`,
+                              animationDelay: `${sIdx * 0.3}s`,
+                              willChange: "transform",
+                              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 4px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 122, 255, 0.12)",
+                            }}
+                          >
+                            {/* لایه رفلکس نوری ۳بعدی قوس شیشه */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-white/60 via-transparent to-white/20 opacity-80 pointer-events-none rounded-full" />
+                            <div className="absolute -top-0.5 left-2 right-2 h-[38%] bg-gradient-to-b from-white/70 to-transparent rounded-t-full pointer-events-none opacity-80" />
 
-                          <div className="size-8 sm:size-10 lg:size-12 flex items-center justify-center mb-0.5 sm:mb-1 transition-transform duration-200 group-hover:scale-105">
-                            {!hasError ? (
-                              <img
-                                src={skill.logo}
-                                alt={skill.name}
-                                onError={() =>
-                                  setImageErrors((prev) => ({
-                                    ...prev,
-                                    [skill.name]: true,
-                                  }))
-                                }
-                                className="w-full h-full object-contain filter drop-shadow-md"
-                              />
-                            ) : (
-                              <div className="font-extrabold text-accent text-xs">
-                                {skill.name.slice(0, 3)}
-                              </div>
-                            )}
+                            {/* لوگوی تکنولوژی */}
+                            <div className="size-11 sm:size-14 lg:size-16 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
+                              {!hasError ? (
+                                <img
+                                  src={skill.logo}
+                                  alt={skill.name}
+                                  onError={() =>
+                                    setImageErrors((prev) => ({
+                                      ...prev,
+                                      [skill.name]: true,
+                                    }))
+                                  }
+                                  className="w-full h-full object-contain filter drop-shadow-md"
+                                />
+                              ) : (
+                                <div className="font-extrabold text-accent text-sm sm:text-base">
+                                  {skill.name.slice(0, 3)}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* نام تکنولوژی */}
+                            <span className="text-xs sm:text-sm font-black text-text-primary text-center tracking-tight leading-none group-hover:text-accent transition-colors z-10">
+                              {skill.name}
+                            </span>
                           </div>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                </AnimatePresence>
 
-                          <span className="text-[10px] sm:text-xs font-black text-text-primary text-center tracking-tight leading-none group-hover:text-accent transition-colors">
-                            {skill.name}
-                          </span>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              </AnimatePresence>
+              </div>
 
             </div>
 
