@@ -44,21 +44,21 @@
         "company": "Kanda Idea",
         "type": "Full-time",
         "duration": "Feb 2026 — Present",
-        "desc": "Working as a Frontend Developer, designing and implementing modern web interfaces. Collaborating with technical teams to deliver scalable features, optimize user experience, and maintain robust component-based architectures using modern frontend patterns."
+        "desc": "The company works on large-scale projects in the oil, gas, petrochemical, and telecommunications sectors, and I am part of the team responsible for developing and maintaining a national mining management system. I have developed user interfaces using JavaScript, jQuery, and ASP.NET MVC, while also being responsible for product maintenance, improving the product by quickly fixing bugs and developing new features."
       },
       "isiran": {
         "role": "Frontend Developer",
         "company": "ISIRAN",
         "type": "Full-time",
-        "duration": "Oct 2025 — Feb 2026",
-        "desc": "Motamayez Group operates in the field of large-scale national initiatives such as the Ministry of Education. I was active as a Frontend Developer, contributing to several key enterprise projects and platforms within this group."
+        "duration": "Jul 2025 — Feb 2026",
+        "desc": "At ISIRAN, I worked as a frontend developer on large-scale national education projects. I was responsible for designing the user interface using React and Next, and through continuous collaboration with the client, I gained experience building a major educational system."
       },
       "mosbatesabz": {
         "role": "Frontend Developer",
         "company": "Mosbatesabz",
         "type": "Internship",
         "duration": "Aug 2023 — Jan 2024",
-        "desc": "During my 6-month internship at Mosbatesabz, I took my first steps into the world of programming. I explored both frontend and backend development, mastered the core technologies of web development (HTML, CSS, JavaScript), and built a solid professional foundation in frontend engineering."
+        "desc": "As an intern at Mosbatesabz, I started my journey in frontend development from the ground up, working with HTML, CSS, and JavaScript while contributing to a real-world online pharmacy project. During this experience, I also became familiar with Scrum, daily stand-ups, and tools like Jira, gaining a better understanding of teamwork and agile development."
       }
     },
     "educationItem": {
