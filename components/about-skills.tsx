@@ -71,6 +71,36 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
 ];
 
+// 🔮 واریانت‌های انیمیشن اصلاح‌شده حباب‌ها (رفع باگ اجرای مجدد کی‌فریم هنگام خروج ماوس)
+const bubbleVariants = {
+  initial: {
+    scale: 0,
+    opacity: 0,
+    filter: "blur(10px)",
+  },
+  animate: (sIdx: number) => ({
+    scale: 1,
+    opacity: 1,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 18,
+      delay: sIdx * 0.05,
+    },
+  }),
+  exit: (sIdx: number) => ({
+    scale: 1.25,
+    opacity: 0,
+    filter: "blur(10px)",
+    transition: {
+      duration: 0.2,
+      delay: sIdx * 0.02,
+      ease: "easeIn",
+    },
+  }),
+};
+
 export default function AboutSkills() {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -78,6 +108,7 @@ export default function AboutSkills() {
 
   const skillsTriggerRef = useRef<HTMLDivElement>(null);
   const skillsSectionRef = useRef<HTMLDivElement>(null);
+
   const gearRef = useRef<SVGSVGElement>(null);
 
   const isRTL = locale === "fa";
@@ -153,11 +184,11 @@ export default function AboutSkills() {
 
           <div className="mx-auto max-w-6xl w-full px-4 sm:px-8 flex flex-col lg:grid lg:grid-cols-12 items-center justify-center gap-6 sm:gap-8 lg:gap-8 z-10">
             
-            {/* ۱. بخش سکان چرخشی (بزرگ‌تر) و عنوان دسته‌بندی */}
+            {/* ۱. بخش سکان چرخشی و عنوان دسته‌بندی */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center text-center gap-4 sm:gap-6 relative shrink-0">
               
-              <div className="relative size-52 sm:size-72 lg:size-96 flex items-center justify-center p-2 sm:p-4">
-                {/* SVG سکان بزرگ‌تر */}
+              <div className="relative size-44 sm:size-64 lg:size-80 flex items-center justify-center p-2 sm:p-4">
+                {/* SVG سکان با دایره‌های مشکی کاملاً جامد */}
                 <svg
                   ref={gearRef}
                   viewBox="0 0 200 200"
@@ -209,8 +240,8 @@ export default function AboutSkills() {
                   ))}
                 </svg>
 
-                {/* 🖼️ تصویر کاور دسته فعال در مرکز سکان (بزرگ‌تر و نمایان‌تر) */}
-                <div className="absolute size-20 sm:size-28 lg:size-36 rounded-full border border-white/80 dark:border-white/20 bg-white/95 dark:bg-[#0a0a14]/95 backdrop-blur-md shadow-2xl flex items-center justify-center p-2.5 sm:p-4 lg:p-5 overflow-hidden z-20">
+                {/* 🖼️ تصویر کاور دسته فعال در مرکز سکان */}
+                <div className="absolute size-16 sm:size-24 lg:size-28 rounded-full border border-white/80 dark:border-white/20 bg-white/90 dark:bg-[#0a0a14]/90 backdrop-blur-md shadow-xl flex items-center justify-center p-3 sm:p-4 overflow-hidden z-20">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={currentCat.id}
@@ -230,7 +261,7 @@ export default function AboutSkills() {
 
                 {/* مرکز درخشان سکان */}
                 <div
-                  className="absolute size-24 sm:size-32 lg:size-40 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
+                  className="absolute size-20 sm:size-28 lg:size-32 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
                   style={{ backgroundColor: currentCat.accentColor }}
                 />
               </div>
@@ -245,9 +276,6 @@ export default function AboutSkills() {
                   transition={{ duration: 0.3 }}
                   className="flex flex-col items-center gap-1 z-10"
                 >
-                  <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-accent uppercase">
-                    CATEGORY 0{activeIndex + 1}
-                  </span>
                   <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-text-primary tracking-tight">
                     {isRTL ? currentCat.titleFa : currentCat.titleEn}
                   </h3>
@@ -268,10 +296,9 @@ export default function AboutSkills() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentCat.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
                     className={
                       currentCat.skills.length === 4
                         ? "grid grid-cols-2 gap-6 sm:gap-8 justify-items-center items-center max-w-md w-full z-10 py-4"
@@ -284,26 +311,27 @@ export default function AboutSkills() {
                       return (
                         <motion.div
                           key={skill.name}
-                          initial={{ opacity: 0, scale: 0.85 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3, delay: sIdx * 0.05 }}
+                          custom={sIdx}
+                          variants={bubbleVariants}
                           whileHover={{ scale: 1.12, zIndex: 50 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
                           className="relative group cursor-pointer flex justify-center items-center"
                         >
-                          {/* 🔮 حباب شیشه‌ای کریستالی گلسمورفیسم با رفلکس نوری ۳بعدی */}
+                          {/* 🔮 حباب شیشه‌ای کریستالی گلسمورفیسم */}
                           <div
                             className={[
-                              "size-28 sm:size-34 lg:size-38 rounded-full border transition-all duration-300 flex flex-col items-center justify-center p-3 sm:p-4 relative overflow-hidden",
+                              "size-28 sm:size-34 lg:size-38 rounded-full border flex flex-col items-center justify-center p-3 sm:p-4 relative overflow-hidden",
                               "bg-white/70 dark:bg-white/[0.08] backdrop-blur-xl",
                               "border-white/90 dark:border-white/20",
-                              "shadow-[0_8px_25px_rgba(0,122,255,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)]",
-                              "hover:border-accent hover:bg-white/90 dark:hover:bg-white/[0.15] hover:shadow-[0_0_35px_rgba(0,122,255,0.5)]",
+                              "hover:border-accent hover:bg-white/90 dark:hover:bg-white/[0.15]",
+                              "transition-[border-color,background-color] duration-150",
                             ].join(" ")}
                             style={{
                               animation: `organicFloat ${skill.floatSpeed}s ease-in-out infinite`,
                               animationDelay: `${sIdx * 0.3}s`,
                               willChange: "transform",
-                              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 4px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 122, 255, 0.12)",
+                              boxShadow:
+                                "inset 0 2px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 4px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 122, 255, 0.12)",
                             }}
                           >
                             {/* لایه رفلکس نوری ۳بعدی قوس شیشه */}
