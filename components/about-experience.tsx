@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useRef } from "react";
 
 const EXPERIENCES = [
@@ -10,6 +10,7 @@ const EXPERIENCES = [
     initial: "K",
     logoPath: "/images/logos/kanda_idea_logo.jpg",
     isCurrent: true,
+    activationThreshold: 0.05,
     skills: ["JavaScript", "jQuery", "ASP.NET", "Bootstrap", "OpenLayers", "GIS Architecture"],
   },
   {
@@ -17,6 +18,7 @@ const EXPERIENCES = [
     initial: "I",
     logoPath: "/images/logos/ISIRAN.jpg",
     isCurrent: false,
+    activationThreshold: 0.42,
     skills: ["React.js", "Next.js", "Tailwind CSS", "Performance Optimization"],
   },
   {
@@ -24,6 +26,7 @@ const EXPERIENCES = [
     initial: "M",
     logoPath: "/images/logos/mosbateSabz.jpg",
     isCurrent: false,
+    activationThreshold: 0.82,
     skills: ["JavaScript", "HTML5", "CSS3", "Web Development Core"],
   },
 ];
@@ -32,13 +35,17 @@ export default function AboutExperience() {
   const t = useTranslations("about");
   const locale = useLocale();
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({});
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // رصد هوشمند پیشرفت اسکرول برای پر کردن خط آبی
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 75%", "end 45%"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setScrollProgress(latest);
   });
 
   const isRTL = locale === "fa";
@@ -56,7 +63,7 @@ export default function AboutExperience() {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
               {isRTL ? "مسیر حرفه‌ای و سوابق شغلی" : "Career & Work Experience"}
             </h2>
-            <p className="text-xs sm:text-sm text-text-secondary mt-3 leading-relaxed">
+            <p className="text-xs sm:text-sm text-text-secondary mt-3 leading-relaxed font-medium">
               {isRTL
                 ? "تجربه توسعه وب‌اپلیکیشن‌ها و سیستم‌های بزرگ در شرکت‌های معتبر"
                 : "Building high-performance web applications across enterprise platforms."}
@@ -66,47 +73,48 @@ export default function AboutExperience() {
           {/* بدنه اصلی تایم‌لاین */}
           <div className="md:col-span-8 relative">
             
-            {/* ۱. خط خاکستری کم‌رنگ پس‌زمینه (مسیر اصلی) */}
+            {/* ۱. خط خاکستری پس‌زمینه */}
             <div
               className={[
-                "absolute top-6 bottom-6 w-[2px] bg-border/40",
+                "absolute top-6 bottom-6 w-[2px] bg-border/40 z-0",
                 isRTL ? "right-6 sm:right-7" : "left-6 sm:left-7",
               ].join(" ")}
             />
 
-            {/* ۲. خط آبی پویا که با اسکرول کاربر به سمت پایین پر می‌شود */}
+            {/* ۲. خط آبی پویا که همزمان با اسکرول پر می‌شود */}
             <motion.div
               style={{
                 scaleY: scrollYProgress,
                 transformOrigin: "top",
               }}
               className={[
-                "absolute top-6 bottom-6 w-[2.5px] bg-accent shadow-[0_0_12px_var(--accent)] z-10",
+                "absolute top-6 bottom-6 w-[2px] bg-accent shadow-[0_0_10px_var(--accent)] z-0",
                 isRTL ? "right-6 sm:right-7" : "left-6 sm:left-7",
               ].join(" ")}
             />
 
             <div className="flex flex-col gap-10">
-              {EXPERIENCES.map(({ key, initial, logoPath, isCurrent, skills }, idx) => {
+              {EXPERIENCES.map(({ key, initial, logoPath, isCurrent, activationThreshold, skills }, idx) => {
                 const hasLogoError = logoErrors[key];
+                const isReached = scrollProgress >= activationThreshold || isCurrent;
 
                 return (
                   <motion.div
                     key={key}
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
-                    className="relative flex items-start gap-5 sm:gap-6 group"
+                    transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                    className="relative flex items-start gap-5 sm:gap-6 group z-10"
                   >
-                    {/* نود تایم‌لاین و لوگوی شرکت */}
+                    {/* لوگوی شرکت: دایره سفید خالص، ۱۰۰٪ بدون هیچ بوردر یا کادر کثیف */}
                     <div className="relative z-20 shrink-0">
                       <div
                         className={[
-                          "size-12 sm:size-14 rounded-2xl border transition-all duration-500 flex items-center justify-center p-1.5 backdrop-blur-xl shadow-md",
-                          isCurrent
-                            ? "border-accent bg-accent/10 shadow-[0_0_20px_rgba(0,122,255,0.25)] ring-2 ring-accent/30"
-                            : "border-border bg-white/80 dark:bg-white/[0.02] group-hover:border-accent/40 group-hover:scale-105",
+                          "size-12 sm:size-14 rounded-full flex items-center justify-center p-2 bg-white transition-all duration-300 border-0 shadow-md",
+                          isReached
+                            ? "shadow-lg shadow-accent/25 ring-2 ring-accent/40 scale-105"
+                            : "shadow-sm",
                         ].join(" ")}
                       >
                         {!hasLogoError ? (
@@ -114,20 +122,20 @@ export default function AboutExperience() {
                             src={logoPath}
                             alt={t(`experienceItems.${key}.company`)}
                             onError={() => setLogoErrors((prev) => ({ ...prev, [key]: true }))}
-                            className="w-full h-full object-contain rounded-xl"
+                            className="w-full h-full object-contain rounded-full"
                           />
                         ) : (
-                          <div className="font-mono font-black text-accent text-lg">
+                          <div className="font-black text-accent text-base sm:text-lg">
                             {initial}
                           </div>
                         )}
                       </div>
 
-                      {/* نشانگر زنده و چشمک‌زن روی موقعیت فعلی */}
+                      {/* نشانگر زنده و چشمک‌زن سبز رنگ فقط برای شغل فعلی */}
                       {isCurrent && (
-                        <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 z-30">
+                        <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 z-30">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-background-main" />
+                          <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white" />
                         </span>
                       )}
                     </div>
@@ -135,11 +143,11 @@ export default function AboutExperience() {
                     {/* کارت توضیحات شغلی */}
                     <div
                       className={[
-                        "flex-grow border rounded-2xl p-5 sm:p-6 backdrop-blur-2xl transition-all duration-500 shadow-sm",
-                        "bg-white/60 dark:bg-white/[0.015]",
-                        isCurrent
-                          ? "border-accent/35 shadow-[0_10px_30px_rgba(0,122,255,0.06)]"
-                          : "border-border/60 hover:border-accent/30 hover:shadow-md",
+                        "flex-grow border rounded-2xl p-5 sm:p-6 backdrop-blur-2xl transition-all duration-500 shadow-xs",
+                        "bg-white/70 dark:bg-white/[0.015]",
+                        isReached
+                          ? "border-accent/30 shadow-[0_10px_30px_rgba(0,122,255,0.05)]"
+                          : "border-border/50 hover:border-accent/25 hover:shadow-sm",
                       ].join(" ")}
                     >
                       {/* هدر کارت: عنوان شغل و مدت زمان */}
@@ -150,24 +158,25 @@ export default function AboutExperience() {
                               {t(`experienceItems.${key}.role`)}
                             </h3>
                             {isCurrent && (
-                              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                                 {isRTL ? "اکنون" : "PRESENT"}
                               </span>
                             )}
                           </div>
                           <p className="text-xs text-accent font-bold mt-1">
                             {t(`experienceItems.${key}.company`)} —{" "}
-                            <span className="opacity-75">{t(`experienceItems.${key}.type`)}</span>
+                            <span className="opacity-75 font-medium">{t(`experienceItems.${key}.type`)}</span>
                           </p>
                         </div>
 
-                        <span className="font-mono text-[11px] font-bold text-text-muted bg-white/50 dark:bg-white/[0.04] px-3 py-1 rounded-xl border border-border/40 w-fit">
+                        {/* بازه زمانی */}
+                        <span className="text-[11px] sm:text-xs font-semibold text-text-muted bg-white/40 dark:bg-white/[0.03] px-2.5 py-1 rounded-lg border border-border/40 w-fit">
                           {t(`experienceItems.${key}.duration`)}
                         </span>
                       </div>
 
                       {/* متن اصلی توضیحات */}
-                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-4">
+                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-4 font-normal">
                         {t(`experienceItems.${key}.desc`)}
                       </p>
 
@@ -176,7 +185,7 @@ export default function AboutExperience() {
                         {skills.map((skill) => (
                           <span
                             key={skill}
-                            className="font-mono text-[10px] font-bold text-text-muted bg-white/40 dark:bg-white/[0.03] border border-border/40 px-2.5 py-1 rounded-lg transition-colors group-hover:border-accent/20"
+                            className="text-[11px] font-semibold text-text-primary bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/20 px-2.5 py-0.5 rounded-md shadow-2xs transition-colors hover:border-accent/60 hover:text-accent"
                           >
                             {skill}
                           </span>
