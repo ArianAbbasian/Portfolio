@@ -19,10 +19,10 @@ export default function Hero() {
     const mm = gsap.matchMedia();
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-    // ۱. تنظیم پرسپکتیو اولیه برای تمام حالت‌ها جهت آماده‌سازی سه بعدی
+    // ۱. تنظیم پرسپکتیو اولیه جهت آماده‌سازی سه بعدی
     gsap.set(containerRef.current, { perspective: 1200 });
 
-    // ۲. انیمیشن پس‌زمینه مستقل (دیگر خط زمان متن‌ها را مسدود نمی‌کند)
+    // ۲. انیمیشن پس‌زمینه مستقل
     gsap.to(glowRef.current, {
       opacity: 0.18,
       scale: 1.1,
@@ -46,7 +46,7 @@ export default function Hero() {
           .join(" ");
       }
 
-      // ۴. اجرای انیمیشن‌های متنی بلافاصله از ثانیه صفر
+      // ۴. اجرای انیمیشن‌های متنی
       tl.fromTo(
         statusRef.current,
         { opacity: 0, y: -20 },
@@ -56,7 +56,7 @@ export default function Hero() {
         titleRef.current.querySelectorAll(".title-word"),
         { y: "140%", rotateX: -40, opacity: 0 },
         { y: "0%", rotateX: 0, opacity: 1, duration: 1.4, stagger: 0.06 },
-        "-=0.9" // شروع سریع همزمان با ظاهر شدن چراغ وضعیت
+        "-=0.9"
       )
       .fromTo(
         subtitleRef.current,
@@ -84,28 +84,32 @@ export default function Hero() {
       );
     }
 
-    // ۵. سیستم جابجایی دائم و خودکار آیکون‌ها (Infinite Random Physics)
+    // ۵. سیستم شناوری کنترل‌شده ایموجی‌ها بدون فرار از محدوده (Bounded Bounded Physics)
     const elements = document.querySelectorAll(".floating-element");
-    elements.forEach((el) => {
-      function animateRandomly() {
-        const randomX = gsap.utils.random(-30, 60);
-        const randomY = gsap.utils.random(-40, 80);
-        const randomRot = gsap.utils.random(-20, 40);
-        const randomTime = gsap.utils.random(4, 6);
+    const floatTweens: gsap.core.Tween[] = [];
 
-        gsap.to(el, {
-          x: "+=" + randomX,
-          y: "+=" + randomY,
+    elements.forEach((el) => {
+      function animateBounded() {
+        const randomX = gsap.utils.random(-25, 25); // شعاع محدود جابه‌جایی نسبت به مرکز
+        const randomY = gsap.utils.random(-25, 25);
+        const randomRot = gsap.utils.random(-20, 20);
+        const randomTime = gsap.utils.random(3.5, 5.5);
+
+        const tween = gsap.to(el, {
+          x: randomX, // مقدار مطلق نسبت به خانه اولیه (حذف باگ +=)
+          y: randomY,
           rotation: randomRot,
           duration: randomTime,
           ease: "sine.inOut",
-          onComplete: animateRandomly,
+          onComplete: animateBounded,
         });
+
+        floatTweens.push(tween);
       }
-      animateRandomly();
+      animateBounded();
     });
 
-    // ۶. منطق دسکتاپ (حرکت با ماوس) و موبایل (ژیروسکوپ)
+    // ۶. سیستم جابجایی دسکتاپ (حرکت با ماوس) و موبایل (ژیروسکوپ)
     mm.add("(min-width: 600px)", () => {
       gsap.set(".hero-content-wrapper", {
         transformPerspective: 1000,
@@ -133,7 +137,7 @@ export default function Hero() {
         });
 
         elements.forEach((el, index) => {
-          const depth = (index + 1) * 15;
+          const depth = (index + 1) * 12;
           gsap.to(el, {
             xPercent: xPercent * depth,
             yPercent: yPercent * depth,
@@ -177,6 +181,7 @@ export default function Hero() {
 
     return () => {
       tl.kill();
+      floatTweens.forEach((t) => t.kill());
       mm.revert();
     };
   }, []);
