@@ -27,7 +27,7 @@ interface SkillCategory {
 const SKILL_CATEGORIES: SkillCategory[] = [
   {
     id: "frontend",
-    titleFa: "فرانت‌اند و جاوااسکریپت",
+    titleFa: "توسعه فرانت‌اند",
     titleEn: "Frontend Development",
     categoryImage: "/images/skills/frontend.png",
     accentColor: "rgba(0, 122, 255, 0.25)",
@@ -41,7 +41,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     id: "backend",
-    titleFa: "بک‌اند و پایگاه داده",
+    titleFa: "بک‌اند و داده",
     titleEn: "Backend & Data",
     categoryImage: "/images/skills/backend.png",
     accentColor: "rgba(147, 51, 234, 0.25)",
@@ -55,8 +55,8 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     id: "ui",
-    titleFa: "طراحی رابط کاربری و واکنش‌گرا",
-    titleEn: "UI & Responsive Design",
+    titleFa: "طراحی UI/UX",
+    titleEn: "UI/UX Design",
     categoryImage: "/images/skills/ui.png",
     accentColor: "rgba(16, 185, 129, 0.25)",
     accentText: "text-emerald-500",
@@ -153,11 +153,11 @@ export default function AboutSkills() {
 
           <div className="mx-auto max-w-6xl w-full px-4 sm:px-8 flex flex-col lg:grid lg:grid-cols-12 items-center justify-center gap-6 sm:gap-8 lg:gap-8 z-10">
             
-            {/* ۱. بخش سکان چرخشی و عنوان دسته‌بندی */}
+            {/* ۱. بخش سکان چرخشی (بزرگ‌تر) و عنوان دسته‌بندی */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center text-center gap-4 sm:gap-6 relative shrink-0">
               
-              <div className="relative size-44 sm:size-64 lg:size-80 flex items-center justify-center p-2 sm:p-4">
-                {/* SVG سکان با دایره‌های مشکی کاملاً جامد */}
+              <div className="relative size-52 sm:size-72 lg:size-96 flex items-center justify-center p-2 sm:p-4">
+                {/* SVG سکان بزرگ‌تر */}
                 <svg
                   ref={gearRef}
                   viewBox="0 0 200 200"
@@ -209,8 +209,8 @@ export default function AboutSkills() {
                   ))}
                 </svg>
 
-                {/* 🖼️ تصویر کاور دسته فعال در مرکز سکان */}
-                <div className="absolute size-16 sm:size-24 lg:size-28 rounded-full border border-white/80 dark:border-white/20 bg-white/90 dark:bg-[#0a0a14]/90 backdrop-blur-md shadow-xl flex items-center justify-center p-3 sm:p-4 overflow-hidden z-20">
+                {/* 🖼️ تصویر کاور دسته فعال در مرکز سکان (بزرگ‌تر و نمایان‌تر) */}
+                <div className="absolute size-20 sm:size-28 lg:size-36 rounded-full border border-white/80 dark:border-white/20 bg-white/95 dark:bg-[#0a0a14]/95 backdrop-blur-md shadow-2xl flex items-center justify-center p-2.5 sm:p-4 lg:p-5 overflow-hidden z-20">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={currentCat.id}
@@ -230,7 +230,7 @@ export default function AboutSkills() {
 
                 {/* مرکز درخشان سکان */}
                 <div
-                  className="absolute size-20 sm:size-28 lg:size-32 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
+                  className="absolute size-24 sm:size-32 lg:size-40 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
                   style={{ backgroundColor: currentCat.accentColor }}
                 />
               </div>
@@ -256,7 +256,7 @@ export default function AboutSkills() {
 
             </div>
 
-            {/* ۲. کانتینر آکواریوم شیشه‌ای با گرادیان درخشان و دقیق #570882e6 */}
+            {/* ۲. کانتینر آکواریوم شیشه‌ای با گرادیان آبی-بنفش */}
             <div className="lg:col-span-7 relative flex items-center justify-center w-full">
               
               <div className="w-full max-w-xl min-h-[320px] sm:min-h-[400px] lg:min-h-[460px] rounded-3xl sm:rounded-[2.5rem] border border-accent/40 dark:border-purple-500/40 bg-gradient-to-br from-accent/20 via-purple-500/20 to-accent/10 dark:from-accent/30 dark:via-purple-500/25 dark:to-[#570882]/90 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,122,255,0.18)] dark:shadow-[0_30px_80px_rgba(147,51,234,0.3)] relative overflow-hidden p-6 sm:p-10 flex items-center justify-center">
@@ -290,7 +290,7 @@ export default function AboutSkills() {
                           whileHover={{ scale: 1.12, zIndex: 50 }}
                           className="relative group cursor-pointer flex justify-center items-center"
                         >
-                          {/* 🔮 حباب شیشه‌ای کریستالی گلسمورفیسم */}
+                          {/* 🔮 حباب شیشه‌ای کریستالی گلسمورفیسم با رفلکس نوری ۳بعدی */}
                           <div
                             className={[
                               "size-28 sm:size-34 lg:size-38 rounded-full border transition-all duration-300 flex flex-col items-center justify-center p-3 sm:p-4 relative overflow-hidden",
