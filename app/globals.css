@@ -456,3 +456,16 @@ html::-webkit-scrollbar {
     cursor: none !important;
   }
 }
+
+@media (min-width: 640px) and (max-width: 1400px) {
+  .header-range-blur {
+    /* حذف کامل بلور و افکت‌های شیشه‌ای */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    
+    /* پس‌زمینه جامد ۱۰۰٪ کدر متناسب با تم سایت */
+    background-color: var(--bg-base) !important;
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  }
+}
