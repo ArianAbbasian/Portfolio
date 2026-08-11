@@ -36,7 +36,8 @@ export function Header() {
     pathname === (href === "" ? `/${locale}` : `/${locale}${href}`);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none">
+    <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none transition-all duration-300 header-range-blur">
+      
       {/* ── ۱. نام برند و عنوان شخصی ── */}
       <div className="hidden sm:flex flex-col justify-center pointer-events-auto select-none">
         <Link
@@ -56,10 +57,10 @@ export function Header() {
         </span>
       </div>
 
-      {/* ── ۲. کپسول ناوبری وسط با بلور شیشه‌ای غلیظ و دقیق ── */}
+      {/* ── ۲. کپسول شیشه‌ای شناور در مرکز صفحه ── */}
       <div className="pointer-events-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2">
         <nav
-          className="seg-pill h-11 sm:h-12 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/75 dark:bg-[#0a0a10]/85 shadow-2xl shadow-black/40"
+          className="seg-pill h-11 sm:h-12 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/75 dark:bg-[#0a0a10]/85 shadow-2xl shadow-black/40 backdrop-blur-2xl"
           style={{
             backdropFilter: "blur(8px) saturate(227%)",
             WebkitBackdropFilter: "blur(8px) saturate(227%)",
@@ -113,7 +114,9 @@ export function Header() {
         </button>
 
         <button
-          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+          onClick={() =>
+            setTheme(resolvedTheme === "dark" ? "light" : "dark")
+          }
           aria-label="Toggle theme"
           className="lg-btn size-8 sm:size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
         >
@@ -125,6 +128,7 @@ export function Header() {
             ))}
         </button>
       </div>
+
     </header>
   );
 }
