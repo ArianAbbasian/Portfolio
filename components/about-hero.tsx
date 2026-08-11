@@ -37,18 +37,10 @@ export default function AboutHero() {
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 select-none flex justify-center w-full">
-      {/* هاله‌ی پس‌زمینه بزرگ */}
       <div className="absolute top-[10%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-accent/5 blur-[120px] opacity-60 pointer-events-none" />
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pointer-events-auto">
-        {/* سمت راست/چپ: عنوان و متن */}
         <div className="lg:col-span-7 flex flex-col gap-6 order-2 lg:order-1">
-          <div className="flex items-center gap-2.5">
-            <span className="h-2 w-2 rounded-full bg-text-primary shadow-[0_0_10px_#ffffff] animate-pulse" />
-            <span className="text-[10px] sm:text-[11px] font-mono font-black text-text-muted tracking-[0.25em] uppercase">
-              {locale === "fa" ? "درباره من" : "ABOUT ME"}
-            </span>
-          </div>
 
           <div
             className={[
@@ -79,7 +71,6 @@ export default function AboutHero() {
           </div>
         </div>
 
-        {/* سمت راست/چپ: کارت هویت و کاراکتر ویدیو */}
         <div
           className={[
             "lg:col-span-5 flex justify-center order-1 lg:order-2",
@@ -101,12 +92,11 @@ export default function AboutHero() {
 
               <div className="absolute bottom-4 inset-x-4 h-24 bg-white/70 dark:bg-white/[0.03] border border-border backdrop-blur-2xl rounded-2xl z-10 shadow-lg" />
 
-              {/* 🛡️ بخش ویدیو کاراکتر مجهز به سپر Blob ضد IDM */}
               <div
                 className="relative w-full h-[220px] flex items-end justify-center select-none"
                 onContextMenu={(e) => e.preventDefault()}
               >
-                {/* لایه نامرئی روکش ویدیو */}
+
                 <div
                   className="absolute inset-0 z-20 cursor-default"
                   onContextMenu={(e) => e.preventDefault()}
