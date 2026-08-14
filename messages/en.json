@@ -61,11 +61,23 @@
         "desc": "As an intern at Mosbatesabz, I started my journey in frontend development from the ground up, working with HTML, CSS, and JavaScript while contributing to a real-world online pharmacy project. During this experience, I also became familiar with Scrum, daily stand-ups, and tools like Jira, gaining a better understanding of teamwork and agile development."
       }
     },
-    "educationItem": {
-      "degree": "Associate's Degree, Computer Software Engineering",
-      "school": "Shamsipour Technical and Vocational College",
-      "duration": "Oct 2024 — Present",
-      "desc": "Software engineering associate student at STVC, focusing on core computer science foundations, algorithm design, and software engineering methodologies."
+    "educationItems": {
+      "shamsipour": {
+        "degree": "Bachelor's Degree, Computer Software Engineering",
+        "school": "Shamsipour Technical and Vocational College",
+        "type": "Undergraduate Program",
+        "duration": "Oct 2024 — Present",
+        "gpa": "GPA: 18.56 / 20",
+        "desc": "Software engineering undergraduate student at STVC, focusing on core computer science, operating systems (OS), algorithm design, database systems, and software architecture."
+      },
+      "karamoz": {
+        "degree": "High School Diploma",
+        "school": "KarAmoz High School",
+        "type": "Computer & Software Stream",
+        "duration": "Oct 2021 — Jun 2024",
+        "gpa": "GPA: 18.78 / 20",
+        "desc": "Completed 3 years of secondary education at KarAmoz High School, earning a High School Diploma focused on programming fundamentals, computer networking, web basics, and computer systems."
+      }
     },
     "skills": {
       "cat1": {
