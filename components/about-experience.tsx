@@ -2,7 +2,8 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useTheme } from "@/components/providers";
 
 const EXPERIENCES = [
   {
@@ -34,10 +35,17 @@ const EXPERIENCES = [
 export default function AboutExperience() {
   const t = useTranslations("about");
   const locale = useLocale();
+  const { resolvedTheme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({});
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -49,6 +57,10 @@ export default function AboutExperience() {
   });
 
   const isRTL = locale === "fa";
+  const isDark = mounted && resolvedTheme === "dark";
+  const iconSrc = isDark
+    ? "/images/Icons/experience white.svg"
+    : "/images/Icons/experience.svg";
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
@@ -58,16 +70,40 @@ export default function AboutExperience() {
           ref={containerRef}
           className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative"
         >
-          {/* عنوان اصلی بخش سوابق شغلی */}
-          <div className="md:col-span-4 select-none">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
-              {isRTL ? "مسیر حرفه‌ای و سوابق شغلی" : "Career & Work Experience"}
-            </h2>
-            <p className="text-xs sm:text-sm text-text-secondary mt-3 leading-relaxed font-medium">
-              {isRTL
-                ? "تجربه توسعه وب‌اپلیکیشن‌ها و سیستم‌های بزرگ در شرکت‌های معتبر"
-                : "Building high-performance web applications across enterprise platforms."}
-            </p>
+          {/* عنوان اصلی بخش سوابق شغلی با آیکون SVG و واترمارک محو */}
+          <div className="md:col-span-4 select-none relative">
+            
+            {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
+            <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
+              <img
+                src={iconSrc}
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                {/* باکس شیشه‌ای آیکون SVG کنار عنوان */}
+                <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl">
+                  <img
+                    src={iconSrc}
+                    alt="Experience Icon"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
+                  {isRTL ? "سوابق شغلی" : "Work Experience"}
+                </h2>
+              </div>
+
+              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
+                {isRTL
+                  ? "تجربه توسعه وب‌اپلیکیشن‌ها و سیستم‌های بزرگ در شرکت‌های معتبر"
+                  : "Building high-performance web applications across enterprise platforms."}
+              </p>
+            </div>
           </div>
 
           {/* بدنه اصلی تایم‌لاین */}
@@ -107,7 +143,7 @@ export default function AboutExperience() {
                     transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                     className="relative flex items-start gap-5 sm:gap-6 group z-10"
                   >
-                    {/* لوگوی شرکت: دایره سفید خالص، ۱۰۰٪ بدون هیچ بوردر یا کادر کثیف */}
+                    {/* لوگوی شرکت */}
                     <div className="relative z-20 shrink-0">
                       <div
                         className={[
@@ -155,22 +191,22 @@ export default function AboutExperience() {
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
                             <h3 className="text-base sm:text-lg font-black text-text-primary leading-tight">
-                              {t(`experienceItems.${key}.role`)}
+                              <span>{t(`experienceItems.${key}.role`)}</span>
+                              {isCurrent && (
+                                <span className="inline-flex items-center text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 ms-2 align-middle font-sans">
+                                  {isRTL ? "اکنون" : "PRESENT"}
+                                </span>
+                              )}
                             </h3>
-                            {isCurrent && (
-                              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                {isRTL ? "اکنون" : "PRESENT"}
-                              </span>
-                            )}
                           </div>
-                          <p className="text-xs text-accent font-bold mt-1">
+                          <p className="text-xs text-accent font-bold mt-1.5">
                             {t(`experienceItems.${key}.company`)} —{" "}
                             <span className="opacity-75 font-medium">{t(`experienceItems.${key}.type`)}</span>
                           </p>
                         </div>
 
                         {/* بازه زمانی */}
-                        <span className="text-[11px] sm:text-xs font-semibold text-text-muted bg-white/40 dark:bg-white/[0.03] px-2.5 py-1 rounded-lg border border-border/40 w-fit">
+                        <span className="text-[11px] sm:text-xs font-semibold text-text-muted bg-white/40 dark:bg-white/[0.03] px-2.5 py-1 rounded-lg border border-border/40 w-fit shrink-0">
                           {t(`experienceItems.${key}.duration`)}
                         </span>
                       </div>
