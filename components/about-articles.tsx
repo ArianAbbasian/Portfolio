@@ -29,9 +29,7 @@ export default function AboutArticles() {
       <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
         <div className="mx-auto max-w-5xl flex flex-col gap-12 sm:gap-16">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
-            {/* ۱. عنوان اصلی بخش مقالات با آیکون SVG و واترمارک محو */}
             <div className="md:col-span-4 select-none relative">
-              {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
               <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
                 <img
                   src={iconSrc}
@@ -42,7 +40,6 @@ export default function AboutArticles() {
 
               <div className="relative z-10 flex flex-col gap-3">
                 <div className="flex items-center gap-3">
-                  {/* باکس شیشه‌ای آیکون SVG کنار عنوان */}
                   <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl">
                     <img
                       src={iconSrc}
@@ -62,7 +59,6 @@ export default function AboutArticles() {
               </div>
             </div>
 
-            {/* ۲. کارت اصلی بنتو شوکیس مقاله بین‌المللی */}
             <div className="md:col-span-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -71,10 +67,8 @@ export default function AboutArticles() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="relative border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/80 via-white/50 to-white/70 dark:from-white/[0.04] dark:via-white/[0.015] dark:to-white/[0.03] p-6 sm:p-8 rounded-3xl backdrop-blur-2xl shadow-lg overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
               >
-                {/* هاله‌ی نوری درخشان پس‌زمینه کارت */}
                 <div className="absolute top-0 end-0 -translate-y-12 translate-x-12 size-40 rounded-full bg-accent/15 blur-2xl pointer-events-none" />
 
-                {/* تصویر گواهی مقاله (سمت چپ/بالا) همراه با قابلیت لایت‌باکس */}
                 <div
                   onClick={() =>
                     setLightboxImage("/images/Articles/article.jpg")
@@ -91,9 +85,7 @@ export default function AboutArticles() {
                   </div>
                 </div>
 
-                {/* جزییات، عنوان و متن اصلی مقاله (سمت راست/پایین) */}
                 <div className="lg:col-span-7 flex flex-col gap-3.5 z-10">
-                  {/* برچسب کنفرانس بین‌المللی و تاریخ (کاملاً دو زبانه و بومی‌سازی‌شده) */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-accent/10 text-accent border border-accent/25 backdrop-blur-md">
                       {t("articles.conference")}
@@ -103,19 +95,15 @@ export default function AboutArticles() {
                     </span>
                   </div>
 
-                  {/* عنوان رسمی مقاله پذیرفته‌شده */}
                   <h3 className="text-base sm:text-lg font-black text-text-primary leading-snug tracking-tight">
                     «{t("articles.paperTitle")}»
                   </h3>
 
-                  {/* متن اصلی توضیحات پذیرش مقاله */}
                   <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
                     {t("articles.desc")}
                   </p>
 
-                  {/* برچسب‌های حوزه پژوهشی و دکمه لینک با بج سبز رنگ «رایگان» در گوشه */}
                   <div className="pt-4 border-t border-border/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    {/* برچسب‌های حوزه پژوهشی */}
                     <div className="flex flex-wrap gap-1.5">
                       {[
                         "Digital Twin",
@@ -166,7 +154,6 @@ export default function AboutArticles() {
         </div>
       </section>
 
-      {/* لایت‌باکس پیش‌نمایش بزرگ گواهی مقاله */}
       <Lightbox src={lightboxImage} onClose={() => setLightboxImage(null)} />
     </>
   );
