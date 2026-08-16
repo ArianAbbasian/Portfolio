@@ -2,7 +2,44 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { Sparkles, Gamepad2, Music, Trophy } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useTheme } from "@/components/providers";
+
+// 🌟 آیکون‌های SVG داخلی برای سایر کارت‌ها
+const MusicIcon = ({ className = "size-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M9 18V5l12-2v13" />
+    <circle cx="6" cy="18" r="3" />
+    <circle cx="18" cy="16" r="3" />
+  </svg>
+);
+
+const TrophyIcon = ({ className = "size-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+    <path d="M4 22h16" />
+    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+  </svg>
+);
 
 const INTERESTS = [
   {
@@ -15,7 +52,8 @@ const INTERESTS = [
     descEn: "Passionate about story-driven games, mechanics, and interactive world design.",
     type: "image",
     mediaSrc: "/images/Interests/gaming.jpg",
-    icon: Gamepad2,
+    iconType: "svg",
+    iconSrc: "/images/Icons/gaming.svg",
     badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30",
   },
   {
@@ -28,7 +66,8 @@ const INTERESTS = [
     descEn: "Playing classic guitar for mind relaxation, focus, and crafting warm acoustic melodies.",
     type: "image",
     mediaSrc: "/images/Interests/guitar.jpg",
-    icon: Music,
+    iconType: "component",
+    icon: MusicIcon,
     badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
   },
   {
@@ -41,7 +80,8 @@ const INTERESTS = [
     descEn: "Passionate football enthusiast, following tactical plays and high-stakes matches.",
     type: "video",
     mediaSrc: "/video/football.mp4",
-    icon: Trophy,
+    iconType: "component",
+    icon: TrophyIcon,
     badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
   },
 ];
@@ -49,7 +89,19 @@ const INTERESTS = [
 export default function AboutInterests() {
   const t = useTranslations("about");
   const locale = useLocale();
+  const { resolvedTheme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isRTL = locale === "fa";
+  const isDark = mounted && resolvedTheme === "dark";
+  const iconSrc = isDark
+    ? "/images/Icons/glitter-white.svg"
+    : "/images/Icons/glitter.svg";
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
@@ -57,11 +109,27 @@ export default function AboutInterests() {
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
           
+          {/* ۱. عنوان اصلی بخش علاقه‌مندی‌ها با آیکون SVG و واترمارک محو */}
           <div className="md:col-span-4 select-none relative">
-            <div className="flex flex-col gap-3">
+            
+            {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
+            <div className="absolute -top-6 -start-4 sm:-top-8 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
+              <img
+                src={iconSrc}
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col gap-3">
               <div className="flex items-center gap-3">
-                <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl text-accent">
-                  <Sparkles size={24} strokeWidth={2} />
+                {/* باکس شیشه‌ای آیکون SVG کنار عنوان */}
+                <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl">
+                  <img
+                    src={iconSrc}
+                    alt="Interests Icon"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
@@ -77,6 +145,7 @@ export default function AboutInterests() {
             </div>
           </div>
 
+          {/* ۲. کارت‌های لوکس ریلز / پرتره علاقه‌مندی‌ها */}
           <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {INTERESTS.map((item, idx) => {
               const IconComponent = item.icon;
@@ -90,7 +159,7 @@ export default function AboutInterests() {
                   transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                   className="group relative h-[380px] sm:h-[420px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4"
                 >
-
+                  {/* فایل مدیا (تصویر یا ویدیو) */}
                   <div className="absolute inset-0 z-0 overflow-hidden bg-black/20">
                     {item.type === "video" ? (
                       <video
@@ -113,19 +182,30 @@ export default function AboutInterests() {
                       />
                     )}
 
+                    {/* گرادیان تاریک برای خوانایی کامل متن روی عکس/ویدیو */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
                   </div>
 
+                  {/* هدر کارت: بج دسته‌بندی و آیکون */}
                   <div className="relative z-10 flex items-center justify-between">
                     <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border backdrop-blur-md ${item.badgeColor}`}>
                       {isRTL ? item.categoryFa : item.categoryEn}
                     </span>
 
-                    <div className="size-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white flex items-center justify-center">
-                      <IconComponent size={15} strokeWidth={2.2} />
+                    <div className="size-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white flex items-center justify-center p-1.5">
+                      {item.iconType === "svg" ? (
+                        <img
+                          src={item.iconSrc}
+                          alt="Gaming Icon"
+                          className="w-full h-full object-contain [filter:brightness(0)_invert(1)]"
+                        />
+                      ) : (
+                        IconComponent && <IconComponent className="size-4" />
+                      )}
                     </div>
                   </div>
 
+                  {/* فوتر کارت: عنوان و متن توضیحات پیش‌فرض */}
                   <div className="relative z-10 flex flex-col gap-1.5 text-white">
                     <h3 className="text-base font-black tracking-tight leading-snug drop-shadow-sm">
                       {isRTL ? item.titleFa : item.titleEn}
