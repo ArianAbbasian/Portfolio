@@ -101,6 +101,14 @@
     },
     "placeholders": {
       "goalsText": "My goal is to build deeper and broader knowledge throughout my academic and professional journey. I want to continue growing as a Frontend Developer, but my ultimate goal is to become a Software Engineer and work at leading global companies, where I can lead teams and create solutions to complex problems."
+    },
+    "articles": {
+      "title": "Publications",
+      "subtitle": "Accepted international conference papers and research publications.",
+      "paperTitle": "A Comprehensive Review of Digital Twin Technology in Industrial Manufacturing Systems",
+      "conference": "ITCT 2026 // MADRID, SPAIN",
+      "date": "January 2026",
+      "desc": "I’m grateful to share that our paper titled “A Comprehensive Review of Digital Twin Technology in Industrial Manufacturing Systems” has been accepted at the International Conference on Information and Telecommunication Technology (ITCT), to be held in Madrid, Spain (January 2026). This work is the result of consistent effort and collaboration, especially during a time when staying focused wasn’t always easy."
     }
   },
   "footer": {
