@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/providers";
 
-// 🌟 آیکون‌های SVG داخلی برای سایر کارت‌ها
+// 🌟 آیکون‌های SVG داخلی برای کارت‌ها
 const MusicIcon = ({ className = "size-4" }: { className?: string }) => (
   <svg
     viewBox="0 0 24 24"
@@ -44,12 +44,6 @@ const TrophyIcon = ({ className = "size-4" }: { className?: string }) => (
 const INTERESTS = [
   {
     id: "gaming",
-    titleFa: "ویدیو گیم و بازی‌های ویدیویی",
-    titleEn: "Video Gaming & Interactive Worlds",
-    categoryFa: "گیمینگ",
-    categoryEn: "GAMING",
-    descFa: "علاقه‌مند به بازی‌های داستانی، رقابتی و تجربه دنیای تعاملی و طراحی مرحله.",
-    descEn: "Passionate about story-driven games, mechanics, and interactive world design.",
     type: "image",
     mediaSrc: "/images/Interests/gaming.jpg",
     iconType: "svg",
@@ -58,12 +52,6 @@ const INTERESTS = [
   },
   {
     id: "guitar",
-    titleFa: "گیتار کلاسیک و موسیقی",
-    titleEn: "Classic Guitar & Acoustic Music",
-    categoryFa: "موسیقی",
-    categoryEn: "MUSIC",
-    descFa: "نواختن گیتار کلاسیک برای آرامش ذهن، تمرکز و خلق ملودی‌های دلنشین.",
-    descEn: "Playing classic guitar for mind relaxation, focus, and crafting warm acoustic melodies.",
     type: "image",
     mediaSrc: "/images/Interests/guitar.jpg",
     iconType: "component",
@@ -72,12 +60,6 @@ const INTERESTS = [
   },
   {
     id: "football",
-    titleFa: "فوتبال و هیجان ورزش",
-    titleEn: "Football & Sports Passion",
-    categoryFa: "ورزش / ویدیو",
-    categoryEn: "SPORTS / REEL",
-    descFa: "دنبال‌کننده پرشور مسابقات فوتبال، تحلیل تاکتیک‌ها و هیجان مسابقات بزرگ.",
-    descEn: "Passionate football enthusiast, following tactical plays and high-stakes matches.",
     type: "video",
     mediaSrc: "/video/football.mp4",
     iconType: "component",
@@ -109,7 +91,7 @@ export default function AboutInterests() {
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
           
-          {/* ۱. عنوان اصلی بخش علاقه‌مندی‌ها با آیکون SVG و واترمارک محو */}
+          {/* ۱. عنوان اصلی بخش علاقه‌مندی‌ها با آیکون SVG و i18n */}
           <div className="md:col-span-4 select-none relative">
             
             {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
@@ -138,9 +120,7 @@ export default function AboutInterests() {
               </div>
 
               <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
-                {isRTL
-                  ? "سرگرمی‌ها، دغدغه‌ها و فعالیت‌های پرشور خارج از دنیای کدنویسی"
-                  : "Hobbies, creative passions, and activities outside the world of coding."}
+                {t("interests.subtitle")}
               </p>
             </div>
           </div>
@@ -157,7 +137,7 @@ export default function AboutInterests() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
-                  className="group relative h-[380px] sm:h-[420px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4"
+                  className="group relative min-h-[400px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4 sm:p-5"
                 >
                   {/* فایل مدیا (تصویر یا ویدیو) */}
                   <div className="absolute inset-0 z-0 overflow-hidden bg-black/20">
@@ -177,19 +157,19 @@ export default function AboutInterests() {
                     ) : (
                       <img
                         src={item.mediaSrc}
-                        alt={isRTL ? item.titleFa : item.titleEn}
+                        alt={t(`interests.items.${item.id}.title`)}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     )}
 
-                    {/* گرادیان تاریک برای خوانایی کامل متن روی عکس/ویدیو */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
+                    {/* گرادیان تاریک غلیظ برای خوانایی ۱۰۰٪ کامل متن بدون محدودیت خط */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent" />
                   </div>
 
                   {/* هدر کارت: بج دسته‌بندی و آیکون */}
                   <div className="relative z-10 flex items-center justify-between">
                     <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border backdrop-blur-md ${item.badgeColor}`}>
-                      {isRTL ? item.categoryFa : item.categoryEn}
+                      {t(`interests.items.${item.id}.category`)}
                     </span>
 
                     <div className="size-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white flex items-center justify-center p-1.5">
@@ -205,13 +185,13 @@ export default function AboutInterests() {
                     </div>
                   </div>
 
-                  {/* فوتر کارت: عنوان و متن توضیحات پیش‌فرض */}
-                  <div className="relative z-10 flex flex-col gap-1.5 text-white">
+                  {/* فوتر کارت: عنوان و متن توضیحات کامل بدون هیچ‌گونه بریدگی یا سه نقطه */}
+                  <div className="relative z-10 flex flex-col gap-1.5 text-white mt-auto pt-8">
                     <h3 className="text-base font-black tracking-tight leading-snug drop-shadow-sm">
-                      {isRTL ? item.titleFa : item.titleEn}
+                      {t(`interests.items.${item.id}.title`)}
                     </h3>
-                    <p className="text-xs text-white/80 leading-relaxed font-medium line-clamp-3">
-                      {isRTL ? item.descFa : item.descEn}
+                    <p className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-medium">
+                      {t(`interests.items.${item.id}.desc`)}
                     </p>
                   </div>
                 </motion.div>
