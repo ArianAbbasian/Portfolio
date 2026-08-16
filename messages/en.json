@@ -79,37 +79,27 @@
         "desc": "Completed 3 years of secondary education at KarAmoz High School, earning a High School Diploma focused on programming fundamentals, computer networking, web basics, and computer systems."
       }
     },
-    "skills": {
-      "cat1": {
-        "title": "Frontend Core",
-        "quote": "\"Building bridges between frontend magic and clean, maintainable logic.\""
-      },
-      "cat2": {
-        "title": "Modern Frameworks",
-        "quote": "\"Perfection is achieved not when there is nothing to add, but when there is nothing to take away.\""
-      },
-      "cat3": {
-        "title": "UI & Styling",
-        "quote": "\"Design is not just what it looks like and feels like. Design is how it works.\""
-      },
-      "cat4": {
-        "title": "Backend & DB",
-        "quote": "\"From database queries to server logic, every layer of the architecture matters.\""
-      },
-      "cat5": {
-        "title": "API & Networking",
-        "quote": "\"Creating reliable channels for data to flow seamlessly across distributed systems.\""
-      },
-      "cat6": {
-        "title": "Workflow & Team",
-        "quote": "\"Great software is not built by individuals, but by aligned minds playing in harmony.\""
+    "interests": {
+      "subtitle": "Get to know about my life beyond coding; these interests help me maintain a healthy balance between work and life.",
+      "items": {
+        "gaming": {
+          "title": "Video Gaming",
+          "category": "GAMING",
+          "desc": "This hobby not only helps me relax, but also boosts my creativity; I genuinely love playing video games."
+        },
+        "guitar": {
+          "title": "Classic Guitar",
+          "category": "MUSIC",
+          "desc": "Playing guitar feels like discovering a new world; music brings me peace and positive vibes."
+        },
+        "football": {
+          "title": "Football & Sports",
+          "category": "SPORTS",
+          "desc": "Playing football with my friends is always a good time and a great excuse to hang out together."
+        }
       }
     },
     "placeholders": {
-      "interest1": "Interactive Design",
-      "interest1Desc": "Creating interfaces that react beautifully to user behavior.",
-      "interest2": "Creative Coding",
-      "interest2Desc": "Experimenting with mathematics and physics-based animations.",
       "goalsText": "My future roadmap focuses on mastering creative development, exploring WebGL/Three.js, advanced performance optimization, and systems architecture."
     }
   },
