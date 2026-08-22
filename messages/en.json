@@ -37,6 +37,35 @@
       "interests": "Interests",
       "futureGoals": "Future Goals"
     },
+    "introSlides": [
+      {
+        "segments": [
+          {
+            "type": "text",
+            "content": "Hey, I'm Arian, a Software Engineering student and "
+          },
+          { "type": "highlight", "content": "Web Developer" },
+          { "type": "text", "content": "." }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "type": "text",
+            "content": "I love solving problems and building "
+          },
+          { "type": "highlight", "content": "digital experiences" },
+          { "type": "text", "content": " that look great," }
+        ]
+      },
+      {
+        "segments": [
+          { "type": "text", "content": "feel right, and actually bring " },
+          { "type": "highlight", "content": "value" },
+          { "type": "text", "content": " to users and businesses." }
+        ]
+      }
+    ],
     "bio": "Hey, I'm Arian, a Software Engineering student and Web Developer. I love solving problems and building digital experiences that look great, feel right, and actually bring value to users and businesses.",
     "experience": {
       "title": "Work Experience",
