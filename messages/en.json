@@ -107,6 +107,15 @@
         "desc": "As an intern at Mosbatesabz, I started my journey in frontend development from the ground up, working with HTML, CSS, and JavaScript while contributing to a real-world online pharmacy project. During this experience, I also became familiar with Scrum, daily stand-ups, and tools like Jira, gaining a better understanding of teamwork and agile development."
       }
     },
+    "skills": {
+      "titleBefore": "Tech",
+      "titleHighlight": "Stack",
+      "categories": {
+        "frontend": "Frontend Development",
+        "backend": "Backend & Data",
+        "ui": "UI/UX Design"
+      }
+    },
     "education": {
       "title": "Education",
       "subtitle": "Computer science foundations and software engineering principles.",

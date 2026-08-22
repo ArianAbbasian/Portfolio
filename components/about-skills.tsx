@@ -6,6 +6,12 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+const CATEGORY_TRANSLATION_KEYS = {
+  frontend: "skills.categories.frontend",
+  backend: "skills.categories.backend",
+  ui: "skills.categories.ui",
+} as const;
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface Skill {
@@ -16,8 +22,6 @@ interface Skill {
 
 interface SkillCategory {
   id: string;
-  titleFa: string;
-  titleEn: string;
   categoryImage: string;
   accentColor: string;
   accentText: string;
@@ -27,46 +31,68 @@ interface SkillCategory {
 const SKILL_CATEGORIES: SkillCategory[] = [
   {
     id: "frontend",
-    titleFa: "توسعه فرانت‌اند",
-    titleEn: "Frontend Development",
     categoryImage: "/images/skills/frontend.png",
     accentColor: "rgba(0, 122, 255, 0.25)",
     accentText: "text-blue-500",
     skills: [
-      { name: "JavaScript", logo: "/images/skills/javaScript.png", floatSpeed: 3.2 },
-      { name: "TypeScript", logo: "/images/skills/Typescript.png", floatSpeed: 4.1 },
+      {
+        name: "JavaScript",
+        logo: "/images/skills/javaScript.png",
+        floatSpeed: 3.2,
+      },
+      {
+        name: "TypeScript",
+        logo: "/images/skills/Typescript.png",
+        floatSpeed: 4.1,
+      },
       { name: "React.js", logo: "/images/skills/react.png", floatSpeed: 3.7 },
       { name: "Next.js", logo: "/images/skills/next.png", floatSpeed: 4.5 },
     ],
   },
   {
     id: "backend",
-    titleFa: "بک‌اند و داده",
-    titleEn: "Backend & Data",
     categoryImage: "/images/skills/backend.png",
     accentColor: "rgba(147, 51, 234, 0.25)",
     accentText: "text-purple-500",
     skills: [
-      { name: "ASP.NET", logo: "/images/skills/asp-net-core.png", floatSpeed: 3.5 },
+      {
+        name: "ASP.NET",
+        logo: "/images/skills/asp-net-core.png",
+        floatSpeed: 3.5,
+      },
       { name: "REST APIs", logo: "/images/skills/api.png", floatSpeed: 4.3 },
-      { name: "SQL Server", logo: "/images/skills/sql-server.png", floatSpeed: 3.8 },
+      {
+        name: "SQL Server",
+        logo: "/images/skills/sql-server.png",
+        floatSpeed: 3.8,
+      },
       { name: "MongoDB", logo: "/images/skills/mongodb.png", floatSpeed: 4.6 },
     ],
   },
   {
     id: "ui",
-    titleFa: "طراحی UI/UX",
-    titleEn: "UI/UX Design",
     categoryImage: "/images/skills/ui.png",
     accentColor: "rgba(16, 185, 129, 0.25)",
     accentText: "text-emerald-500",
     skills: [
       { name: "HTML5", logo: "/images/skills/html.png", floatSpeed: 3.3 },
       { name: "CSS3", logo: "/images/skills/css.png", floatSpeed: 4.2 },
-      { name: "Tailwind CSS", logo: "/images/skills/tailwind.png", floatSpeed: 3.6 },
-      { name: "Bootstrap", logo: "/images/skills/bootStrap.png", floatSpeed: 4.8 },
+      {
+        name: "Tailwind CSS",
+        logo: "/images/skills/tailwind.png",
+        floatSpeed: 3.6,
+      },
+      {
+        name: "Bootstrap",
+        logo: "/images/skills/bootStrap.png",
+        floatSpeed: 4.8,
+      },
       { name: "Material UI", logo: "/images/skills/MUI.png", floatSpeed: 3.9 },
-      { name: "Responsive UI", logo: "/images/skills/Responsive UI.png", floatSpeed: 4.4 },
+      {
+        name: "Responsive UI",
+        logo: "/images/skills/Responsive UI.png",
+        floatSpeed: 4.4,
+      },
     ],
   },
 ];
@@ -101,6 +127,7 @@ const bubbleVariants = {
 };
 
 export default function AboutSkills() {
+  const t = useTranslations("about");
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
@@ -134,12 +161,12 @@ export default function AboutSkills() {
               const totalSectors = SKILL_CATEGORIES.length;
               const index = Math.min(
                 Math.floor(progress * totalSectors),
-                totalSectors - 1
+                totalSectors - 1,
               );
               setActiveIndex(index);
             },
           },
-        }
+        },
       );
     }, skillsTriggerRef);
 
@@ -170,9 +197,15 @@ export default function AboutSkills() {
     <>
       <style jsx global>{`
         @keyframes organicFloat {
-          0% { transform: translate3d(0, 0, 0) rotate(0deg); }
-          50% { transform: translate3d(0, -6px, 0) rotate(1.5deg); }
-          100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+          0% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
+          50% {
+            transform: translate3d(0, -6px, 0) rotate(1.5deg);
+          }
+          100% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
         }
       `}</style>
 
@@ -195,30 +228,17 @@ export default function AboutSkills() {
           {/* ۰. عنوان اصلی بزرگ بخش مهارت‌ها */}
           <div className="w-full text-center shrink-0 z-20">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-text-primary">
-              {isRTL ? (
-                <span>
-                  تکنولوژی‌ها و{" "}
-                  <span className="bg-gradient-to-r from-accent via-purple-500 to-accent bg-clip-text text-transparent">
-                    مهارت‌ها
-                  </span>
-                </span>
-              ) : (
-                <span>
-                  Tech{" "}
-                  <span className="bg-gradient-to-r from-accent via-purple-500 to-accent bg-clip-text text-transparent">
-                    Stack
-                  </span>
-                </span>
-              )}
+              {t("skills.titleBefore")}{" "}
+              <span className="bg-gradient-to-r from-accent via-purple-500 to-accent bg-clip-text text-transparent">
+                {t("skills.titleHighlight")}
+              </span>
             </h2>
           </div>
 
           {/* ۱ و ۲. بدنه اصلی استیج مهارت‌ها */}
           <div className="mx-auto max-w-6xl w-full flex flex-col md:grid md:grid-cols-12 items-center justify-center gap-3 sm:gap-6 lg:gap-8 my-auto z-10">
-            
             {/* بخش سکان چرخشی و عنوان دسته‌بندی */}
             <div className="md:col-span-5 flex flex-col items-center justify-center text-center gap-2 sm:gap-4 relative shrink-0 w-full">
-              
               {/* کانتینر سکان چرخشی اصلی (size-52 معادل 208px در نمایشگر زیر 640px) */}
               <div className="relative size-52 sm:size-56 md:size-60 lg:size-72 flex items-center justify-center p-2">
                 {/* SVG سکان مکانیکی */}
@@ -283,10 +303,14 @@ export default function AboutSkills() {
                       initial={{ opacity: 0, scale: 0.4, rotate: -60 }}
                       animate={{ opacity: 1, scale: 1, rotate: 0 }}
                       exit={{ opacity: 0, scale: 0.4, rotate: 60 }}
-                      transition={{ duration: 0.4, ease: [0.175, 0.885, 0.32, 1.275] }}
+                      transition={{
+                        duration: 0.4,
+                        ease: [0.175, 0.885, 0.32, 1.275],
+                      }}
                       className="w-full h-full object-contain filter drop-shadow-lg"
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).style.display = 'none';
+                        (e.currentTarget as HTMLImageElement).style.display =
+                          "none";
                       }}
                     />
                   </AnimatePresence>
@@ -310,7 +334,11 @@ export default function AboutSkills() {
                     transition={{ duration: 0.2 }}
                     className="text-xl sm:text-2xl lg:text-3xl font-black text-text-primary tracking-tight"
                   >
-                    {isRTL ? currentCat.titleFa : currentCat.titleEn}
+                    {t(
+                      CATEGORY_TRANSLATION_KEYS[
+                        currentCat.id as keyof typeof CATEGORY_TRANSLATION_KEYS
+                      ],
+                    )}
                   </motion.h3>
                 </AnimatePresence>
 
@@ -324,10 +352,16 @@ export default function AboutSkills() {
                         onClick={() => handleCategoryClick(idx)}
                         className={[
                           "relative z-10 px-3 py-1 text-[11px] sm:text-xs font-bold transition-colors duration-200 cursor-pointer whitespace-nowrap rounded-full",
-                          active ? "text-text-primary" : "text-text-secondary hover:text-text-primary",
+                          active
+                            ? "text-text-primary"
+                            : "text-text-secondary hover:text-text-primary",
                         ].join(" ")}
                       >
-                        {isRTL ? cat.titleFa : cat.titleEn}
+                        {t(
+                          CATEGORY_TRANSLATION_KEYS[
+                            cat.id as keyof typeof CATEGORY_TRANSLATION_KEYS
+                          ],
+                        )}
 
                         {active && (
                           <motion.div
@@ -345,14 +379,11 @@ export default function AboutSkills() {
                   })}
                 </div>
               </div>
-
             </div>
 
             {/* کانتینر آکواریوم شیشه‌ای استیج اصلی مهارت‌ها (با ارتفاع قفل‌شده و ثابت) */}
             <div className="md:col-span-7 relative flex items-center justify-center w-full shrink-0">
-              
               <div className="w-full max-w-xl h-[280px] sm:h-[350px] lg:h-[420px] rounded-3xl sm:rounded-[2.5rem] border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/70 via-white/40 to-white/60 dark:from-white/[0.08] dark:via-white/[0.03] dark:to-white/[0.05] backdrop-blur-2xl shadow-[0_15px_40px_rgba(0,122,255,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.5)] relative overflow-hidden p-3 sm:p-6 lg:p-8 flex items-center justify-center">
-                
                 {/* لبه نوری درخشان */}
                 <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-accent/60 dark:via-accent/80 to-transparent opacity-90" />
 
@@ -378,7 +409,11 @@ export default function AboutSkills() {
                           variants={bubbleVariants}
                           whileHover={{ scale: 1.08, zIndex: 50 }}
                           whileTap={{ scale: 0.92 }}
-                          transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 320,
+                            damping: 22,
+                          }}
                           className="relative group cursor-pointer flex justify-center items-center"
                         >
                           {/* حباب کریستالی */}
@@ -433,11 +468,8 @@ export default function AboutSkills() {
                     })}
                   </motion.div>
                 </AnimatePresence>
-
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
