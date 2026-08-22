@@ -115,8 +115,7 @@ html[dir="rtl"] body {
    PREMIUM LIQUID GLASS STYLES (Tailwind Override Protected)
    ═══════════════════════════════════════════════ */
 @layer utilities {
-  /* ─── Segmented Control Outer Trough ─── */
-  /* ─── Segmented Control Outer Trough (کپسول شیشه‌ای وسط) ─── */
+  /* ─── Segmented Control Outer Trough  ─── */
   .seg-pill {
     position: relative;
     display: flex;
@@ -147,10 +146,8 @@ html[dir="rtl"] body {
     position: relative;
     overflow: hidden;
 
-    /* پس‌زمینه شیشه‌ای اپل */
     background: rgba(255, 255, 255, 0.75) !important;
 
-    /* مرز متمایز و مشهود در حالت روشن (Apple Border Style) */
     border: 1px solid rgba(0, 0, 0, 0.1) !important;
 
     backdrop-filter: blur(8px) saturate(227%) !important;
@@ -161,7 +158,6 @@ html[dir="rtl"] body {
       0 2px 8px rgba(0, 0, 0, 0.05),
       0 0 0 0.5px rgba(0, 0, 0, 0.04) !important;
 
-    /* رنگ متن و آیکون پرکنتراست */
     color: #0f172a !important;
 
     transition:
@@ -185,7 +181,6 @@ html[dir="rtl"] body {
     ) !important;
   }
 
-  /* هاور دکمه در حالت لایت */
   .lg-btn:hover {
     background: rgba(255, 255, 255, 0.95) !important;
     border-color: rgba(0, 0, 0, 0.18) !important;
@@ -200,7 +195,6 @@ html[dir="rtl"] body {
     transform: scale(0.94) !important;
   }
 
-  /* ─── Controls: Liquid Buttons (.lg-btn حالت دارک مود) ─── */
   .dark .lg-btn {
     background: linear-gradient(
       to bottom,
@@ -323,7 +317,6 @@ html[dir="rtl"] body {
     position: relative;
     overflow: hidden;
 
-    /* تغییر مهم: ترکیب مشکی فوق‌العاده شفاف با سفید برای ایجاد تضاد روی هدر سفید */
     background:
       linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.05)),
       linear-gradient(
@@ -332,21 +325,17 @@ html[dir="rtl"] body {
         rgba(255, 255, 255, 0.3)
       ) !important;
 
-    /* مرز شیشه‌ای متمایز و ضخیم‌تر در حالت لایت */
     border: 1px solid rgba(255, 255, 255, 0.9) !important;
 
-    /* اشباع رنگ بالا برای عبور دادن رنگ‌های پشتی */
     backdrop-filter: blur(14px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
 
     box-shadow:
       inset 0 1.5px 0.5px rgba(255, 255, 255, 1),
-      /* لبه نوری درخشان بالا */ inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-      /* سایه داخلی تیره برای ایجاد بعد و ضخامت شیشه */ 0 3px 8px
-        rgba(0, 0, 0, 0.04),
-      /* سایه نرم بیرونی برای معلق شدن */ 0 0 0 0.5px rgba(0, 0, 0, 0.03) !important;
+      inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+      0 3px 8px rgba(0, 0, 0, 0.04),
+      0 0 0 0.5px rgba(0, 0, 0, 0.03) !important;
 
-    /* رنگ متن و آیکون‌ها برای خوانایی بیشتر در شیشه روشن */
     color: #2e3542 !important;
 
     transition:
@@ -357,7 +346,6 @@ html[dir="rtl"] body {
       color 0.2s ease !important;
   }
 
-  /* رفلکس شدید نوری در بالا سمت چپ دکمه */
   .lg-btn::before {
     content: "";
     position: absolute;
@@ -371,7 +359,6 @@ html[dir="rtl"] body {
     ) !important;
   }
 
-  /* هاور دکمه در حالت لایت (شیشه کاملاً براق و فشرده می‌شود) */
   .lg-btn:hover {
     background: linear-gradient(
       to bottom,
@@ -391,7 +378,6 @@ html[dir="rtl"] body {
     transform: scale(0.94) !important;
   }
 
-  /* ─── Controls: Liquid Buttons (.lg-btn Dark Mode) ─── */
   .dark .lg-btn {
     background: linear-gradient(
       to bottom,
@@ -464,11 +450,8 @@ html.custom-cursor-active * {
 
 @media (min-width: 640px) and (max-width: 1400px) {
   .header-range-blur {
-    /* حذف کامل بلور و افکت‌های شیشه‌ای */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-
-    /* پس‌زمینه جامد ۱۰۰٪ کدر متناسب با تم سایت */
     background-color: var(--bg-base) !important;
     border-bottom: 1px solid var(--border) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;

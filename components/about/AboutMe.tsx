@@ -73,16 +73,13 @@ export default function AboutMe() {
         ref={pinRef}
         className="w-full h-screen flex flex-col justify-between py-10 md:py-16 select-none relative"
       >
-        {/* هاله نوری پس‌زمینه */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[300px] w-[600px] rounded-full bg-accent/5 blur-[120px] opacity-70 pointer-events-none" />
 
-        {/* ۱. هدر بالای اسکرولر */}
         <div className="mx-auto max-w-5xl w-full px-6 md:px-12 lg:px-16 flex items-center justify-between text-[10px] sm:text-[11px] font-sans text-text-muted font-bold tracking-widest uppercase">
           <span></span>
           <span></span>
         </div>
 
-        {/* ۲. بدنه متن اسلایدها */}
         <div className="w-full overflow-visible my-auto py-8 sm:py-16 relative">
           <div
             ref={textRef}
@@ -114,7 +111,6 @@ export default function AboutMe() {
           </div>
         </div>
 
-        {/* ۳. خط تراز نوری و فوتر پایین اسکرولر */}
         <div className="mx-auto max-w-5xl w-full px-6 md:px-12 lg:px-16 flex flex-col gap-6">
           <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-border to-transparent" />
           <div className="flex items-center justify-between text-[10px] font-sans text-text-muted font-bold tracking-widest uppercase opacity-60"></div>

@@ -10,7 +10,6 @@ import Lightbox from "../ui/Lightbox";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// تم‌های رنگی مجزا به همراه استایل دکمه‌های هاور اختصاصی
 const PROJECT_THEMES = [
   {
     accent: "text-purple-600 dark:text-purple-400",
@@ -166,7 +165,6 @@ export default function ProjectsList() {
                 }}
               />
 
-              {/* کارت اصلی پروژه‌ها */}
               <div
                 onClick={() => !isDesktop && setSelectedProject(project)}
                 className={[
@@ -183,10 +181,8 @@ export default function ProjectsList() {
                     "0 20px 50px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
                 }}
               >
-                {/* افکت درخشش نوری شیشه‌ای متحرک */}
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out bg-gradient-to-r from-transparent via-white/45 dark:via-white/12 to-transparent pointer-events-none z-20" />
 
-                {/* هدر کارت */}
                 <div className="flex items-center justify-between z-10 w-full mb-6">
                   <div className="flex items-center gap-2 sm:gap-3">
                     <span
@@ -223,9 +219,7 @@ export default function ProjectsList() {
                   </div>
                 </div>
 
-                {/* بدنه اصلی کارت */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center my-auto z-10 w-full">
-                  {/* بخش متون */}
                   <div
                     className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1"
                     style={{ direction: locale === "fa" ? "rtl" : "ltr" }}
@@ -246,7 +240,6 @@ export default function ProjectsList() {
                     </p>
                   </div>
 
-                  {/* بخش تصویر */}
                   <div
                     onClick={(e) => {
                       if (!isDesktop) {
@@ -271,12 +264,7 @@ export default function ProjectsList() {
                   </div>
                 </div>
 
-                {/* 
-                  ─── فوتر کارت (کاملاً اصلاح شده و پویا) ───
-                  تگ‌های تکنولوژی در موبایل مخفی می‌شوند، اما دکمه CTA به صورت تمام‌عرض (w-full) برای راهنمایی دقیق کاربر باقی می‌ماند!
-                */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-6 z-10 w-full mt-6">
-                  {/* پنهان‌سازی مینی‌مال فقط کپسول‌های تکنولوژی در موبایل */}
                   <div className="hidden lg:flex flex-wrap gap-1.5 sm:gap-2">
                     {pData.technologies.map((tag, idx) => (
                       <span
@@ -291,7 +279,6 @@ export default function ProjectsList() {
                     ))}
                   </div>
 
-                  {/* دکمه ناوبری که در موبایل به صورت تمام‌عرض (w-full) برای راهنمایی ۱۰۰٪ کلاینت لمسی ظاهر می‌شود */}
                   <button
                     onClick={() => setSelectedProject(project)}
                     className={[

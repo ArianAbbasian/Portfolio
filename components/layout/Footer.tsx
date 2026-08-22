@@ -10,15 +10,12 @@ export default function Footer() {
   return (
     <footer className="relative mt-20 border-t border-border/40 px-6 py-14">
       <div className="mx-auto max-w-5xl flex flex-col gap-12">
-        {/* بخش اصلی */}
         <div className="flex flex-col items-center text-center gap-6">
           <h2 className="max-w-3xl text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-text-primary leading-snug">
             {t("readyText")}
           </h2>
 
-          {/* دکمه‌های ارتباطی */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            {/* دکمه ایمیل */}
             <motion.a
               href="mailto:ArianAbbasian013@gmail.com?subject=Project%20Inquiry"
               whileHover={{ scale: 1.03 }}
@@ -29,7 +26,6 @@ export default function Footer() {
               {t("emailMe")}
             </motion.a>
 
-            {/* دکمه تلگرام */}
             <motion.a
               href="https://t.me/Arian_Abbasian"
               target="_blank"
@@ -44,7 +40,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* بخش پایین */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/30 pt-6 text-xs text-text-muted">
           <p>{t("copyRight")}</p>
 

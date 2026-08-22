@@ -38,7 +38,6 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none transition-all duration-300 header-range-blur">
       
-      {/* ── ۱. نام برند و عنوان شخصی ── */}
       <div className="hidden sm:flex flex-col justify-center pointer-events-auto select-none">
         <Link
           href={`/${locale}`}
@@ -53,11 +52,10 @@ export function Header() {
           <span className="text-accent">.</span>
         </Link>
         <span className="text-[10px] sm:text-[11px] text-text-muted mt-1 font-medium tracking-wider uppercase opacity-80">
-          {locale === "fa" ? "توسعه‌دهنده فرانت‌اند" : "Frontend Engineer"}
+          {locale === "fa" ? "طراح وب‌سایت و توسعه‌دهنده فرانت‌اند" : "Frontend Developer"}
         </span>
       </div>
 
-      {/* ── ۲. کپسول شیشه‌ای شناور در مرکز صفحه ── */}
       <div className="pointer-events-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2">
         <nav
           className="seg-pill h-11 sm:h-12 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/75 dark:bg-[#0a0a10]/85 shadow-2xl shadow-black/40 backdrop-blur-2xl"
@@ -83,7 +81,6 @@ export function Header() {
               >
                 <span className="relative z-10 px-1">{label}</span>
 
-                {/* لایه انیمیشنی شیشه‌ای داینامیک */}
                 {active && (
                   <motion.div
                     layoutId="active-liquid-glass"
@@ -94,7 +91,6 @@ export function Header() {
                       damping: 26,
                     }}
                   >
-                    {/* خط نوری بالای دکمه */}
                     <div className="seg-top-glow" />
                   </motion.div>
                 )}
@@ -104,7 +100,6 @@ export function Header() {
         </nav>
       </div>
 
-      {/* ── ۳. دکمه‌های کنترل سمت راست/چپ ── */}
       <div className="pointer-events-auto flex items-center gap-2 sm:gap-3">
         <button
           onClick={switchLocale}

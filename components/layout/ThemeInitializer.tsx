@@ -3,7 +3,6 @@
 import { useServerInsertedHTML } from "next/navigation";
 
 export function ThemeInitializer() {
-  // تزریق تم استاتیک در زمان ساخت صفحات (SSG) بدون ایجاد رندر سمت کلاینت ری‌اکت
   useServerInsertedHTML(() => {
     return (
       <script

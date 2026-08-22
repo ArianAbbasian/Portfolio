@@ -58,7 +58,6 @@ export default function AboutGoals() {
     setMounted(true);
   }, []);
 
-  // چرخه زمان‌بندی: ۴.۵ ثانیه برای هر ایستگاه (۱.۵ ثانیه حرکت + ۳ ثانیه توقف)
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStation((prev) => (prev + 1) % STATIONS.length);
@@ -70,7 +69,6 @@ export default function AboutGoals() {
   const isDark = mounted && resolvedTheme === "dark";
   const iconSrc = isDark ? "/icons/goals-white.svg" : "/icons/goals.svg";
 
-  // مسیر دقیق خط پیست برای هماهنگی ۱۰۰٪ خط و ماشین
   const trackPathD =
     "M 70,22 H 330 A 42,42 0 0 1 372,64 A 42,42 0 0 1 330,106 H 70 A 42,42 0 0 1 28,64 A 42,42 0 0 1 70,22 Z";
 
@@ -90,9 +88,7 @@ export default function AboutGoals() {
       <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
         <div className="mx-auto max-w-5xl flex flex-col gap-12 sm:gap-16">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
-            {/* ۱. عنوان اصلی بخش اهداف آینده با آیکون SVG و واترمارک محو */}
             <div className="md:col-span-4 select-none relative">
-              {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
               <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
                 <img
                   src={iconSrc}
@@ -103,7 +99,6 @@ export default function AboutGoals() {
 
               <div className="relative z-10 flex flex-col gap-3">
                 <div className="flex items-center gap-3">
-                  {/* باکس شیشه‌ای آیکون SVG کنار عنوان */}
                   <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl">
                     <img
                       src={iconSrc}
@@ -123,9 +118,7 @@ export default function AboutGoals() {
               </div>
             </div>
 
-            {/* ۲. بدنه استیج پیست مسابقه و کارت بیانیه اهداف آینده */}
             <div className="md:col-span-8 flex flex-col gap-6">
-              {/* 🏎️ پیست مسابقه و نمایش عنوان ایستگاه‌ها روی خود پیست */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -133,16 +126,13 @@ export default function AboutGoals() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="relative w-full h-48 sm:h-56 rounded-3xl border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl p-4 flex flex-col items-center justify-center overflow-hidden shadow-xs"
               >
-                {/* هاله‌ی نوری پس‌زمینه پیست */}
                 <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-purple-500/10 to-accent/10 blur-xl pointer-events-none" />
 
-                {/* SVG اصلی پیست و عناوین ایستگاه‌ها */}
                 <svg
                   viewBox="0 0 400 128"
                   className="w-full h-full max-w-lg overflow-visible relative z-10"
                   fill="none"
                 >
-                  {/* خط‌چین پیست خارجی */}
                   <rect
                     x="10"
                     y="8"
@@ -155,7 +145,6 @@ export default function AboutGoals() {
                     className="opacity-20"
                   />
 
-                  {/* مسیر اصلی نئونی پیست */}
                   <path
                     d={trackPathD}
                     stroke="url(#trackGradient)"
@@ -164,7 +153,6 @@ export default function AboutGoals() {
                     className="opacity-85"
                   />
 
-                  {/* گرادیان خط پیست */}
                   <defs>
                     <linearGradient
                       id="trackGradient"
@@ -191,14 +179,12 @@ export default function AboutGoals() {
                     </linearGradient>
                   </defs>
 
-                  {/* ۴ ایستگاه و عناوین آن‌ها با ترنزیشن‌های نرم فرمر موشن */}
                   {STATIONS.map((st, idx) => {
                     const isActive = activeStation === idx;
                     const title = isRTL ? st.titleFa : st.titleEn;
 
                     return (
                       <g key={st.id}>
-                        {/* هاله نوری محو و ملایم پشت ایستگاه فعال */}
                         {isActive && (
                           <motion.circle
                             cx={st.cx}
@@ -214,7 +200,6 @@ export default function AboutGoals() {
                           />
                         )}
 
-                        {/* نقطه ایستگاه با انیمیشن سایز و رنگ فوق‌العاده روان */}
                         <motion.circle
                           cx={st.cx}
                           cy={st.cy}
@@ -230,7 +215,6 @@ export default function AboutGoals() {
                           }}
                         />
 
-                        {/* عنوان ایستگاه با ترنزیشن نرم رنگ، شفافیت و سایز */}
                         <motion.text
                           x={st.textX}
                           y={st.textY}
@@ -263,7 +247,6 @@ export default function AboutGoals() {
                     );
                   })}
 
-                  {/* 🏎️ ماشین متحرک روی مسیر پیست */}
                   <g>
                     <text
                       fontSize="13"
@@ -285,7 +268,6 @@ export default function AboutGoals() {
                 </svg>
               </motion.div>
 
-              {/* 🌟 کارت اصلی بیانیه چشم‌انداز (Manifesto Card) بدون font-mono و بدون باکس‌های رنگی */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -293,10 +275,8 @@ export default function AboutGoals() {
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                 className="relative border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/80 via-white/50 to-white/70 dark:from-white/[0.04] dark:via-white/[0.015] dark:to-white/[0.03] p-6 sm:p-8 rounded-3xl backdrop-blur-2xl shadow-lg overflow-hidden flex flex-col gap-5"
               >
-                {/* هاله‌ی نوری درخشان گوشه کارت */}
                 <div className="absolute top-0 end-0 -translate-y-12 translate-x-12 size-40 rounded-full bg-accent/15 blur-2xl pointer-events-none" />
 
-                {/* هدر کارت چشم‌انداز */}
                 <div className="flex items-center justify-between z-10 border-b border-border/20 pb-4">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2 w-2">
@@ -308,13 +288,11 @@ export default function AboutGoals() {
                     </span>
                   </div>
 
-                  {/* علامت نقل‌قول شیشه‌ای */}
                   <span className="text-2xl sm:text-3xl font-serif text-accent/40 select-none">
                     “
                   </span>
                 </div>
 
-                {/* متن اصلی بیانیه با فونت ایران‌یکان / ساتوشی عالی، بزرگ و باکیفیت */}
                 <p className="text-sm sm:text-base lg:text-lg text-text-primary leading-relaxed sm:leading-loose font-bold tracking-tight z-10">
                   {t("goals.statement")}
                 </p>

@@ -209,23 +209,19 @@ export default function AboutSkills() {
         }
       `}</style>
 
-      {/* کانتینر اصلی Trigger بدون هیچ مارجین منفی یا تداخل طبقاتی */}
       <div
         ref={skillsTriggerRef}
         className="relative w-full h-[220vh] sm:h-[250vh] select-none z-20"
       >
-        {/* کانتینر پین‌شده با z-20 و پدینگ بالای امن جهت عدم تداخل با هدر */}
         <div
           ref={skillsSectionRef}
           className="h-[100dvh] w-full flex flex-col justify-between items-center overflow-hidden relative pt-20 sm:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 z-20"
         >
-          {/* هاله نوری متحرک پس‌زمینه */}
           <div
             className="absolute left-1/2 top-1/2 -z-10 h-[280px] w-[280px] sm:h-[450px] sm:w-[450px] lg:h-[500px] lg:w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] sm:blur-[160px] opacity-45 transition-colors duration-700 pointer-events-none"
             style={{ backgroundColor: currentCat.accentColor }}
           />
 
-          {/* ۰. عنوان اصلی بزرگ بخش مهارت‌ها */}
           <div className="w-full text-center shrink-0 z-20">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-text-primary">
               {t("skills.titleBefore")}{" "}
@@ -235,13 +231,9 @@ export default function AboutSkills() {
             </h2>
           </div>
 
-          {/* ۱ و ۲. بدنه اصلی استیج مهارت‌ها */}
           <div className="mx-auto max-w-6xl w-full flex flex-col md:grid md:grid-cols-12 items-center justify-center gap-3 sm:gap-6 lg:gap-8 my-auto z-10">
-            {/* بخش سکان چرخشی و عنوان دسته‌بندی */}
             <div className="md:col-span-5 flex flex-col items-center justify-center text-center gap-2 sm:gap-4 relative shrink-0 w-full">
-              {/* کانتینر سکان چرخشی اصلی (size-52 معادل 208px در نمایشگر زیر 640px) */}
               <div className="relative size-52 sm:size-56 md:size-60 lg:size-72 flex items-center justify-center p-2">
-                {/* SVG سکان مکانیکی */}
                 <svg
                   ref={gearRef}
                   viewBox="0 0 200 200"
@@ -293,7 +285,6 @@ export default function AboutSkills() {
                   ))}
                 </svg>
 
-                {/* تصویر کاور مرکز سکان (size-22 معادل 88px در نمایشگر زیر 640px) */}
                 <div className="absolute size-22 sm:size-24 md:size-24 lg:size-26 rounded-full border-2 border-white/90 dark:border-white/20 bg-white/90 dark:bg-[#0a0a14]/90 backdrop-blur-xl shadow-2xl flex items-center justify-center p-2.5 sm:p-4 overflow-hidden z-20">
                   <AnimatePresence mode="wait">
                     <motion.img
@@ -316,14 +307,12 @@ export default function AboutSkills() {
                   </AnimatePresence>
                 </div>
 
-                {/* هاله‌ی درخشان مرکز سکان */}
                 <div
                   className="absolute size-22 sm:size-24 md:size-28 lg:size-32 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
                   style={{ backgroundColor: currentCat.accentColor }}
                 />
               </div>
 
-              {/* عنوان اصلی و کنترلر کپسولی تعاملی */}
               <div className="flex flex-col items-center gap-2 z-10 w-full">
                 <AnimatePresence mode="wait">
                   <motion.h3
@@ -342,7 +331,6 @@ export default function AboutSkills() {
                   </motion.h3>
                 </AnimatePresence>
 
-                {/* نوار کنترل شیشه‌ای لمسی */}
                 <div className="seg-pill h-9 sm:h-10 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/80 dark:bg-[#0a0a10]/80 shadow-md backdrop-blur-xl max-w-full overflow-x-auto">
                   {SKILL_CATEGORIES.map((cat, idx) => {
                     const active = activeIndex === idx;
@@ -381,10 +369,8 @@ export default function AboutSkills() {
               </div>
             </div>
 
-            {/* کانتینر آکواریوم شیشه‌ای استیج اصلی مهارت‌ها (با ارتفاع قفل‌شده و ثابت) */}
             <div className="md:col-span-7 relative flex items-center justify-center w-full shrink-0">
               <div className="w-full max-w-xl h-[280px] sm:h-[350px] lg:h-[420px] rounded-3xl sm:rounded-[2.5rem] border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/70 via-white/40 to-white/60 dark:from-white/[0.08] dark:via-white/[0.03] dark:to-white/[0.05] backdrop-blur-2xl shadow-[0_15px_40px_rgba(0,122,255,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.5)] relative overflow-hidden p-3 sm:p-6 lg:p-8 flex items-center justify-center">
-                {/* لبه نوری درخشان */}
                 <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-accent/60 dark:via-accent/80 to-transparent opacity-90" />
 
                 <AnimatePresence mode="wait">
@@ -416,7 +402,6 @@ export default function AboutSkills() {
                           }}
                           className="relative group cursor-pointer flex justify-center items-center"
                         >
-                          {/* حباب کریستالی */}
                           <div
                             className={[
                               "size-20 sm:size-24 md:size-28 lg:size-36 rounded-full border flex flex-col items-center justify-center p-2.5 sm:p-4 relative overflow-hidden",
@@ -433,11 +418,9 @@ export default function AboutSkills() {
                                 "inset 0 2px 5px rgba(255, 255, 255, 0.95), inset 0 -2px 5px rgba(0, 0, 0, 0.06), 0 10px 25px rgba(0, 122, 255, 0.15)",
                             }}
                           >
-                            {/* انعکاس نور سه بعدی */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-white/70 via-transparent to-white/30 opacity-90 pointer-events-none rounded-full" />
                             <div className="absolute -top-0.5 left-2 right-2 h-[38%] bg-gradient-to-b from-white/80 to-transparent rounded-t-full pointer-events-none opacity-90" />
 
-                            {/* لوگوی تکنولوژی */}
                             <div className="size-8 sm:size-10 md:size-12 lg:size-14 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
                               {!hasError ? (
                                 <img
@@ -458,7 +441,6 @@ export default function AboutSkills() {
                               )}
                             </div>
 
-                            {/* نام تکنولوژی */}
                             <span className="text-[10px] sm:text-xs lg:text-sm font-black text-text-primary text-center tracking-tight leading-none group-hover:text-accent transition-colors z-10">
                               {skill.name}
                             </span>

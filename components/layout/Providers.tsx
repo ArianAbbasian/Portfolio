@@ -19,7 +19,6 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
-// تعریف هوک ایزومورفیک برای اجرای همزمان پیش از نقاشی صفحه روی کلاینت و جلوگیری از اخطار سرور
 const useIsomorphicLayoutEffect = 
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -48,7 +47,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setThemeState(initial);
   }, []);
 
-  // استفاده از هوک همزمان ایزومورفیک جهت احیای تم قبل از نقاشی صفحه و نابود کردن فلاش نوری ۱ فریمی
   useIsomorphicLayoutEffect(() => {
     applyTheme(theme);
   }, [theme, pathname]);

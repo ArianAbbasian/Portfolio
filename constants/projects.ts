@@ -38,7 +38,7 @@ export const PROJECTS_DATA: Project[] = [
       solution: "Built a purely frontend React app with Vite and Tailwind CSS, using local JSON files for content and IntersectionObserver for real-time category sync while scrolling.",
       technologies: ["React", "Tailwind CSS", "Vite" , "React-Router-Dom" , "React-Icons"],
       liveUrl: "https://cafe-mitra.ir",
-      githubUrl: null // برای حفظ حریم خصوصی تجاری حذف شد
+      githubUrl: null 
     },
     fa: {
       title: "کافه شمرون",

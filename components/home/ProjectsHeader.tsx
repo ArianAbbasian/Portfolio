@@ -10,7 +10,6 @@ export default function ProjectsHeader() {
   return (
     <section className="relative w-full z-20 mt-20 sm:mt-28 md:mt-36 select-none">
       
-      {/* ─── ۱. نوار اطلاعاتی بالای هدر ─── */}
       <div className="w-full border-t border-b border-border bg-white/[0.02] dark:bg-black/[0.02] backdrop-blur-sm">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 h-12 flex items-center justify-between text-xs sm:text-[13px] font-mono text-text-secondary tracking-wider">
           
@@ -29,11 +28,9 @@ export default function ProjectsHeader() {
         </div>
       </div>
 
-      {/* ─── ۲. بلوک اصلی عنوان هدر ─── */}
       <div className="py-16 sm:py-20 bg-gradient-to-b from-white/[0.01] dark:from-white/[0.005] to-transparent">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8">
           
-          {/* عنوان پروژه */}
           <motion.div
             initial={{ opacity: 0, x: locale === "fa" ? 40 : -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -49,7 +46,6 @@ export default function ProjectsHeader() {
             </h2>
           </motion.div>
 
-          {/* توضیحات پروژه */}
           <motion.div
             initial={{ opacity: 0, x: locale === "fa" ? -40 : 40 }}
             whileInView={{ opacity: 0.7, x: 0 }}
@@ -65,7 +61,6 @@ export default function ProjectsHeader() {
         </div>
       </div>
 
-      {/* ─── ۳. راهنمای اسکرول بزرگ، لوکس و انیمیشنی (Sleek Explore Guide) ─── */}
       <div className="hidden lg:flex w-full border-t border-b border-border/60 py-5 bg-white/[0.005] justify-center">
         <div className="flex flex-col items-center gap-2">
           <span className="text-[9px] sm:text-[10px] font-mono font-black text-text-muted tracking-[0.25em] uppercase animate-pulse">
@@ -85,7 +80,6 @@ export default function ProjectsHeader() {
         </div>
       </div>
       
-      {/* هاله‌ی نوری ظریف پس‌زمینه */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -z-10 h-[200px] w-[400px] rounded-full bg-accent/5 blur-[100px] pointer-events-none" />
     </section>
   );

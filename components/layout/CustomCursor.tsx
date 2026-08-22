@@ -21,10 +21,8 @@ export function CustomCursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
-    // ✅ فقط وقتی مطمئن شدیم کرسر سفارشی کار می‌کند، نشانگر بومی را مخفی می‌کنیم
     document.documentElement.classList.add("custom-cursor-active");
 
-    // ۲. تعریف تابع حرکت سریع برای نقطه داخلی (پاسخ‌دهی آنی)
     const xDot = gsap.quickTo(dot, "x", { duration: 0.08, ease: "power3.out" });
     const yDot = gsap.quickTo(dot, "y", { duration: 0.08, ease: "power3.out" });
 
@@ -65,7 +63,6 @@ export function CustomCursor() {
     window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
-      // ✅ هنگام پاک‌سازی، کلاس را حذف می‌کنیم تا نشانگر بومی برگردد
       document.documentElement.classList.remove("custom-cursor-active");
 
       window.removeEventListener("mousemove", onMouseMove);
@@ -75,12 +72,10 @@ export function CustomCursor() {
     };
   }, []);
 
-  // اگر دستگاه لمسی باشد، چیزی رندر نشود
   if (isTouchDevice) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden select-none">
-      {/* ─── ۱. حلقه بیرونی (با تاخیر حرکتی و افکت شیشه‌ای) ─── */}
       <div
         ref={ringRef}
         style={{
@@ -96,7 +91,6 @@ export function CustomCursor() {
         ].join(" ")}
       />
 
-      {/* ─── ۲. نقطه داخلی (پوینتر اصلی و سریع) ─── */}
       <div
         ref={dotRef}
         style={{

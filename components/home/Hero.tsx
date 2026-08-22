@@ -19,10 +19,8 @@ export default function Hero() {
     const mm = gsap.matchMedia();
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-    // ۱. تنظیم پرسپکتیو اولیه جهت آماده‌سازی سه بعدی
     gsap.set(containerRef.current, { perspective: 1200 });
 
-    // ۲. انیمیشن پس‌زمینه مستقل
     gsap.to(glowRef.current, {
       opacity: 0.18,
       scale: 1.1,
@@ -30,7 +28,6 @@ export default function Hero() {
       ease: "power2.out",
     });
 
-    // ۳. آماده‌سازی و اسپلیت متن هدر با کنترل جلوگیری از تکرار در StrictMode
     if (titleRef.current) {
       const isAlreadySplit = titleRef.current.querySelector(".title-word");
       
@@ -46,7 +43,6 @@ export default function Hero() {
           .join(" ");
       }
 
-      // ۴. اجرای انیمیشن‌های متنی
       tl.fromTo(
         statusRef.current,
         { opacity: 0, y: -20 },
@@ -84,19 +80,18 @@ export default function Hero() {
       );
     }
 
-    // ۵. سیستم شناوری کنترل‌شده ایموجی‌ها بدون فرار از محدوده (Bounded Bounded Physics)
     const elements = document.querySelectorAll(".floating-element");
     const floatTweens: gsap.core.Tween[] = [];
 
     elements.forEach((el) => {
       function animateBounded() {
-        const randomX = gsap.utils.random(-25, 25); // شعاع محدود جابه‌جایی نسبت به مرکز
+        const randomX = gsap.utils.random(-25, 25); 
         const randomY = gsap.utils.random(-25, 25);
         const randomRot = gsap.utils.random(-20, 20);
         const randomTime = gsap.utils.random(3.5, 5.5);
 
         const tween = gsap.to(el, {
-          x: randomX, // مقدار مطلق نسبت به خانه اولیه (حذف باگ +=)
+          x: randomX, 
           y: randomY,
           rotation: randomRot,
           duration: randomTime,
@@ -109,7 +104,6 @@ export default function Hero() {
       animateBounded();
     });
 
-    // ۶. سیستم جابجایی دسکتاپ (حرکت با ماوس) و موبایل (ژیروسکوپ)
     mm.add("(min-width: 600px)", () => {
       gsap.set(".hero-content-wrapper", {
         transformPerspective: 1000,
@@ -192,13 +186,11 @@ export default function Hero() {
       className="relative flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 md:pt-44 md:pb-28 select-none"
       style={{ transformStyle: "preserve-3d" }}
     >
-      {/* هاله نوری پس‌زمینه */}
       <div
         ref={glowRef}
         className="absolute top-[5%] lg:top-[-5%] left-1/2 -z-10 h-[280px] w-[280px] sm:h-[400px] sm:w-[600px] lg:h-[450px] lg:w-[750px] -translate-x-1/2 rounded-full bg-accent-primary blur-[90px] sm:blur-[140px] opacity-0 scale-90 will-change-transform"
       />
 
-      {/* آیکون‌های فضایی شناور */}
       <div
         className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
         style={{ transformStyle: "preserve-3d" }}
@@ -261,9 +253,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* کانتینر اصلی محتوا */}
       <div className="hero-content-wrapper relative z-10 mx-auto max-w-4xl text-center will-change-transform">
-        {/* چراغ وضعیت زنده */}
         <div ref={statusRef} className="opacity-0">
           <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-background-glass/70 px-3.5 py-1.5 backdrop-blur-md">
             <span className="relative flex h-2 w-2">
@@ -276,7 +266,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* تیتر اصلی */}
         <h1
           ref={titleRef}
           className="mt-8 text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl lg:text-6xl leading-[1.2] sm:leading-[1.15] flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-0"
@@ -284,7 +273,6 @@ export default function Hero() {
           {t("title")}
         </h1>
 
-        {/* دسکریپشن بیزینسی */}
         <p
           ref={subtitleRef}
           className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-base lg:text-lg leading-relaxed text-text-secondary opacity-0 px-2"
@@ -292,7 +280,6 @@ export default function Hero() {
           {t("subtitle")}
         </p>
 
-        {/* باکس محرمانگی پروژه */}
         <div
           ref={ndaRef}
           className="mx-auto mt-8 sm:mt-12 max-w-xl opacity-0 px-2"

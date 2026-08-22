@@ -14,7 +14,6 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
-// تم‌های رنگی مجزا جهت همگام‌سازی بصری مودال با رنگ امضای هر پروژه
 const PROJECT_THEMES = [
   {
     accent: "text-purple-600 dark:text-purple-400",
@@ -106,7 +105,6 @@ export default function ProjectModal({
       attributeFilter: ["class"],
     });
 
-    // قفل همزمان اسکرول تگ html و body با دستور قدرتمند setProperty و اولویت important برای مهار قطعی اسکرول پس‌زمینه
     document.documentElement.style.setProperty(
       "overflow",
       "hidden",
@@ -145,7 +143,6 @@ export default function ProjectModal({
     ? getCleanPath(project.desktopImages[2])
     : mainImage;
 
-  // استخراج تم رنگی پروژه فعال بر اساس ایندکس آن
   const realIndex = PROJECTS_DATA.findIndex((p) => p.id === project.id);
   const theme = PROJECT_THEMES[realIndex % PROJECT_THEMES.length];
 
@@ -177,7 +174,6 @@ export default function ProjectModal({
         `}
         style={{ direction: locale === "fa" ? "rtl" : "ltr" }}
       >
-        {/* هاله‌ی نوری ظریف و اختصاصی تم پروژه در پس‌زمینه مودال جزئیات */}
         <div
           className="absolute top-[10%] left-1/4 -z-10 h-[250px] w-[500px] rounded-full blur-[130px] opacity-40 pointer-events-none animate-pulse"
           style={{
@@ -197,11 +193,9 @@ export default function ProjectModal({
           ✕
         </button>
 
-        {/* هدر مودال مجهز به تراز رنگی اختصاصی تم فعال و انیمیشن‌های ورودی فوق‌العاده شیک */}
         <div
           className={`mb-10 border-b pb-6 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
-          {/* انیمیشن ورود عنوان دسته‌بندی */}
           <motion.span
             initial={{ opacity: 0, x: locale === "fa" ? 15 : -15 }}
             animate={{ opacity: 1, x: 0 }}
@@ -214,7 +208,6 @@ export default function ProjectModal({
             {pData.category}
           </motion.span>
 
-          {/* انیمیشن ماسک سنیمایی اسلایدآپ نام پروژه (H2) */}
           <div className="overflow-hidden py-1">
             <motion.h2
               initial={{ filter: "blur(12px)", scale: 0.95, y: 15, opacity: 0 }}
@@ -230,7 +223,6 @@ export default function ProjectModal({
             </motion.h2>
           </div>
 
-          {/* انیمیشن ورود اطلاعات کلاینت و سال و بومی‌سازی کامل برچسب‌های متادیتا */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -238,8 +230,8 @@ export default function ProjectModal({
             className={[
               "mt-4 flex flex-wrap gap-3 items-center text-xs font-bold",
               locale === "fa"
-                ? "tracking-normal text-text-secondary" // استفاده از فونت اصلی ایران‌یکان با کنتراست عالی برای زبان فارسی
-                : "font-mono tracking-wider text-zinc-400 dark:text-zinc-500", // حفظ فونت مونو با فواصل حروف مناسب برای انگلیسی
+                ? "tracking-normal text-text-secondary" 
+                : "font-mono tracking-wider text-zinc-400 dark:text-zinc-500", 
             ].join(" ")}
           >
             <span>
@@ -256,9 +248,7 @@ export default function ProjectModal({
           </motion.div>
         </div>
 
-        {/* گالری تصاویر مجهز به مرزهای شیک و همگام با تم پروژه */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 mb-12 items-start">
-          {/* تصویر موبایل */}
           <div
             onClick={() => setActiveLightboxImage(imgMobile)}
             className={[
@@ -275,7 +265,6 @@ export default function ProjectModal({
           </div>
 
           <div className="md:col-span-8 flex flex-col gap-5 sm:gap-6 w-full">
-            {/* تصویر دسکتاپ اصلی */}
             <div
               onClick={() => setActiveLightboxImage(img1)}
               className={[
@@ -291,7 +280,6 @@ export default function ProjectModal({
               />
             </div>
 
-            {/* دو تصویر فرعی دسکتاپ */}
             <div className="grid grid-cols-2 gap-5 sm:gap-6 w-full">
               <div
                 onClick={() => setActiveLightboxImage(img2)}
@@ -325,7 +313,6 @@ export default function ProjectModal({
           </div>
         </div>
 
-        {/* چالش و راهکار */}
         <div
           className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 border-t pt-10 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
@@ -358,7 +345,6 @@ export default function ProjectModal({
           </div>
         </div>
 
-        {/* فوتر مودال مجهز به تگ‌های رنگی هماهنگ و دکمه لینک پویای نئونی */}
         <div
           className={`mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t pt-8 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
@@ -411,7 +397,6 @@ export default function ProjectModal({
         </div>
       </motion.div>
 
-      {/* فراخوانی لایت‌باکس مستقل برای تصاویر فرعی گالری مودال */}
       <Lightbox
         src={activeLightboxImage}
         onClose={() => setActiveLightboxImage(null)}
