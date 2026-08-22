@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Hero from "@/components/hero";
-import Services from "@/components/services";
-import ProjectsHeader from "@/components/projects-header";
-import ProjectsList from "@/components/projects-list";
+import Hero from "@/components/home/Hero";
+import Services from "@/components/home/Services";
+import ProjectsHeader from "@/components/home/ProjectsHeader";
+import ProjectsList from "@/components/home/ProjectsList";
 
 export async function generateMetadata({
   params,

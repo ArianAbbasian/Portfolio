@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useTheme } from "@/components/providers";
+import { useTheme } from "@/components/layout/Providers";
 
 const STATIONS = [
   {

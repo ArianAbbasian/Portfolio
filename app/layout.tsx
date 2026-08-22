@@ -1,34 +1,54 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import './globals.css';
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { siteConfig } from "@/lib/site-config";
+import "./globals.css";
 
 const satoshi = localFont({
   src: [
-    { path: '../public/fonts/Satoshi/Satoshi-Regular.woff2', weight: '400' },
-    { path: '../public/fonts/Satoshi/Satoshi-Medium.woff2', weight: '500' },
-    { path: '../public/fonts/Satoshi/Satoshi-Bold.woff2', weight: '700' },
-    { path: '../public/fonts/Satoshi/Satoshi-Black.woff2', weight: '900' },
+    { path: "../public/fonts/Satoshi/Satoshi-Regular.woff2", weight: "400" },
+    { path: "../public/fonts/Satoshi/Satoshi-Medium.woff2", weight: "500" },
+    { path: "../public/fonts/Satoshi/Satoshi-Bold.woff2", weight: "700" },
+    { path: "../public/fonts/Satoshi/Satoshi-Black.woff2", weight: "900" },
   ],
-  variable: '--font-satoshi',
-  display: 'swap',
-  preload: true,
+  variable: "--font-satoshi",
+  display: "swap",
+  preload: false,
 });
 
 const iranYekan = localFont({
   src: [
-    { path: '../public/fonts/IranYekan/iranyekanwebregular.woff', weight: '400' },
-    { path: '../public/fonts/IranYekan/iranyekanwebmedium.woff', weight: '500' },
-    { path: '../public/fonts/IranYekan/iranyekanwebbold.woff', weight: '700' },
-    { path: '../public/fonts/IranYekan/iranyekanwebextrabold.woff', weight: '800' },
+    {
+      path: "../public/fonts/IranYekan/iranyekanwebregular.woff",
+      weight: "400",
+    },
+    {
+      path: "../public/fonts/IranYekan/iranyekanwebmedium.woff",
+      weight: "500",
+    },
+    { path: "../public/fonts/IranYekan/iranyekanwebbold.woff", weight: "700" },
+    {
+      path: "../public/fonts/IranYekan/iranyekanwebextrabold.woff",
+      weight: "800",
+    },
   ],
-  variable: '--font-iran-yekan',
-  display: 'swap',
-  preload: true,
+  variable: "--font-iran-yekan",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
-  title: 'Arian Abbasian',
-  description: 'Arian Abbasian — Frontend Developer & Software Engineering Student',
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+  },
+  description: siteConfig.description,
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    alternateLocale: "fa_IR",
+    siteName: siteConfig.name,
+    url: "/",
+  },
 };
 
 export default function RootLayout({

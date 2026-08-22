@@ -1,11 +1,11 @@
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { Providers } from "@/components/providers";
-import { Header } from "@/components/header";
-import Footer from "@/components/footer";
-import { ThemeInitializer } from "@/components/theme-initializer";
-import { CustomCursor } from "@/components/custom-cursor";
-import LocaleHtml from "@/components/locale-html";
+import { Providers } from "@/components/layout/Providers";
+import { Header } from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { ThemeInitializer } from "@/components/layout/ThemeInitializer";
+import { CustomCursor } from "@/components/layout/CustomCursor";
+import LocaleHtml from "@/components/layout/LocaleHtml";
 import StructuredData from "@/components/structured-data";
 
 const locales = ["en", "fa"];

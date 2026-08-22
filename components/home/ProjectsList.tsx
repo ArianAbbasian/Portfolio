@@ -5,8 +5,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PROJECTS_DATA, ProjectLangData, Project } from "@/constants/projects";
-import ProjectModal from "./project-modal";
-import Lightbox from "./lightbox";
+import ProjectModal from "../projects/ProjectModal";
+import Lightbox from "../projects/Lightbox";
 
 gsap.registerPlugin(ScrollTrigger);
 

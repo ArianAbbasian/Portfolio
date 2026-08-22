@@ -1,13 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import AboutHero from "@/components/about-hero";
-import AboutMe from "@/components/about-me";
-import AboutExperience from "@/components/about-experience";
-import AboutSkills from "@/components/about-skills";
-import AboutEducation from "@/components/about-education";
-import AboutArticles from "@/components/about-articles";
-import AboutInterests from "@/components/about-interests";
-import AboutGoals from "@/components/about-goals";
+import AboutHero from "@/components/about/AboutHero";
+import AboutMe from "@/components/about/AboutMe";
+import AboutExperience from "@/components/about/AboutExperience";
+import AboutSkills from "@/components/about/AboutSkills";
+import AboutEducation from "@/components/about/AboutEducation";
+import AboutArticles from "@/components/about/AboutArticles";
+import AboutInterests from "@/components/about/AboutInterests";
+import AboutGoals from "@/components/about/AboutGoals";
 
 export async function generateMetadata({
   params,

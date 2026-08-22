@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { useTheme } from "@/components/providers";
+import { useTheme } from "@/components/layout/Providers";
 
 const EDUCATIONS = [
   {
