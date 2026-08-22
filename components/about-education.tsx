@@ -94,14 +94,12 @@ export default function AboutEducation() {
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
-                  {isRTL ? "تحصیلات" : "Education"}
+                  {t("education.title")}
                 </h2>
               </div>
 
               <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
-                {isRTL
-                  ? "پایه‌های علمی، علوم کامپیوتر و مهندسی نرم‌افزار"
-                  : "Computer science foundations and software engineering principles."}
+                {t("education.subtitle")}
               </p>
             </div>
           </div>
@@ -206,7 +204,7 @@ export default function AboutEducation() {
                               <span>{t(`educationItems.${key}.degree`)}</span>
                               {isCurrent && (
                                 <span className="inline-flex items-center text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 ms-2 align-middle font-sans">
-                                  {isRTL ? "اکنون" : "PRESENT"}
+                                  {t("education.present")}
                                 </span>
                               )}
                             </h3>

@@ -61,6 +61,11 @@
         "desc": "As an intern at Mosbatesabz, I started my journey in frontend development from the ground up, working with HTML, CSS, and JavaScript while contributing to a real-world online pharmacy project. During this experience, I also became familiar with Scrum, daily stand-ups, and tools like Jira, gaining a better understanding of teamwork and agile development."
       }
     },
+    "education": {
+      "title": "Education",
+      "subtitle": "Computer science foundations and software engineering principles.",
+      "present": "PRESENT"
+    },
     "educationItems": {
       "shamsipour": {
         "degree": "Bachelor's Degree, Computer Software Engineering",
