@@ -1,5 +1,11 @@
-import { redirect } from 'next/navigation';
+"use client";
 
-export default function RootPage() {
-  redirect('/fa');
+import { useEffect } from "react";
+
+export default function RootRedirect() {
+  useEffect(() => {
+    window.location.replace("/fa");
+  }, []);
+
+  return null;
 }

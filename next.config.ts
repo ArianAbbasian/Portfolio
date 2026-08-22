@@ -5,6 +5,11 @@ const withNextIntl = createNextIntlPlugin({
   i18nDir: './i18n',
 });
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
 
 export default withNextIntl(nextConfig);
