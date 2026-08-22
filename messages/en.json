@@ -90,6 +90,7 @@
       }
     },
     "interests": {
+      "title": "Interests",
       "subtitle": "Get to know about my life beyond coding; these interests help me maintain a healthy balance between work and life.",
       "items": {
         "gaming": {

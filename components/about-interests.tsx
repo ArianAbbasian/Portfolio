@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/providers";
 
-// 🌟 آیکون‌های SVG داخلی برای کارت‌ها
 const MusicIcon = ({ className = "size-4" }: { className?: string }) => (
   <svg
     viewBox="0 0 24 24"
@@ -91,10 +90,8 @@ export default function AboutInterests() {
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
           
-          {/* ۱. عنوان اصلی بخش علاقه‌مندی‌ها با آیکون SVG و i18n */}
           <div className="md:col-span-4 select-none relative">
             
-            {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
             <div className="absolute -top-6 -start-4 sm:-top-8 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
               <img
                 src={iconSrc}
@@ -105,7 +102,6 @@ export default function AboutInterests() {
 
             <div className="relative z-10 flex flex-col gap-3">
               <div className="flex items-center gap-3">
-                {/* باکس شیشه‌ای آیکون SVG کنار عنوان */}
                 <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-xl">
                   <img
                     src={iconSrc}
@@ -115,7 +111,7 @@ export default function AboutInterests() {
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
-                  {isRTL ? "علاقه‌مندی‌ها" : "Interests"}
+                  {t("interests.title")}
                 </h2>
               </div>
 
@@ -125,7 +121,6 @@ export default function AboutInterests() {
             </div>
           </div>
 
-          {/* ۲. کارت‌های لوکس ریلز / پرتره علاقه‌مندی‌ها */}
           <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {INTERESTS.map((item, idx) => {
               const IconComponent = item.icon;
@@ -139,7 +134,6 @@ export default function AboutInterests() {
                   transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                   className="group relative min-h-[400px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4 sm:p-5"
                 >
-                  {/* فایل مدیا (تصویر یا ویدیو) */}
                   <div className="absolute inset-0 z-0 overflow-hidden bg-black/20">
                     {item.type === "video" ? (
                       <video
@@ -162,11 +156,9 @@ export default function AboutInterests() {
                       />
                     )}
 
-                    {/* گرادیان تاریک غلیظ برای خوانایی ۱۰۰٪ کامل متن بدون محدودیت خط */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent" />
                   </div>
 
-                  {/* هدر کارت: بج دسته‌بندی و آیکون */}
                   <div className="relative z-10 flex items-center justify-between">
                     <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border backdrop-blur-md ${item.badgeColor}`}>
                       {t(`interests.items.${item.id}.category`)}
@@ -185,7 +177,6 @@ export default function AboutInterests() {
                     </div>
                   </div>
 
-                  {/* فوتر کارت: عنوان و متن توضیحات کامل بدون هیچ‌گونه بریدگی یا سه نقطه */}
                   <div className="relative z-10 flex flex-col gap-1.5 text-white mt-auto pt-8">
                     <h3 className="text-base font-black tracking-tight leading-snug drop-shadow-sm">
                       {t(`interests.items.${item.id}.title`)}
