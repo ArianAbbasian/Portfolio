@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 
 type Theme = "light" | "dark";
@@ -19,11 +25,24 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
-const useIsomorphicLayoutEffect = 
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") return "light";
+
+  try {
+    const stored = localStorage.getItem("theme") as Theme | null;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    return stored ?? (prefersDark ? "dark" : "light");
+  } catch {
+    return "light";
+  }
+}
+const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
   const pathname = usePathname();
 
   const applyTheme = (t: Theme) => {
@@ -37,15 +56,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     localStorage.setItem("theme", newTheme);
     applyTheme(newTheme);
   };
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    const initial = stored ?? (prefersDark ? "dark" : "light");
-    setThemeState(initial);
-  }, []);
 
   useIsomorphicLayoutEffect(() => {
     applyTheme(theme);
