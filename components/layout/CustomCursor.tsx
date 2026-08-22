@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
+import { useIsTouchDevice } from "@/hooks/use-is-touch-device";
 
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
@@ -9,13 +10,10 @@ export function CustomCursor() {
 
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const isTouchDevice = useIsTouchDevice();
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      setIsTouchDevice(true);
-      return;
-    }
+    if (isTouchDevice) return;
 
     const dot = dotRef.current;
     const ring = ringRef.current;
@@ -70,12 +68,12 @@ export function CustomCursor() {
       window.removeEventListener("mouseenter", onMouseEnter);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   if (isTouchDevice) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden select-none">
+    <div className="pointer-events-none fixed inset-0 z-999999 overflow-hidden select-none">
       <div
         ref={ringRef}
         style={{
