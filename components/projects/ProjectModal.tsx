@@ -361,9 +361,9 @@ export default function ProjectModal({
           </div>
 
           <div className="flex items-center gap-4">
-            {project.githubUrl && (
+            {pData.githubUrl && (
               <Link
-                href={project.githubUrl}
+                href={pData.githubUrl}
                 target="_blank"
                 className={[
                   "text-sm font-medium transition-colors cursor-pointer text-text-secondary",
