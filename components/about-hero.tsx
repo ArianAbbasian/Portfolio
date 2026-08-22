@@ -7,32 +7,9 @@ export default function AboutHero() {
   const t = useTranslations("about");
   const locale = useLocale();
   const [mounted, setMounted] = useState(false);
-  const [videoBlobUrl, setVideoBlobUrl] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
-
-    // 🔒 تبدیل ویدیو به Blob URL جهت دور زدن افزونه IDM
-    let isMounted = true;
-    let objectUrl = "";
-
-    fetch("/video/charakter.webm")
-      .then((res) => res.blob())
-      .then((blob) => {
-        if (isMounted) {
-          objectUrl = URL.createObjectURL(blob);
-          setVideoBlobUrl(objectUrl);
-        }
-      })
-      .catch(() => {
-        // فال‌بک در صورت عدم پشتیبانی مرورگر
-        if (isMounted) setVideoBlobUrl("/video/charakter.mp4");
-      });
-
-    return () => {
-      isMounted = false;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
   }, []);
 
   return (
@@ -41,7 +18,6 @@ export default function AboutHero() {
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pointer-events-auto">
         <div className="lg:col-span-7 flex flex-col gap-6 order-2 lg:order-1">
-
           <div
             className={[
               "flex flex-col gap-2 max-w-3xl",
@@ -96,31 +72,30 @@ export default function AboutHero() {
                 className="relative w-full h-[220px] flex items-end justify-center select-none"
                 onContextMenu={(e) => e.preventDefault()}
               >
-
                 <div
                   className="absolute inset-0 z-20 cursor-default"
                   onContextMenu={(e) => e.preventDefault()}
                 />
 
-                {videoBlobUrl && (
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    controlsList="nodownload"
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    onContextMenu={(e) => e.preventDefault()}
-                    src={videoBlobUrl}
-                    className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
-                    style={{
-                      transform: "translate3d(0, 27px, 0)",
-                      WebkitUserSelect: "none",
-                    }}
-                  />
-                )}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  controlsList="nodownload"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
+                  style={{
+                    transform: "translate3d(0, 27px, 0)",
+                    WebkitUserSelect: "none",
+                  }}
+                >
+                  <source src="/video/charakter.webm" type="video/webm" />
+                  <source src="/video/charakter.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
           )}
