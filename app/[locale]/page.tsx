@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Hero from "@/components/hero";
+import Services from "@/components/services";
 import ProjectsHeader from "@/components/projects-header";
 import ProjectsList from "@/components/projects-list";
 
@@ -48,6 +49,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-background-main pb-24">
       <Hero />
+      <Services />
       <ProjectsHeader />
       <ProjectsList />
     </main>

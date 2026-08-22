@@ -15,6 +15,33 @@
       "subtitle": "Hi, I'm Arian. A Frontend Engineer crafted around performance, seamless animations, and clean architecture. I turn complex logic into fluid, premium web experiences."
     },
     "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase.",
+    "services": {
+      "eyebrow": "WHAT I DO",
+      "title": "How I Can Help Your Business",
+      "subtitle": "Professional web solutions that build trust, improve user experience, and support your business goals.",
+      "items": [
+        {
+          "icon": "globe",
+          "title": "Professional Business Website",
+          "desc": "A modern, fast website that makes your brand look credible and trustworthy."
+        },
+        {
+          "icon": "smartphone",
+          "title": "Mobile-First Design",
+          "desc": "Your site looks and works great on any device, especially mobile."
+        },
+        {
+          "icon": "gauge",
+          "title": "Performance & Speed",
+          "desc": "Fast loading times that keep visitors engaged and improve SEO."
+        },
+        {
+          "icon": "file",
+          "title": "Easy to Update",
+          "desc": "Simple structure that your team can manage without technical skills."
+        }
+      ]
+    },
     "projects": {
       "commercialBadge": "COMMERCIAL",
       "status": "STATUS: ACTIVE & OPEN TO WORK",
