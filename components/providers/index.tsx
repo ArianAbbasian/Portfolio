@@ -1,4 +1,3 @@
-"use html";
 "use client";
 
 import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";

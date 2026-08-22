@@ -1,4 +1,3 @@
-"use html";
 "use client";
 
 import { useTranslations } from "next-intl";
