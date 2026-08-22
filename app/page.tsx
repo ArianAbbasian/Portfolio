@@ -1,11 +1,11 @@
-"use client";
+import type { Metadata } from 'next';
 
-import { useEffect } from "react";
+export const metadata: Metadata = {
+  other: {
+    refresh: '0;url=/fa',
+  },
+};
 
-export default function RootRedirect() {
-  useEffect(() => {
-    window.location.replace("/fa");
-  }, []);
-
+export default function RootPage() {
   return null;
 }
