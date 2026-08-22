@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import { ThemeInitializer } from "@/components/theme-initializer";
 import { CustomCursor } from "@/components/custom-cursor";
 import LocaleHtml from "@/components/locale-html";
+import StructuredData from "@/components/structured-data";
 
 const locales = ["en", "fa"];
 
@@ -30,11 +31,9 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <>
-      {/* تنظیم lang و dir روی html */}
       <LocaleHtml locale={locale} />
-
-      {/* اجرای اسکریپت تمساز */}
       <ThemeInitializer />
+      <StructuredData locale={locale} />
 
       <NextIntlClientProvider locale={locale} messages={messages}>
         <Providers>
@@ -51,5 +50,5 @@ export default async function LocaleLayout({ children, params }: Props) {
 }
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'fa' }];
+  return [{ locale: "en" }, { locale: "fa" }];
 }
