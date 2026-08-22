@@ -23,6 +23,8 @@
   --header-shadow:
     0 0 0 0.5px rgba(255, 255, 255, 0.7), 0 8px 40px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 1);
+
+  --accent-primary-rgb: 0, 122, 255;
 }
 
 /* ─── Dark Theme ──────────────────────────────── */
@@ -48,6 +50,8 @@
   --header-shadow:
     0 0 0 0.5px rgba(255, 255, 255, 0.08), 0 8px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  --accent-primary-rgb: 10, 132, 255;
 }
 
 /* ─── Tailwind Tokens ─────────────────────────── */
@@ -66,6 +70,10 @@
   --color-border: var(--border);
   --font-sans: var(--font-satoshi);
   --font-fa: var(--font-iran-yekan);
+  --color-background-main: var(--bg-base);
+  --color-background-glass: var(--glass-bg);
+  --color-border-subtle: var(--border);
+  --color-accent-primary: var(--accent);
 }
 
 /* ─── Base ────────────────────────────────────── */
@@ -462,7 +470,7 @@ html::-webkit-scrollbar {
     /* حذف کامل بلور و افکت‌های شیشه‌ای */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    
+
     /* پس‌زمینه جامد ۱۰۰٪ کدر متناسب با تم سایت */
     background-color: var(--bg-base) !important;
     border-bottom: 1px solid var(--border) !important;
