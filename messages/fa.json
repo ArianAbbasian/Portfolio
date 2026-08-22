@@ -25,7 +25,11 @@
       "selectedCase": "پروژه برگزیده",
       "viewProject": "مشاهده بررسی متنی",
       "clientLabel": "کارفرما: ",
-      "yearLabel": "سال انتشار: "
+      "yearLabel": "سال انتشار: ",
+      "challenge": "چالش پروژه",
+      "solution": "راهکار توسعه",
+      "sourceCode": "کد منبع",
+      "launchLive": "ورود به سایت زنده"
     }
   },
   "about": {

@@ -25,7 +25,11 @@
       "selectedCase": "SELECTED CASE",
       "viewProject": "View Case Study",
       "clientLabel": "CLIENT: ",
-      "yearLabel": "YEAR: "
+      "yearLabel": "YEAR: ",
+      "challenge": "The Challenge",
+      "solution": "The Solution",
+      "sourceCode": "Source Code",
+      "launchLive": "Launch Live Site"
     }
   },
   "about": {
