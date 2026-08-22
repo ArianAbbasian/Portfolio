@@ -26,9 +26,13 @@ export const PROJECTS_DATA: Project[] = [
     id: "cafe-restaurant",
     year: "2026",
     isCommercial: true,
-    image: "/images/shemroon-cafe/download (1).jpg",
-    desktopImages: ["/images/shemroon-cafe/download (1).jpg", "/images/shemroon-cafe/download (2).jpg", "/images/shemroon-cafe/download (3).jpg"],
-    mobileImage: "/images/shemroon-cafe/download (4).jpg",
+    image: "/images/projects/shemroon-cafe/main.jpg",
+    desktopImages: [
+      "/images/projects/shemroon-cafe/main.jpg",
+      "/images/projects/shemroon-cafe/desktop-1.jpg",
+      "/images/projects/shemroon-cafe/desktop-2.jpg",
+    ],
+    mobileImage: "/images/projects/shemroon-cafe/mobile.jpg",
     en: {
       title: "Shemroon Cafe",
       category: "Web Development / UI Design",
@@ -36,9 +40,9 @@ export const PROJECTS_DATA: Project[] = [
       shortDescription: "A modern digital menu for a cozy Tehran café with scroll-synced categories, mobile-first design, and effortless updates via JSON data files.",
       challenge: "The client needed a lightweight, mobile-friendly online menu to replace printed menus and enable non-technical staff to update items without rebuilding the site.",
       solution: "Built a purely frontend React app with Vite and Tailwind CSS, using local JSON files for content and IntersectionObserver for real-time category sync while scrolling.",
-      technologies: ["React", "Tailwind CSS", "Vite" , "React-Router-Dom" , "React-Icons"],
+      technologies: ["React", "Tailwind CSS", "Vite", "React-Router-Dom", "React-Icons"],
       liveUrl: "https://cafe-mitra.ir",
-      githubUrl: null 
+      githubUrl: null
     },
     fa: {
       title: "کافه شمرون",
@@ -47,7 +51,7 @@ export const PROJECTS_DATA: Project[] = [
       shortDescription: "منوی دیجیتال مدرن برای یک کافه دنج تهرانی با همگام‌سازی دسته‌بندی‌ها هنگام اسکرول، طراحی واکنش‌گرا و ویرایش آسان از طریق فایل‌های JSON.",
       challenge: "کافه نیاز به یک منوی آنلاین ساده و سبک داشت تا جایگزین منوهای چاپی شود و پرسنل بتوانند بدون دانش فنی آیتم‌ها را بروز کنند.",
       solution: "یک وب‌اپ فرانت‌اند خالص با React، Vite و Tailwind CSS توسعه دادم که محتوا را از فایل‌های JSON می‌خواند و با IntersectionObserver همگام‌سازی اسکرول را مدیریت می‌کند.",
-      technologies: ["React", "Tailwind CSS", "Vite" , "React-Router-Dom" , "React-Icons"],
+      technologies: ["React", "Tailwind CSS", "Vite", "React-Router-Dom", "React-Icons"],
       liveUrl: "https://cafe-mitra.ir",
       githubUrl: null
     }
@@ -56,9 +60,13 @@ export const PROJECTS_DATA: Project[] = [
     id: "cms-dashboard",
     year: "2026",
     isCommercial: false,
-    image: "/images/CMS/download (1).jpg",
-    desktopImages: ["/images/CMS/download (1).jpg", "/images/CMS/download (2).jpg", "/images/CMS/download (3).jpg"],
-    mobileImage: "/images/CMS/download (4).jpg",
+    image: "/images/projects/cms-dashboard/main.jpg",
+    desktopImages: [
+      "/images/projects/cms-dashboard/main.jpg",
+      "/images/projects/cms-dashboard/desktop-1.jpg",
+      "/images/projects/cms-dashboard/desktop-2.jpg",
+    ],
+    mobileImage: "/images/projects/cms-dashboard/mobile.jpg",
     en: {
       title: "CMS Dashboard",
       category: "Web Development / React Dashboard",
@@ -86,9 +94,13 @@ export const PROJECTS_DATA: Project[] = [
     id: "sm-shop",
     year: "2026",
     isCommercial: false,
-    image: "/images/sm-shop/download.jpg",
-    desktopImages: ["/images/sm-shop/download (1).jpg", "/images/sm-shop/download (2).jpg", "/images/sm-shop/download (3).jpg"],
-    mobileImage: "/images/sm-shop/download (4).jpg",
+    image: "/images/projects/sm-shop/main.jpg",
+    desktopImages: [
+      "/images/projects/sm-shop/main.jpg",
+      "/images/projects/sm-shop/desktop-1.jpg",
+      "/images/projects/sm-shop/desktop-2.jpg",
+    ],
+    mobileImage: "/images/projects/sm-shop/mobile.jpg",
     en: {
       title: "SM-Shop",
       category: "E-Commerce / Admin Dashboard",
@@ -116,10 +128,14 @@ export const PROJECTS_DATA: Project[] = [
     id: "persian-speech-to-text",
     year: "2026",
     isCommercial: false,
-    image: "/images/speech-toText/download.jpg",
-    desktopImages: ["/images/speech-toText/download (1).jpg", "/images/speech-toText/download (2).jpg", "/images/speech-toText/download (3).jpg"],
-    mobileImage: "/images/speech-toText/download (4).jpg",
-    
+    image: "/images/projects/speech-to-text/main.jpg",
+    desktopImages: [
+      "/images/projects/speech-to-text/main.jpg",
+      "/images/projects/speech-to-text/desktop-1.jpg",
+      "/images/projects/speech-to-text/desktop-2.jpg",
+    ],
+    mobileImage: "/images/projects/speech-to-text/mobile.jpg",
+
     en: {
       title: "Persian Speech-to-Text",
       category: "Web Development / Speech Recognition",
