@@ -7,6 +7,7 @@ import { useTheme } from "@/components/layout/Providers";
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMounted } from "@/hooks/use-mounted";
 
 const NAV_ITEMS = [
   { href: "", labelKey: "work" },
@@ -21,9 +22,7 @@ export function Header() {
   const router = useRouter();
   const { resolvedTheme, setTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   const switchLocale = () => {
     const next = locale === "en" ? "fa" : "en";
@@ -37,7 +36,6 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none transition-all duration-300 header-range-blur">
-      
       <div className="hidden sm:flex flex-col justify-center pointer-events-auto select-none">
         <Link
           href={`/${locale}`}
@@ -52,7 +50,9 @@ export function Header() {
           <span className="text-accent">.</span>
         </Link>
         <span className="text-[10px] sm:text-[11px] text-text-muted mt-1 font-medium tracking-wider uppercase opacity-80">
-          {locale === "fa" ? "طراح وب‌سایت و توسعه‌دهنده فرانت‌اند" : "Frontend Developer"}
+          {locale === "fa"
+            ? "طراح وب‌سایت و توسعه‌دهنده فرانت‌اند"
+            : "Frontend Developer"}
         </span>
       </div>
 
@@ -109,9 +109,7 @@ export function Header() {
         </button>
 
         <button
-          onClick={() =>
-            setTheme(resolvedTheme === "dark" ? "light" : "dark")
-          }
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
           className="lg-btn size-8 sm:size-9 rounded-full flex items-center justify-center cursor-pointer text-text-secondary hover:text-text-primary"
         >
@@ -123,7 +121,6 @@ export function Header() {
             ))}
         </button>
       </div>
-
     </header>
   );
 }

@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
+import { useMounted } from "@/hooks/use-mounted";
+
 
 const STATIONS = [
   {
@@ -49,14 +51,11 @@ export default function AboutGoals() {
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
   const [activeStation, setActiveStation] = useState(0);
 
   const isRTL = locale === "fa";
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   useEffect(() => {
     const interval = setInterval(() => {

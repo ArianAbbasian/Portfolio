@@ -5,18 +5,17 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
 import Lightbox from "../ui/Lightbox";
+import { useMounted } from "@/hooks/use-mounted";
 
 export default function AboutArticles() {
   const t = useTranslations("about");
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
+
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";

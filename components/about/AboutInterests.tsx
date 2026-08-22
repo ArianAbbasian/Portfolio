@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
+import { useMounted } from "@/hooks/use-mounted";
 
 const MusicIcon = ({ className = "size-4" }: { className?: string }) => (
   <svg
@@ -72,11 +73,7 @@ export default function AboutInterests() {
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";

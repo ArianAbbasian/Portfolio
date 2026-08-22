@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
+import { useMounted } from "@/hooks/use-mounted";
+
 
 const EXPERIENCES = [
   {
@@ -44,15 +46,13 @@ export default function AboutExperience() {
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({});
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
+
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

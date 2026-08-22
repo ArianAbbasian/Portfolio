@@ -7,6 +7,7 @@ import { PROJECTS_DATA, Project, ProjectLangData } from "@/constants/projects";
 import Link from "next/link";
 import Lightbox from "@/components/ui/Lightbox";
 import { motion } from "framer-motion";
+import { useMounted } from "@/hooks/use-mounted";
 
 interface ProjectModalProps {
   project: Project;
@@ -76,11 +77,8 @@ export default function ProjectModal({
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(
     null,
   );
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -230,8 +228,8 @@ export default function ProjectModal({
             className={[
               "mt-4 flex flex-wrap gap-3 items-center text-xs font-bold",
               locale === "fa"
-                ? "tracking-normal text-text-secondary" 
-                : "font-mono tracking-wider text-zinc-400 dark:text-zinc-500", 
+                ? "tracking-normal text-text-secondary"
+                : "font-mono tracking-wider text-zinc-400 dark:text-zinc-500",
             ].join(" ")}
           >
             <span>

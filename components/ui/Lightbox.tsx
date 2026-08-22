@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useMounted } from "@/hooks/use-mounted";
 
 interface LightboxProps {
   src: string | null;
@@ -9,11 +10,7 @@ interface LightboxProps {
 }
 
 export default function Lightbox({ src, onClose }: LightboxProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   useEffect(() => {
     if (src) {
@@ -33,26 +30,25 @@ export default function Lightbox({ src, onClose }: LightboxProps) {
   if (!src || !mounted) return null;
 
   return createPortal(
-    <div 
+    <div
       className="fixed inset-0 z-[99999] flex items-center justify-center p-4 backdrop-blur-2xl transition-all duration-500 animate-in fade-in cursor-zoom-out"
       onClick={onClose}
-      style={{ transform: "translate3d(0, 0, 10000px)" }} 
+      style={{ transform: "translate3d(0, 0, 10000px)" }}
     >
-      
-      <button 
+      <button
         className="absolute top-6 right-6 z-[100000] flex h-10 w-10 items-center justify-center rounded-full border border-border bg-black/5 dark:bg-white/5 text-text-primary hover:bg-text-primary hover:text-background transition-all duration-300 cursor-pointer shadow-lg"
         onClick={onClose}
       >
         ✕
       </button>
-         
-      <img 
-        src={src} 
-        alt="Full Screen Preview" 
+
+      <img
+        src={src}
+        alt="Full Screen Preview"
         className="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl cursor-default"
         onClick={(e) => e.stopPropagation()}
       />
     </div>,
-    document.body
+    document.body,
   );
 }

@@ -2,15 +2,15 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState, useRef } from "react";
+import { useMounted } from "@/hooks/use-mounted";
+
 
 export default function AboutHero() {
   const t = useTranslations("about");
   const locale = useLocale();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
+
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 select-none flex justify-center w-full">
