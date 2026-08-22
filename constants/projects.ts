@@ -135,7 +135,6 @@ export const PROJECTS_DATA: Project[] = [
       "/images/projects/speech-to-text/desktop-2.jpg",
     ],
     mobileImage: "/images/projects/speech-to-text/mobile.jpg",
-
     en: {
       title: "Persian Speech-to-Text",
       category: "Web Development / Speech Recognition",
