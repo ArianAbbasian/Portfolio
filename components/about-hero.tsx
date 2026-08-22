@@ -80,9 +80,9 @@ export default function AboutHero() {
           {mounted && (
             <div className="w-full max-w-[320px] h-[380px] rounded-[2.25rem] border border-border bg-slate-200/60 dark:bg-white/[0.015] backdrop-blur-3xl pt-6 px-6 pb-4 relative flex flex-col justify-between shadow-[0_30px_70px_rgba(0,0,0,0.03)] dark:shadow-[0_40px_90px_rgba(0,0,0,0.5)]">
               <div className="flex items-center justify-between text-[10px] font-sans text-text-muted font-bold tracking-[0.2em] select-none border-b border-border/40 pb-3 z-20">
-                <span>LOC: TEHRAN, IRN</span>
+                <span>{t("hero.location")}</span>
                 <div className="flex items-center gap-1.5">
-                  <span>SYS: FRONTEND</span>
+                  <span>{t("hero.system")}</span>
                   <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>

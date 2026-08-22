@@ -37,6 +37,10 @@
       "interests": "علاقه‌مندی‌ها",
       "futureGoals": "اهداف آینده"
     },
+    "hero": {
+      "location": "موقعیت: تهران، ایران",
+      "system": "سیستم: فرانت‌اند"
+    },
     "introSlides": [
       {
         "segments": [

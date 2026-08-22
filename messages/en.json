@@ -29,6 +29,10 @@
     "titleHighlight": "me and my journey",
     "titleSuffix": " next",
     "description": "About me, my professional experience, and technical skills.",
+    "hero": {
+      "location": "LOC: TEHRAN, IRN",
+      "system": "SYS: FRONTEND"
+    },
     "sections": {
       "aboutMe": "About Me",
       "experience": "Experience",
