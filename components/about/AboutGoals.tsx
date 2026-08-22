@@ -68,9 +68,7 @@ export default function AboutGoals() {
   }, []);
 
   const isDark = mounted && resolvedTheme === "dark";
-  const iconSrc = isDark
-    ? "/images/Icons/goals-white.svg"
-    : "/images/Icons/goals.svg";
+  const iconSrc = isDark ? "/icons/goals-white.svg" : "/icons/goals.svg";
 
   // مسیر دقیق خط پیست برای هماهنگی ۱۰۰٪ خط و ماشین
   const trackPathD =
@@ -80,19 +78,20 @@ export default function AboutGoals() {
     <>
       <style jsx global>{`
         @keyframes driveCircuit {
-          0% { offset-distance: 0%; }
-          100% { offset-distance: 100%; }
+          0% {
+            offset-distance: 0%;
+          }
+          100% {
+            offset-distance: 100%;
+          }
         }
       `}</style>
 
       <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
         <div className="mx-auto max-w-5xl flex flex-col gap-12 sm:gap-16">
-          
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
-            
             {/* ۱. عنوان اصلی بخش اهداف آینده با آیکون SVG و واترمارک محو */}
             <div className="md:col-span-4 select-none relative">
-              
               {/* 🌟 آیکون SVG بزرگ و محو (واترمارک) پشت متن عنوان */}
               <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
                 <img
@@ -126,7 +125,6 @@ export default function AboutGoals() {
 
             {/* ۲. بدنه استیج پیست مسابقه و کارت بیانیه اهداف آینده */}
             <div className="md:col-span-8 flex flex-col gap-6">
-              
               {/* 🏎️ پیست مسابقه و نمایش عنوان ایستگاه‌ها روی خود پیست */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -168,10 +166,28 @@ export default function AboutGoals() {
 
                   {/* گرادیان خط پیست */}
                   <defs>
-                    <linearGradient id="trackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.8" />
-                      <stop offset="50%" stopColor="#a855f7" stopOpacity="0.9" />
-                      <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.8" />
+                    <linearGradient
+                      id="trackGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop
+                        offset="0%"
+                        stopColor="var(--accent)"
+                        stopOpacity="0.8"
+                      />
+                      <stop
+                        offset="50%"
+                        stopColor="#a855f7"
+                        stopOpacity="0.9"
+                      />
+                      <stop
+                        offset="100%"
+                        stopColor="var(--accent)"
+                        stopOpacity="0.8"
+                      />
                     </linearGradient>
                   </defs>
 
@@ -204,9 +220,14 @@ export default function AboutGoals() {
                           cy={st.cy}
                           animate={{
                             r: isActive ? 6.5 : 4,
-                            fill: isActive ? "var(--accent)" : "var(--text-muted)",
+                            fill: isActive
+                              ? "var(--accent)"
+                              : "var(--text-muted)",
                           }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
                         />
 
                         {/* عنوان ایستگاه با ترنزیشن نرم رنگ، شفافیت و سایز */}
@@ -216,16 +237,24 @@ export default function AboutGoals() {
                           textAnchor="middle"
                           dominantBaseline="central"
                           animate={{
-                            fill: isActive ? "var(--accent)" : "var(--text-primary)",
+                            fill: isActive
+                              ? "var(--accent)"
+                              : "var(--text-primary)",
                             opacity: isActive ? 1 : 0.35,
                           }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
                           className="select-none"
                           style={{
                             fontSize: isActive ? "13.5px" : "11px",
                             fontWeight: isActive ? "900" : "600",
-                            filter: isActive ? "drop-shadow(0 0 8px var(--accent))" : "none",
-                            transition: "font-size 0.6s ease, filter 0.6s ease, font-weight 0.6s ease",
+                            filter: isActive
+                              ? "drop-shadow(0 0 8px var(--accent))"
+                              : "none",
+                            transition:
+                              "font-size 0.6s ease, filter 0.6s ease, font-weight 0.6s ease",
                           }}
                         >
                           {title}
@@ -290,11 +319,8 @@ export default function AboutGoals() {
                   {t("goals.statement")}
                 </p>
               </motion.div>
-
             </div>
-
           </div>
-
         </div>
       </section>
     </>

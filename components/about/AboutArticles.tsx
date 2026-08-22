@@ -20,9 +20,7 @@ export default function AboutArticles() {
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";
-  const iconSrc = isDark
-    ? "/images/Icons/article-white.svg"
-    : "/images/Icons/article.svg";
+  const iconSrc = isDark ? "/icons/article-white.svg" : "/icons/article.svg";
 
   return (
     <>
@@ -119,14 +117,12 @@ export default function AboutArticles() {
                       ))}
                     </div>
 
-
                     <a
                       href="https://civilica.com/doc/2588476/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="relative inline-flex items-center justify-center gap-2.5 px-5 py-3 sm:px-6 sm:py-3.5 rounded-2xl bg-accent text-white font-black text-xs sm:text-sm shadow-[0_8px_25px_rgba(0,122,255,0.25)] hover:shadow-[0_12px_30px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all duration-300 w-fit shrink-0 cursor-pointer group/btn mt-2 sm:mt-0"
                     >
-                      
                       <span className="absolute -top-3.5 -end-2.5 px-3 py-1 rounded-full bg-emerald-500 text-white font-black text-[10px] sm:text-[11px] shadow-[0_4px_12px_rgba(16,185,129,0.4)] border-none">
                         {t("articles.freeBadge")}
                       </span>

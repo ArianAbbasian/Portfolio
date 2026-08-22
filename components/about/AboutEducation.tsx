@@ -64,8 +64,8 @@ export default function AboutEducation() {
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";
   const iconSrc = isDark
-    ? "/images/Icons/education-white.svg"
-    : "/images/Icons/education.svg";
+    ? "/icons/education-white.svg"
+    : "/icons/education.svg";
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">

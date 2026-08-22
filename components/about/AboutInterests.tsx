@@ -46,7 +46,7 @@ const INTERESTS = [
     type: "image",
     mediaSrc: "/images/Interests/gaming.jpg",
     iconType: "svg",
-    iconSrc: "/images/Icons/gaming.svg",
+    iconSrc: "/icons/gaming.svg",
     badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30",
   },
   {
@@ -80,18 +80,13 @@ export default function AboutInterests() {
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";
-  const iconSrc = isDark
-    ? "/images/Icons/glitter-white.svg"
-    : "/images/Icons/glitter.svg";
+  const iconSrc = isDark ? "/icons/glitter-white.svg" : "/icons/glitter.svg";
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 py-0 select-none">
       <div className="mx-auto max-w-5xl flex flex-col gap-12 sm:gap-16">
-        
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-border/30 pb-16 relative">
-          
           <div className="md:col-span-4 select-none relative">
-            
             <div className="absolute -top-6 -start-4 sm:-top-8 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
               <img
                 src={iconSrc}
@@ -131,7 +126,11 @@ export default function AboutInterests() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: idx * 0.12,
+                    ease: "easeOut",
+                  }}
                   className="group relative min-h-[400px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4 sm:p-5"
                 >
                   <div className="absolute inset-0 z-0 overflow-hidden bg-black/20">
@@ -160,7 +159,9 @@ export default function AboutInterests() {
                   </div>
 
                   <div className="relative z-10 flex items-center justify-between">
-                    <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border backdrop-blur-md ${item.badgeColor}`}>
+                    <span
+                      className={`text-[10px] font-black px-2.5 py-1 rounded-full border backdrop-blur-md ${item.badgeColor}`}
+                    >
                       {t(`interests.items.${item.id}.category`)}
                     </span>
 
@@ -189,9 +190,7 @@ export default function AboutInterests() {
               );
             })}
           </div>
-
         </div>
-
       </div>
     </section>
   );
