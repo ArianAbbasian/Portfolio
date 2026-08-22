@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "@/components/layout/Providers";
-import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMounted } from "@/hooks/use-mounted";
@@ -115,9 +114,9 @@ export function Header() {
         >
           {mounted &&
             (resolvedTheme === "dark" ? (
-              <Sun size={14} className="sm:size-[15px]" strokeWidth={2} />
+              <Sun size={14} className="sm:size-3.75" strokeWidth={2} />
             ) : (
-              <Moon size={14} className="sm:size-[15px]" strokeWidth={2} />
+              <Moon size={14} className="sm:size-3.75" strokeWidth={2} />
             ))}
         </button>
       </div>
