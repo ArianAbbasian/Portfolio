@@ -38,6 +38,11 @@
       "futureGoals": "Future Goals"
     },
     "bio": "Hey, I'm Arian, a Software Engineering student and Web Developer. I love solving problems and building digital experiences that look great, feel right, and actually bring value to users and businesses.",
+    "experience": {
+      "title": "Work Experience",
+      "subtitle": "Building high-performance web applications across enterprise platforms.",
+      "present": "PRESENT"
+    },
     "experienceItems": {
       "kanda": {
         "role": "Frontend Developer",

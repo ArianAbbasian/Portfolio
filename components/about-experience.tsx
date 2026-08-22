@@ -94,14 +94,12 @@ export default function AboutExperience() {
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
-                  {isRTL ? "سوابق شغلی" : "Work Experience"}
+                  {t("experience.title")}
                 </h2>
               </div>
 
               <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
-                {isRTL
-                  ? "تجربه توسعه وب‌اپلیکیشن‌ها و سیستم‌های بزرگ در شرکت‌های معتبر"
-                  : "Building high-performance web applications across enterprise platforms."}
+                {t("experience.subtitle")}
               </p>
             </div>
           </div>
@@ -194,7 +192,7 @@ export default function AboutExperience() {
                               <span>{t(`experienceItems.${key}.role`)}</span>
                               {isCurrent && (
                                 <span className="inline-flex items-center text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 ms-2 align-middle font-sans">
-                                  {isRTL ? "اکنون" : "PRESENT"}
+                                  {t("experience.present")}
                                 </span>
                               )}
                             </h3>
