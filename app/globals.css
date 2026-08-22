@@ -457,12 +457,9 @@ html::-webkit-scrollbar {
   display: none !important;
 }
 
-@media (pointer: fine) {
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
 }
 
 @media (min-width: 640px) and (max-width: 1400px) {

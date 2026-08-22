@@ -21,15 +21,22 @@ export function CustomCursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    // ✅ فقط وقتی مطمئن شدیم کرسر سفارشی کار می‌کند، نشانگر بومی را مخفی می‌کنیم
+    document.documentElement.classList.add("custom-cursor-active");
+
     // ۲. تعریف تابع حرکت سریع برای نقطه داخلی (پاسخ‌دهی آنی)
     const xDot = gsap.quickTo(dot, "x", { duration: 0.08, ease: "power3.out" });
     const yDot = gsap.quickTo(dot, "y", { duration: 0.08, ease: "power3.out" });
 
-    // ۳. تعریف تاخیر فیزیکی و کشسانی برای حلقه بیرونی (افکت خروج و بازگشت)
-    const xRing = gsap.quickTo(ring, "x", { duration: 0.38, ease: "power2.out" });
-    const yRing = gsap.quickTo(ring, "y", { duration: 0.38, ease: "power2.out" });
+    const xRing = gsap.quickTo(ring, "x", {
+      duration: 0.38,
+      ease: "power2.out",
+    });
+    const yRing = gsap.quickTo(ring, "y", {
+      duration: 0.38,
+      ease: "power2.out",
+    });
 
-    // ۴. شنونده حرکت ماوس
     const onMouseMove = (e: MouseEvent) => {
       setIsVisible(true);
       xDot(e.clientX);
@@ -41,13 +48,12 @@ export function CustomCursor() {
     const onMouseLeave = () => setIsVisible(false);
     const onMouseEnter = () => setIsVisible(true);
 
-    // ۵. تشخیص عناصر تعاملی (دکمه‌ها، لینک‌ها، کارت‌ها) جهت بزرگ‌نمایی حلقه
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
       const isInteractive = target.closest(
-        'a, button, input, textarea, [role="button"], .lg-btn, .seg-item, .cursor-pointer, [data-cursor="pointer"]'
+        'a, button, input, textarea, [role="button"], .lg-btn, .seg-item, .cursor-pointer, [data-cursor="pointer"]',
       );
 
       setIsHovered(!!isInteractive);
@@ -59,6 +65,9 @@ export function CustomCursor() {
     window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
+      // ✅ هنگام پاک‌سازی، کلاس را حذف می‌کنیم تا نشانگر بومی برگردد
+      document.documentElement.classList.remove("custom-cursor-active");
+
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
       window.removeEventListener("mouseenter", onMouseEnter);
