@@ -16,6 +16,7 @@
     },
     "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase.",
     "projects": {
+      "commercialBadge": "COMMERCIAL",
       "status": "STATUS: ACTIVE & OPEN TO WORK",
       "archive": "CURATED PROJECTS ARCHIVE",
       "scrollGuide": "SCROLL DOWN TO EXPLORE WORKS",
