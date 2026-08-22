@@ -19,11 +19,11 @@ export default function ProjectsHeader() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
             </span>
-            {locale === "fa" ? "وضعیت: آماده برای پروژه‌های جدید" : "STATUS: ACTIVE & OPEN TO WORK"}
+            {t("status")}
           </span>
           
           <span className="font-bold text-text-secondary uppercase">
-            {locale === "fa" ? "آرشیو پروژه‌های برگزیده" : "CURATED PROJECTS ARCHIVE"}
+            {t("archive")}
           </span>
           
         </div>
@@ -69,7 +69,7 @@ export default function ProjectsHeader() {
       <div className="hidden lg:flex w-full border-t border-b border-border/60 py-5 bg-white/[0.005] justify-center">
         <div className="flex flex-col items-center gap-2">
           <span className="text-[9px] sm:text-[10px] font-mono font-black text-text-muted tracking-[0.25em] uppercase animate-pulse">
-            {locale === "fa" ? "جهت کاوش پروژه‌ها، اسکرول کنید" : "SCROLL DOWN TO EXPLORE WORKS"}
+            {t("scrollGuide")}
           </span>
           <motion.div
             animate={locale === "fa" ? { x: [0, -14, 0] } : { x: [0, 14, 0] }}
