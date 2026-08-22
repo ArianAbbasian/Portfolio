@@ -1,49 +1,11 @@
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeInitializer } from "@/components/theme-initializer";
-import Script from "next/script";
 import { CustomCursor } from "@/components/custom-cursor";
-import "../globals.css";
-
-const satoshi = localFont({
-  src: [
-    { path: "../../public/fonts/Satoshi/Satoshi-Regular.woff2", weight: "400" },
-    { path: "../../public/fonts/Satoshi/Satoshi-Medium.woff2", weight: "500" },
-    { path: "../../public/fonts/Satoshi/Satoshi-Bold.woff2", weight: "700" },
-    { path: "../../public/fonts/Satoshi/Satoshi-Black.woff2", weight: "900" },
-  ],
-  variable: "--font-satoshi",
-  display: "swap",
-  preload: false,
-});
-
-const iranYekan = localFont({
-  src: [
-    {
-      path: "../../public/fonts/IranYekan/iranyekanwebregular.woff",
-      weight: "400",
-    },
-    {
-      path: "../../public/fonts/IranYekan/iranyekanwebmedium.woff",
-      weight: "500",
-    },
-    {
-      path: "../../public/fonts/IranYekan/iranyekanwebbold.woff",
-      weight: "700",
-    },
-    {
-      path: "../../public/fonts/IranYekan/iranyekanwebextrabold.woff",
-      weight: "800",
-    },
-  ],
-  variable: "--font-iran-yekan",
-  display: "swap",
-  preload: false,
-});
+import LocaleHtml from "@/components/locale-html";
 
 const locales = ["en", "fa"];
 
@@ -66,35 +28,24 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
-  const fontClass = locale === "fa" ? iranYekan.className : satoshi.className;
-
   return (
-    <html
-      lang={locale}
-      dir={locale === "fa" ? "rtl" : "ltr"}
-      data-scroll-behavior="smooth"
-      suppressHydrationWarning
-    >
-      <body
-        className={`${satoshi.variable} ${iranYekan.variable} ${fontClass} bg-background-main text-text-primary antialiased selection:bg-accent-primary/30`}
-      >
-        {/* اجرای اسکریپت تمساز */}
-        <ThemeInitializer />
+    <>
+      {/* تنظیم lang و dir روی html */}
+      <LocaleHtml locale={locale} />
 
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
-            <CustomCursor />
+      {/* اجرای اسکریپت تمساز */}
+      <ThemeInitializer />
 
-            {/* هدر سایت */}
-            <Header />
-
-            <div className="overflow-x-hidden w-full relative min-h-screen flex flex-col">
-              <main className="flex-grow">{children}</main>
-              <Footer />
-            </div>
-          </Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <Providers>
+          <CustomCursor />
+          <Header />
+          <div className="overflow-x-hidden w-full relative min-h-screen flex flex-col">
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
+      </NextIntlClientProvider>
+    </>
   );
 }
