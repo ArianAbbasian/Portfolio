@@ -114,9 +114,11 @@
     }
   },
   "footer": {
-    "ctaTitle": "Let's build something amazing together",
-    "ctaSubtitle": "Looking for a frontend engineer to bring your ideas to life? Let's connect and talk about your project.",
-    "copyRight": "© 2026 Arian Abbasian. All rights reserved.",
-    "resumeBtn": "Download Resume"
+    "readyText": "I’m ready to bring your vision to life",
+    "waysToReach": "Ways to reach me",
+    "emailMe": "Email",
+    "telegramMe": "Telegram",
+    "resumeBtn": "Resume",
+    "copyRight": "© 2026 Arian Abbasian. All rights reserved."
   }
 }
