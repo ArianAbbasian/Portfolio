@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
-import Lightbox from "../projects/Lightbox";
+import Lightbox from "../ui/Lightbox";
 
 export default function AboutArticles() {
   const t = useTranslations("about");

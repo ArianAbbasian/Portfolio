@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { useTranslations, useLocale } from "next-intl";
 import { PROJECTS_DATA, Project, ProjectLangData } from "@/constants/projects";
 import Link from "next/link";
-import Lightbox from "@/components/projects/Lightbox";
+import Lightbox from "@/components/ui/Lightbox";
 import { motion } from "framer-motion";
 
 interface ProjectModalProps {
