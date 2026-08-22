@@ -114,14 +114,12 @@ export default function AboutGoals() {
                   </div>
 
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-text-primary tracking-tight leading-tight">
-                    {isRTL ? "اهداف آینده" : "Future Goals"}
+                    {t("goals.title")}
                   </h2>
                 </div>
 
                 <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-medium">
-                  {isRTL
-                    ? "چشم‌انداز، نقشه راه و مقاصد بعدی مسیر توسعه نرم‌افزار"
-                    : "Vision, future roadmap, and upcoming development milestones."}
+                  {t("goals.subtitle")}
                 </p>
               </div>
             </div>
@@ -277,7 +275,7 @@ export default function AboutGoals() {
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
                     </span>
                     <span className="text-xs sm:text-sm font-bold text-accent tracking-wide">
-                      {isRTL ? "چشم‌انداز" : "VISION"}
+                      {t("goals.visionLabel")}
                     </span>
                   </div>
 
@@ -289,7 +287,7 @@ export default function AboutGoals() {
 
                 {/* متن اصلی بیانیه با فونت ایران‌یکان / ساتوشی عالی، بزرگ و باکیفیت */}
                 <p className="text-sm sm:text-base lg:text-lg text-text-primary leading-relaxed sm:leading-loose font-bold tracking-tight z-10">
-                  {t("placeholders.goalsText")}
+                  {t("goals.statement")}
                 </p>
               </motion.div>
 
