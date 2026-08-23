@@ -10,35 +10,35 @@
     "title": "My Work",
     "description": "Selected projects and designs",
     "hero": {
-      "status": "Available for premium freelance projects",
-      "title": "Crafting Web Interfaces with Native Precision.",
+      "status": "Available for freelance projects",
+      "title": "I build websites that grow your business, profit, and customer base.",
       "subtitle": "Hi, I'm Arian. A Frontend Engineer crafted around performance, seamless animations, and clean architecture. I turn complex logic into fluid, premium web experiences."
     },
     "ndaNotice": "To respect non-disclosure agreements (NDA), some production-level enterprise applications and corporate systems are omitted from this public showcase.",
     "services": {
       "eyebrow": "WHAT I DO",
       "title": "How I Can Help Your Business",
-      "subtitle": "Professional web solutions that build trust, improve user experience, and support your business goals.",
+      "subtitle": "Solutions that not only build trust, but also boost your sales and pave the way for your growth.",
       "items": [
         {
           "icon": "globe",
-          "title": "Professional Business Website",
-          "desc": "A modern, fast website that makes your brand look credible and trustworthy."
+          "title": "Professional Website",
+          "desc": "Professional design that builds customer trust and boosts sales."
         },
         {
           "icon": "smartphone",
-          "title": "Mobile-First Design",
-          "desc": "Your site looks and works great on any device, especially mobile."
+          "title": "Responsive Design",
+          "desc": "A great mobile experience; your customers can easily connect with you from any device."
         },
         {
           "icon": "gauge",
-          "title": "Performance & Speed",
-          "desc": "Fast loading times that keep visitors engaged and improve SEO."
+          "title": "Speed & Performance",
+          "desc": "High speed keeps users engaged and puts your site at the top of Google search results."
         },
         {
-          "icon": "file",
-          "title": "Easy to Update",
-          "desc": "Simple structure that your team can manage without technical skills."
+          "icon": "shield",
+          "title": "Security & Stability",
+          "desc": "A secure and consistently stable website that gives you peace of mind about performance drops."
         }
       ]
     },

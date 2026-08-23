@@ -6,7 +6,7 @@ import {
   Globe,
   Smartphone,
   Gauge,
-  FileText,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -14,7 +14,7 @@ const iconMap: Record<string, LucideIcon> = {
   globe: Globe,
   smartphone: Smartphone,
   gauge: Gauge,
-  file: FileText,
+  shield: ShieldCheck,
 };
 
 export default function Services() {
