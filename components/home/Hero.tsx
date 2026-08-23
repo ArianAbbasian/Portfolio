@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { gsap } from "gsap";
 
 export default function Hero() {
+  const locale = useLocale();
   const t = useTranslations("home.hero");
   const tHome = useTranslations("home");
 
@@ -30,7 +31,7 @@ export default function Hero() {
 
     if (titleRef.current) {
       const isAlreadySplit = titleRef.current.querySelector(".title-word");
-      
+
       if (!isAlreadySplit) {
         const words = titleRef.current.innerText.split(" ");
         titleRef.current.innerHTML = words
@@ -46,38 +47,38 @@ export default function Hero() {
       tl.fromTo(
         statusRef.current,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 1.2 }
-      )
-      .fromTo(
-        titleRef.current.querySelectorAll(".title-word"),
-        { y: "140%", rotateX: -40, opacity: 0 },
-        { y: "0%", rotateX: 0, opacity: 1, duration: 1.4, stagger: 0.06 },
-        "-=0.9"
-      )
-      .fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 1.2 },
-        "-=1.1"
       )
-      .fromTo(
-        ndaRef.current,
-        { opacity: 0, y: 15, scale: 0.98 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2 },
-        "-=0.9"
-      )
-      .fromTo(
-        ".floating-element",
-        { opacity: 0, scale: 0 },
-        {
-          opacity: 0.7,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.05,
-          ease: "back.out(1.5)",
-        },
-        "-=0.8"
-      );
+        .fromTo(
+          titleRef.current.querySelectorAll(".title-word"),
+          { y: "140%", rotateX: -40, opacity: 0 },
+          { y: "0%", rotateX: 0, opacity: 1, duration: 1.4, stagger: 0.06 },
+          "-=0.9",
+        )
+        .fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1.2 },
+          "-=1.1",
+        )
+        .fromTo(
+          ndaRef.current,
+          { opacity: 0, y: 15, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 1.2 },
+          "-=0.9",
+        )
+        .fromTo(
+          ".floating-element",
+          { opacity: 0, scale: 0 },
+          {
+            opacity: 0.7,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+          },
+          "-=0.8",
+        );
     }
 
     const elements = document.querySelectorAll(".floating-element");
@@ -85,13 +86,13 @@ export default function Hero() {
 
     elements.forEach((el) => {
       function animateBounded() {
-        const randomX = gsap.utils.random(-25, 25); 
+        const randomX = gsap.utils.random(-25, 25);
         const randomY = gsap.utils.random(-25, 25);
         const randomRot = gsap.utils.random(-20, 20);
         const randomTime = gsap.utils.random(3.5, 5.5);
 
         const tween = gsap.to(el, {
-          x: randomX, 
+          x: randomX,
           y: randomY,
           rotation: randomRot,
           duration: randomTime,
@@ -268,7 +269,11 @@ export default function Hero() {
 
         <h1
           ref={titleRef}
-          className="mt-8 text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl lg:text-6xl leading-[1.2] sm:leading-[1.15] flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-0"
+          className={`mt-8 font-extrabold tracking-tight text-text-primary leading-[1.2] sm:leading-[1.15] flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-0 ${
+            locale === "fa"
+              ? "!text-[2.2rem] sm:!text-[3rem] md:!text-[3.4rem] lg:!text-[3.4rem]"
+              : "!text-[2rem] sm:!text-[2.75rem] md:!text-[3.2rem] lg:!text-[3.2rem]"
+          }`}
         >
           {t("title")}
         </h1>
