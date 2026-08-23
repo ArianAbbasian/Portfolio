@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { redirect } from "next/navigation";
+
 
 export const metadata: Metadata = {
   other: {
@@ -7,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootPage() {
-  return null;
+  redirect("/fa");
 }
