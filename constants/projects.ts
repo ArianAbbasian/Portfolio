@@ -14,6 +14,8 @@ export interface Project {
   id: string;
   year: string;
   isCommercial: boolean;
+  isProduction?: boolean;
+  monthlyUsers?: string;
   image: string;
   desktopImages: string[];
   mobileImage: string;
@@ -26,6 +28,8 @@ export const PROJECTS_DATA: Project[] = [
     id: "cafe-restaurant",
     year: "2026",
     isCommercial: true,
+    isProduction: true,
+    monthlyUsers: "100+",
     image: "/images/projects/shemroon-cafe/main.jpg",
     desktopImages: [
       "/images/projects/shemroon-cafe/main.jpg",

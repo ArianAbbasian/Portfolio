@@ -11,7 +11,6 @@ import { PROJECT_THEMES } from "@/constants/project-themes";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 export default function ProjectsList() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(
@@ -136,20 +135,30 @@ export default function ProjectsList() {
 
                 <div className="flex items-center justify-between z-10 w-full mb-6">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <span
-                      className={[
-                        "rounded-full border px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-bold uppercase tracking-widest transition-colors duration-300",
-                        theme.badgeBg,
-                        theme.badgeBorder,
-                        theme.accent,
-                      ].join(" ")}
-                    >
-                      {t("selectedCase")} / 0{index + 1}
-                    </span>
-
-                    {project.isCommercial && (
+                    {project.isCommercial && !project.isProduction && (
                       <span className="rounded-full border border-amber-500/20 bg-amber-500/8 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[10px] font-bold tracking-wide text-amber-600 dark:text-amber-400">
                         {t("commercialBadge")}
+                      </span>
+                    )}
+
+                    {project.isProduction && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[10px] font-bold tracking-wide text-emerald-700 dark:text-emerald-300">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                        </span>
+                        {t("productionBadge")}
+                      </span>
+                    )}
+
+                    {project.monthlyUsers && (
+                      <span className="inline-flex items-baseline gap-1.5 text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                        <span className="text-base sm:text-lg lg:text-xl font-black tracking-tight">
+                          {project.monthlyUsers}
+                        </span>
+                        <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                          {t("monthlyUsersLabel")}
+                        </span>
                       </span>
                     )}
                   </div>
