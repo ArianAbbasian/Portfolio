@@ -27,6 +27,8 @@ export default function AboutMe() {
   const introSlides = t.raw("introSlides") as IntroSlide[];
 
   useEffect(() => {
+    if (!textRef.current) return;
+
     const isRTL = locale === "fa";
 
     const getScrollAmount = () => {
@@ -53,7 +55,7 @@ export default function AboutMe() {
           end: "bottom bottom",
           invalidateOnRefresh: true,
         },
-      }
+      },
     );
 
     return () => {
@@ -71,7 +73,7 @@ export default function AboutMe() {
     >
       <div
         ref={pinRef}
-        className="w-full h-screen flex flex-col justify-between py-10 md:py-16 select-none relative"
+        className="w-full h-screen flex flex-col justify-between py-0 select-none relative"
       >
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[300px] w-[600px] rounded-full bg-accent/5 blur-[120px] opacity-70 pointer-events-none" />
 
@@ -103,7 +105,7 @@ export default function AboutMe() {
                       </span>
                     ) : (
                       <span key={segmentIndex}>{segment.content}</span>
-                    )
+                    ),
                   )}
                 </div>
               </div>

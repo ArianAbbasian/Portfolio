@@ -7,27 +7,29 @@ import { gsap } from "gsap";
 export default function Hero() {
   const locale = useLocale();
   const t = useTranslations("home.hero");
-  const tHome = useTranslations("home");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ndaRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-    gsap.set(containerRef.current, { perspective: 1200 });
+    if (containerRef.current) {
+      gsap.set(containerRef.current, { perspective: 1200 });
+    }
 
-    gsap.to(glowRef.current, {
-      opacity: 0.18,
-      scale: 1.1,
-      duration: 2.5,
-      ease: "power2.out",
-    });
+    if (glowRef.current) {
+      gsap.to(glowRef.current, {
+        opacity: 0.18,
+        scale: 1.1,
+        duration: 2.5,
+        ease: "power2.out",
+      });
+    }
 
     if (titleRef.current) {
       const isAlreadySplit = titleRef.current.querySelector(".title-word");
@@ -60,12 +62,6 @@ export default function Hero() {
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 1.2 },
           "-=1.1",
-        )
-        .fromTo(
-          ndaRef.current,
-          { opacity: 0, y: 15, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 1.2 },
-          "-=0.9",
         )
         .fromTo(
           ".floating-element",
@@ -184,7 +180,7 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 md:pt-44 md:pb-28 select-none"
+      className="relative flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 md:pt-44 min-[613px]:pb-[150px] select-none"
       style={{ transformStyle: "preserve-3d" }}
     >
       <div
@@ -284,30 +280,6 @@ export default function Hero() {
         >
           {t("subtitle")}
         </p>
-
-        <div
-          ref={ndaRef}
-          className="mx-auto mt-8 sm:mt-12 max-w-xl opacity-0 px-2"
-          style={{ transform: "translateZ(20px)" }}
-        >
-          <div
-            className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-xl transition-colors duration-300 hover:border-white/[0.15] hover:bg-white/[0.05]"
-            style={{
-              boxShadow: `
-        0 4px 30px rgba(0, 0, 0, 0.4), 
-        inset 0 1px 0px rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0px rgba(255, 255, 255, 0.05)
-      `,
-            }}
-          >
-            <p className="text-[11px] sm:text-xs leading-relaxed text-text-muted tracking-wide flex items-center justify-center gap-2">
-              <span className="filter drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]">
-                💡
-              </span>
-              {tHome("ndaNotice")}
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );
