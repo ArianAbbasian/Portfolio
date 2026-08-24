@@ -50,13 +50,13 @@
       "title": "نمونه کارهای من",
       "productionBadge": "فعال در محیط واقعی",
       "monthlyUsersLabel": "کاربر ماهانه",
-      "viewProject": "مشاهده بررسی متنی",
       "clientLabel": "کارفرما: ",
       "yearLabel": "سال انتشار: ",
       "challenge": "چالش پروژه",
       "solution": "راهکار توسعه",
-      "sourceCode": "کد منبع",
-      "launchLive": "ورود به سایت زنده"
+      "viewProject": "مشاهده جزئیات پروژه",
+      "launchLive": "مشاهده وب‌سایت",
+      "sourceCode": "سورس‌کد پروژه"
     }
   },
   "about": {

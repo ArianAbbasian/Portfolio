@@ -16,7 +16,6 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
-
 export default function ProjectModal({
   project,
   isOpen,
@@ -311,17 +310,24 @@ export default function ProjectModal({
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             {pData.githubUrl && (
               <Link
                 href={pData.githubUrl}
                 target="_blank"
                 className={[
-                  "text-sm font-medium transition-colors cursor-pointer text-text-secondary",
-                  theme.accent,
+                  "inline-flex items-center justify-center rounded-xl border border-border bg-white/60 dark:bg-white/5 px-5 py-3 text-xs sm:text-sm font-bold text-text-primary whitespace-nowrap cursor-pointer",
+                  "transition-all duration-300 ease-out",
+                  "gap-2 group/btn hover:gap-3 active:scale-95",
+                  "hover:border-accent hover:text-accent dark:hover:border-accent dark:hover:text-accent",
                 ].join(" ")}
               >
                 {t("sourceCode")}
+                <span
+                  className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1 rotate-180" : "group-hover/btn:translate-x-1"}`}
+                >
+                  →
+                </span>
               </Link>
             )}
 

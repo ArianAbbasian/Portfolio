@@ -50,13 +50,13 @@
       "title": "My Work",
       "productionBadge": "LIVE IN PRODUCTION",
       "monthlyUsersLabel": "Monthly Users",
-      "viewProject": "View Case Study",
       "clientLabel": "CLIENT: ",
       "yearLabel": "YEAR: ",
       "challenge": "The Challenge",
       "solution": "The Solution",
-      "sourceCode": "Source Code",
-      "launchLive": "Launch Live Site"
+      "viewProject": "View Project Details",
+      "launchLive": "Visit Website",
+      "sourceCode": "View Source Code"
     }
   },
   "about": {
