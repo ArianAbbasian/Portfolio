@@ -123,7 +123,7 @@ export const PROJECTS_DATA: Project[] = [
       shortDescription: "فروشگاه آنلاین کامل با مدیریت لحظه‌ای محصولات، تم تاریک/روشن و همگام‌سازی با مرورگر – بدون نیاز به بک‌اند.",
       challenge: "چالش اصلی ساخت یک فروشگاه اینترنتی کامل بدون بک‌اند اختصاصی، همراه با همگام‌سازی داده‌ها بین تب‌های مختلف مرورگر و ذخیره‌سازی تم بود.",
       solution: "با استفاده از Context ری‌اکت و localStorage به عنوان منبع داده، رویدادهای storage برای همگام‌سازی بین تب‌ها پیاده‌سازی شدند. برای مدیریت تم از Redux Toolkit استفاده گردید.",
-      technologies: ["ری‌اکت", "ری‌اکت روتر", "رداکس تولکیت", "تیلویند سی‌اس‌اس", "سوایپر", "LocalStorage API"],
+      technologies: ["React", "React Router", "Redux Toolkit", "Tailwind CSS", "Swiper", "LocalStorage API"],
       liveUrl: "https://ArianAbbasian.github.io/SM-Shop",
       githubUrl: "https://github.com/ArianAbbasian/SM-Shop"
     }
