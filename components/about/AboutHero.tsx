@@ -4,16 +4,14 @@ import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useState, useRef } from "react";
 import { useMounted } from "@/hooks/use-mounted";
 
-
 export default function AboutHero() {
   const t = useTranslations("about");
   const locale = useLocale();
 
   const mounted = useMounted();
 
-
   return (
-    <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 select-none flex justify-center w-full">
+    <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 lg:mb-[133px] select-none flex justify-center w-full">
       <div className="absolute top-[10%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-accent/5 blur-[120px] opacity-60 pointer-events-none" />
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pointer-events-auto">
