@@ -15,7 +15,7 @@ export async function generateMetadata({
 
   const isFa = locale === "fa";
   const title = isFa
-    ? "آرین عباسیان | طراح وب‌سایت و توسعه‌دهنده فرانت‌اند"
+    ? "آرین عباسیان | طراح و توسعه‌دهنده وب‌سایت"
     : "Arian Abbasian | Frontend Developer";
   const description = isFa ? t("hero.subtitle") : t("hero.subtitle");
 
