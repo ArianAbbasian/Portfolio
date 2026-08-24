@@ -52,7 +52,7 @@ export const PROJECTS_DATA: Project[] = [
       title: "کافه شمرون",
       category: "توسعه وب / طراحی رابط کاربری",
       client: "کافه شمرون",
-      shortDescription: "منوی دیجیتال مدرن برای یک کافه دنج تهرانی با همگام‌سازی دسته‌بندی‌ها هنگام اسکرول، طراحی واکنش‌گرا و ویرایش آسان از طریق فایل‌های JSON.",
+      shortDescription: "منوی دیجیتال مدرن برای یک کافه دنج در تجریش، با تجربه کاربری روان، طراحی واکنش‌گرا و مدیریت آسان محتوا از طریق فایل‌های JSON.  ",
       challenge: "کافه نیاز به یک منوی آنلاین ساده و سبک داشت تا جایگزین منوهای چاپی شود و پرسنل بتوانند بدون دانش فنی آیتم‌ها را بروز کنند.",
       solution: "یک وب‌اپ فرانت‌اند خالص با React، Vite و Tailwind CSS توسعه دادم که محتوا را از فایل‌های JSON می‌خواند و با IntersectionObserver همگام‌سازی اسکرول را مدیریت می‌کند.",
       technologies: ["React", "Tailwind CSS", "Vite", "React-Router-Dom", "React-Icons"],
@@ -62,7 +62,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "cms-dashboard",
-    year: "2026",
+    year: "2025",
     isCommercial: false,
     image: "/images/projects/cms-dashboard/main.jpg",
     desktopImages: [
@@ -96,7 +96,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "sm-shop",
-    year: "2026",
+    year: "2025",
     isCommercial: false,
     image: "/images/projects/sm-shop/main.jpg",
     desktopImages: [
@@ -130,7 +130,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "persian-speech-to-text",
-    year: "2026",
+    year: "2025",
     isCommercial: false,
     image: "/images/projects/speech-to-text/main.jpg",
     desktopImages: [
