@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { useTheme } from "@/components/layout/Providers";
 import { useMounted } from "@/hooks/use-mounted";
 
-
 const STATIONS = [
   {
     id: "learning",
@@ -188,6 +187,8 @@ export default function AboutGoals() {
                           <motion.circle
                             cx={st.cx}
                             cy={st.cy}
+                            r={4}
+                            fill="var(--accent)"
                             initial={{ r: 4, opacity: 0.6 }}
                             animate={{ r: 14, opacity: 0 }}
                             transition={{
@@ -195,13 +196,13 @@ export default function AboutGoals() {
                               repeat: Infinity,
                               ease: "easeOut",
                             }}
-                            fill="var(--accent)"
                           />
                         )}
 
                         <motion.circle
                           cx={st.cx}
                           cy={st.cy}
+                          initial={{ r: 4, fill: "var(--text-muted)" }}
                           animate={{
                             r: isActive ? 6.5 : 4,
                             fill: isActive
@@ -219,6 +220,8 @@ export default function AboutGoals() {
                           y={st.textY}
                           textAnchor="middle"
                           dominantBaseline="central"
+                          fill="var(--text-primary)"
+                          opacity={0.35}
                           animate={{
                             fill: isActive
                               ? "var(--accent)"
