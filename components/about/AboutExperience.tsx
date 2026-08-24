@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useTheme } from "@/components/layout/Providers";
 import { useMounted } from "@/hooks/use-mounted";
 

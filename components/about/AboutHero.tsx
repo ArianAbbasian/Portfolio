@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { useEffect, useState, useRef } from "react";
 import { useMounted } from "@/hooks/use-mounted";
 
 export default function AboutHero() {
