@@ -1,86 +1,51 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
 export default function ProjectsHeader() {
   const t = useTranslations("home.projects");
-  const locale = useLocale();
+  const tHome = useTranslations("home");
 
   return (
-    <section className="relative w-full z-20 mt-20 sm:mt-28 md:mt-36 select-none">
-      
-      <div className="w-full border-t border-b border-border bg-white/[0.02] dark:bg-black/[0.02] backdrop-blur-sm">
-        <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 h-12 flex items-center justify-between text-xs sm:text-[13px] font-mono text-text-secondary tracking-wider">
-          
-          <span className="flex items-center gap-2.5 font-bold text-text-primary">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
-            </span>
-            {t("status")}
-          </span>
-          
-          <span className="font-bold text-text-secondary uppercase">
-            {t("archive")}
-          </span>
-          
-        </div>
-      </div>
+    <section className="relative w-full z-20 mt-20 sm:mt-28 md:mt-36 pb-12 sm:pb-16 select-none">
+      {/* هاله نوری پس‌زمینه */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[200px] w-[400px] rounded-full bg-accent/5 blur-[100px] pointer-events-none" />
 
-      <div className="py-16 sm:py-20 bg-gradient-to-b from-white/[0.01] dark:from-white/[0.005] to-transparent">
-        <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8">
-          
-          <motion.div
-            initial={{ opacity: 0, x: locale === "fa" ? 40 : -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-xl"
-          >
-            <span className="text-[10px] sm:text-[11px] font-bold tracking-widest text-accent uppercase block mb-3 opacity-85">
-              {t("selectedCase")}
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-text-primary tracking-tight leading-none">
-              {t("title")}
-            </h2>
-          </motion.div>
+      <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-16">
+        {/* عنوان مرکزی با دو خط افقی واضح */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="flex items-center justify-center gap-4 sm:gap-6"
+        >
+          <span className="h-[1.5px] flex-1 bg-gradient-to-r from-transparent via-text-primary/50 to-text-primary/25" />
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-text-primary text-center leading-none">
+            {t("title")}
+          </h2>
+          <span className="h-[1.5px] flex-1 bg-gradient-to-l from-transparent via-text-primary/50 to-text-primary/25" />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: locale === "fa" ? -40 : 40 }}
-            whileInView={{ opacity: 0.7, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-            className="max-w-md border-r-2 border-accent/20 pr-4 ltr:border-r-0 ltr:pr-0 ltr:border-l-2 ltr:pl-4"
-          >
-            <p className="text-xs sm:text-sm md:text-base text-text-secondary leading-relaxed">
-              {t("subtitle")}
+        {/* NDA Notice */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+          className="mx-auto mt-8 max-w-3xl"
+        >
+          <div className="rounded-2xl border border-border/60 bg-white/60 dark:bg-white/[0.03] p-5 backdrop-blur-xl text-center shadow-lg">
+            <p className="text-[11px] sm:text-xs leading-relaxed text-text-muted tracking-wide flex items-center justify-center gap-2">
+              <span className="filter drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]">
+                💡
+              </span>
+              {tHome("ndaNotice")}
             </p>
-          </motion.div>
-
-        </div>
+          </div>
+        </motion.div>
       </div>
-
-      <div className="hidden lg:flex w-full border-t border-b border-border/60 py-5 bg-white/[0.005] justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-[9px] sm:text-[10px] font-mono font-black text-text-muted tracking-[0.25em] uppercase animate-pulse">
-            {t("scrollGuide")}
-          </span>
-          <motion.div
-            animate={locale === "fa" ? { x: [0, -14, 0] } : { x: [0, 14, 0] }}
-            transition={{
-              repeat: Infinity,
-              duration: 1.6,
-              ease: "easeInOut",
-            }}
-            className="text-accent text-2xl font-black cursor-default"
-          >
-            {locale === "fa" ? "←" : "→"}
-          </motion.div>
-        </div>
-      </div>
-      
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -z-10 h-[200px] w-[400px] rounded-full bg-accent/5 blur-[100px] pointer-events-none" />
     </section>
   );
 }
