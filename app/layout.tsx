@@ -59,6 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${satoshi.variable} ${iranYekan.variable}`}
       suppressHydrationWarning
     >
