@@ -290,7 +290,11 @@ export default function AboutSkills() {
                     <motion.img
                       key={currentCat.id}
                       src={currentCat.categoryImage}
-                      alt={currentCat.titleEn}
+                      alt={t(
+                        CATEGORY_TRANSLATION_KEYS[
+                          currentCat.id as keyof typeof CATEGORY_TRANSLATION_KEYS
+                        ],
+                      )}
                       initial={{ opacity: 0, scale: 0.4, rotate: -60 }}
                       animate={{ opacity: 1, scale: 1, rotate: 0 }}
                       exit={{ opacity: 0, scale: 0.4, rotate: 60 }}
