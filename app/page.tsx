@@ -1,13 +1,11 @@
-import type { Metadata } from 'next';
-import { redirect } from "next/navigation";
+"use client";
 
-
-export const metadata: Metadata = {
-  other: {
-    refresh: '0;url=/fa',
-  },
-};
+import { useEffect } from "react";
 
 export default function RootPage() {
-  redirect("/fa");
+  useEffect(() => {
+    window.location.replace("/fa");
+  }, []);
+
+  return null;
 }
