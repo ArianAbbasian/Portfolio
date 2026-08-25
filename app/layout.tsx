@@ -38,9 +38,7 @@ const iranYekan = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.name,
-  },
+  title: siteConfig.name,
   description: siteConfig.description,
   openGraph: {
     type: "website",

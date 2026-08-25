@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -97,7 +97,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
 ];
 
-const bubbleVariants = {
+const bubbleVariants: Variants = {
   initial: {
     scale: 0,
     opacity: 0,
