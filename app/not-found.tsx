@@ -34,7 +34,6 @@ export default function NotFound() {
         isRTL ? "font-fa" : "font-sans"
       }`}
     >
-      {/* هاله‌های نوری پس‌زمینه */}
       <div className="absolute top-1/4 left-1/4 -z-10 h-[250px] w-[400px] rounded-full bg-accent/10 blur-[120px] opacity-70" />
       <div className="absolute bottom-1/4 right-1/4 -z-10 h-[250px] w-[400px] rounded-full bg-purple-500/10 blur-[120px] opacity-70" />
 
