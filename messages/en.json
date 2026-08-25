@@ -211,5 +211,15 @@
     "telegramMe": "Telegram",
     "resumeBtn": "Resume",
     "copyRight": "© 2026 Arian Abbasian. All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "badge": "404 ERROR",
+    "message": "The page you are looking for doesn't exist or has been moved.",
+    "description": "Let's get you back on track.",
+    "backHome": "Back to Home",
+    "viewWork": "View Work",
+    "contactMe": "Contact Me",
+    "report": "If you think this is a mistake, please let me know."
   }
 }
