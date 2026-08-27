@@ -30,8 +30,12 @@ export function Header() {
     router.push(segments.join("/") || "/");
   };
 
-  const isActive = (href: string) =>
-    pathname === (href === "" ? `/${locale}` : `/${locale}${href}`);
+  const normalizePath = (path: string) => path.replace(/\/$/, "");
+
+  const isActive = (href: string) => {
+    const target = href === "" ? `/${locale}` : `/${locale}${href}`;
+    return normalizePath(pathname) === normalizePath(target);
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 h-16 sm:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16 pointer-events-none transition-all duration-300 header-range-blur">
