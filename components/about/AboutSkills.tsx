@@ -131,14 +131,55 @@ export default function AboutSkills() {
   const locale = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [gearRotation, setGearRotation] = useState(0);
 
   const skillsTriggerRef = useRef<HTMLDivElement>(null);
   const skillsSectionRef = useRef<HTMLDivElement>(null);
   const gearRef = useRef<SVGSVGElement>(null);
+  const autoRotateIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const isRTL = locale === "fa";
 
+  // Detect if device is desktop (for ScrollTrigger)
   useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
+  // Auto-rotation on mobile: rotate gear every 4 seconds
+  useEffect(() => {
+    if (isDesktop) {
+      // Desktop: ScrollTrigger controls gear, no auto-rotation needed
+      if (autoRotateIntervalRef.current) {
+        clearInterval(autoRotateIntervalRef.current);
+        autoRotateIntervalRef.current = null;
+      }
+      return;
+    }
+
+    // Mobile: Auto-rotate gear every 4 seconds
+    autoRotateIntervalRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % SKILL_CATEGORIES.length);
+      setGearRotation((prev) => prev + 120); // Rotate 120 degrees per category (360/3)
+    }, 4000);
+
+    return () => {
+      if (autoRotateIntervalRef.current) {
+        clearInterval(autoRotateIntervalRef.current);
+      }
+    };
+  }, [isDesktop]);
+
+  // ScrollTrigger animation - DESKTOP ONLY
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         skillsSectionRef.current,
@@ -173,22 +214,38 @@ export default function AboutSkills() {
     return () => {
       ctx.revert();
     };
-  }, []);
+  }, [isDesktop]);
 
   const handleCategoryClick = (index: number) => {
-    if (!skillsTriggerRef.current) return;
-    const trigger = skillsTriggerRef.current;
-    const rect = trigger.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const absoluteTriggerTop = rect.top + scrollTop;
-    const totalScroll = trigger.offsetHeight - window.innerHeight;
-    const targetProgress = (index + 0.5) / SKILL_CATEGORIES.length;
-    const targetY = absoluteTriggerTop + targetProgress * totalScroll;
+    if (isDesktop && skillsTriggerRef.current) {
+      // Desktop: smooth scroll animation (ScrollTrigger)
+      const trigger = skillsTriggerRef.current;
+      const rect = trigger.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const absoluteTriggerTop = rect.top + scrollTop;
+      const totalScroll = trigger.offsetHeight - window.innerHeight;
+      const targetProgress = (index + 0.5) / SKILL_CATEGORIES.length;
+      const targetY = absoluteTriggerTop + targetProgress * totalScroll;
 
-    window.scrollTo({
-      top: targetY,
-      behavior: "smooth",
-    });
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+    } else {
+      // Mobile: instant category switch + animate gear
+      setActiveIndex(index);
+      const rotationDegrees = (index * 120) % 360;
+      setGearRotation(rotationDegrees);
+
+      // Reset auto-rotation timer (restart 4-second countdown)
+      if (autoRotateIntervalRef.current) {
+        clearInterval(autoRotateIntervalRef.current);
+      }
+      autoRotateIntervalRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % SKILL_CATEGORIES.length);
+        setGearRotation((prev) => prev + 120);
+      }, 4000);
+    }
   };
 
   const currentCat = SKILL_CATEGORIES[activeIndex];
@@ -196,29 +253,49 @@ export default function AboutSkills() {
   return (
     <>
       <style jsx global>{`
-        @keyframes organicFloat {
-          0% {
-            transform: translate3d(0, 0, 0) rotate(0deg);
+        /* Desktop: Full floating animation */
+        @media (min-width: 768px) {
+          @keyframes organicFloat {
+            0% {
+              transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+            50% {
+              transform: translate3d(0, -6px, 0) rotate(1.5deg);
+            }
+            100% {
+              transform: translate3d(0, 0, 0) rotate(0deg);
+            }
           }
-          50% {
-            transform: translate3d(0, -6px, 0) rotate(1.5deg);
-          }
-          100% {
-            transform: translate3d(0, 0, 0) rotate(0deg);
+        }
+
+        /* Mobile: NO floating animation (performance) */
+        @media (max-width: 767px) {
+          @keyframes organicFloat {
+            0% {
+              transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+            100% {
+              transform: translate3d(0, 0, 0) rotate(0deg);
+            }
           }
         }
       `}</style>
 
       <div
         ref={skillsTriggerRef}
-        className="relative w-full h-[220vh] sm:h-[250vh] select-none z-20"
+        className={`relative w-full select-none z-20 ${
+          isDesktop ? "h-[220vh] sm:h-[250vh] md:h-[220vh]" : "h-auto"
+        }`}
       >
         <div
           ref={skillsSectionRef}
-          className="h-[100dvh] w-full flex flex-col justify-between items-center overflow-hidden relative pt-20 sm:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 z-20"
+          className={`${
+            isDesktop ? "h-[100dvh]" : "min-h-[100dvh]"
+          } w-full flex flex-col justify-between items-center overflow-hidden relative pt-20 sm:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 z-20`}
         >
+          {/* Background Glow - Optimized for mobile */}
           <div
-            className="absolute left-1/2 top-1/2 -z-10 h-[280px] w-[280px] sm:h-[450px] sm:w-[450px] lg:h-[500px] lg:w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] sm:blur-[160px] opacity-45 transition-colors duration-700 pointer-events-none"
+            className="absolute left-1/2 top-1/2 -z-10 h-[280px] w-[280px] sm:h-[450px] sm:w-[450px] lg:h-[500px] lg:w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full md:blur-[160px] sm:blur-[90px] blur-[60px] opacity-35 md:opacity-45 transition-colors duration-700 pointer-events-none"
             style={{ backgroundColor: currentCat.accentColor }}
           />
 
@@ -232,13 +309,20 @@ export default function AboutSkills() {
           </div>
 
           <div className="mx-auto max-w-6xl w-full flex flex-col md:grid md:grid-cols-12 items-center justify-center gap-3 sm:gap-6 lg:gap-8 my-auto z-10">
+            {/* Left: Wheel + Category Selector */}
             <div className="md:col-span-5 flex flex-col items-center justify-center text-center gap-2 sm:gap-4 relative shrink-0 w-full">
               <div className="relative size-52 sm:size-56 md:size-60 lg:size-72 flex items-center justify-center p-2">
+                {/* SVG Gear - Rotates on scroll (desktop) or by state (mobile) */}
                 <svg
                   ref={gearRef}
                   viewBox="0 0 200 200"
                   className="w-full h-full transition-colors duration-300 drop-shadow-xl overflow-visible"
                   fill="none"
+                  style={{
+                    willChange: isDesktop ? "transform" : "auto",
+                    transform: !isDesktop ? `rotate(${gearRotation}deg)` : "none",
+                    transition: !isDesktop ? "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)" : "none",
+                  }}
                 >
                   <circle
                     cx="100"
@@ -285,6 +369,7 @@ export default function AboutSkills() {
                   ))}
                 </svg>
 
+                {/* Center Image Circle */}
                 <div className="absolute size-22 sm:size-24 md:size-24 lg:size-26 rounded-full border-2 border-white/90 dark:border-white/20 bg-white/90 dark:bg-[#0a0a14]/90 backdrop-blur-xl shadow-2xl flex items-center justify-center p-2.5 sm:p-4 overflow-hidden z-20">
                   <AnimatePresence mode="wait">
                     <motion.img
@@ -311,12 +396,14 @@ export default function AboutSkills() {
                   </AnimatePresence>
                 </div>
 
+                {/* Glow behind image - optimized */}
                 <div
-                  className="absolute size-22 sm:size-24 md:size-28 lg:size-32 rounded-full blur-2xl opacity-80 transition-colors duration-700 pointer-events-none z-0"
+                  className="absolute size-22 sm:size-24 md:size-28 lg:size-32 rounded-full md:blur-2xl sm:blur-xl blur-lg opacity-60 md:opacity-80 transition-colors duration-700 pointer-events-none z-0"
                   style={{ backgroundColor: currentCat.accentColor }}
                 />
               </div>
 
+              {/* Category Title & Navigation */}
               <div className="flex flex-col items-center gap-2 z-10 w-full">
                 <AnimatePresence mode="wait">
                   <motion.h3
@@ -335,7 +422,8 @@ export default function AboutSkills() {
                   </motion.h3>
                 </AnimatePresence>
 
-                <div className="seg-pill h-9 sm:h-10 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/80 dark:bg-[#0a0a10]/80 shadow-md backdrop-blur-xl max-w-full overflow-x-auto">
+                {/* Segmented Control */}
+                <div className="seg-pill h-9 sm:h-10 flex items-center px-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/80 dark:bg-[#0a0a10]/80 shadow-md md:backdrop-blur-xl sm:backdrop-blur-lg backdrop-blur-sm max-w-full overflow-x-auto">
                   {SKILL_CATEGORIES.map((cat, idx) => {
                     const active = activeIndex === idx;
                     return (
@@ -373,8 +461,10 @@ export default function AboutSkills() {
               </div>
             </div>
 
+            {/* Right: Skills Grid */}
             <div className="md:col-span-7 relative flex items-center justify-center w-full shrink-0">
-              <div className="w-full max-w-xl h-[280px] sm:h-[350px] lg:h-[420px] rounded-3xl sm:rounded-[2.5rem] border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/70 via-white/40 to-white/60 dark:from-white/[0.08] dark:via-white/[0.03] dark:to-white/[0.05] backdrop-blur-2xl shadow-[0_15px_40px_rgba(0,122,255,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.5)] relative overflow-hidden p-3 sm:p-6 lg:p-8 flex items-center justify-center">
+              {/* Skills Container - optimized for mobile */}
+              <div className="w-full max-w-xl h-[280px] sm:h-[350px] lg:h-[420px] rounded-3xl sm:rounded-[2.5rem] border border-white/80 dark:border-white/15 bg-gradient-to-br from-white/70 via-white/40 to-white/60 dark:from-white/[0.08] dark:via-white/[0.03] dark:to-white/[0.05] md:backdrop-blur-2xl sm:backdrop-blur-lg backdrop-blur-sm shadow-[0_15px_40px_rgba(0,122,255,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.5)] relative overflow-hidden p-3 sm:p-6 lg:p-8 flex items-center justify-center">
                 <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-accent/60 dark:via-accent/80 to-transparent opacity-90" />
 
                 <AnimatePresence mode="wait">
@@ -408,8 +498,8 @@ export default function AboutSkills() {
                         >
                           <div
                             className={[
-                              "size-20 sm:size-24 md:size-28 lg:size-36 rounded-full border flex flex-col items-center justify-center p-2.5 sm:p-4 relative overflow-hidden",
-                              "bg-white/80 dark:bg-white/[0.09] backdrop-blur-xl",
+                              "size-24 sm:size-32 md:size-40 lg:size-48 rounded-full border flex flex-col items-center justify-center p-2.5 sm:p-4 md:p-5 lg:p-6 relative overflow-hidden",
+                              "bg-white/80 dark:bg-white/[0.09] md:backdrop-blur-xl sm:backdrop-blur-lg backdrop-blur-sm",
                               "border-white/95 dark:border-white/20",
                               "hover:border-accent hover:bg-white/95 dark:hover:bg-white/[0.16]",
                               "transition-[border-color,background-color] duration-200",
@@ -417,15 +507,22 @@ export default function AboutSkills() {
                             style={{
                               animation: `organicFloat ${skill.floatSpeed}s ease-in-out infinite`,
                               animationDelay: `${sIdx * 0.25}s`,
-                              willChange: "transform",
-                              boxShadow:
-                                "inset 0 2px 5px rgba(255, 255, 255, 0.95), inset 0 -2px 5px rgba(0, 0, 0, 0.06), 0 10px 25px rgba(0, 122, 255, 0.15)",
+                              willChange: isDesktop ? "transform" : "auto",
+                              boxShadow: isDesktop
+                                ? "inset 0 2px 5px rgba(255, 255, 255, 0.95), inset 0 -2px 5px rgba(0, 0, 0, 0.06), 0 10px 25px rgba(0, 122, 255, 0.15)"
+                                : "inset 0 1px 3px rgba(255, 255, 255, 0.8), 0 4px 12px rgba(0, 122, 255, 0.08)",
                             }}
                           >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/70 via-transparent to-white/30 opacity-90 pointer-events-none rounded-full" />
-                            <div className="absolute -top-0.5 left-2 right-2 h-[38%] bg-gradient-to-b from-white/80 to-transparent rounded-t-full pointer-events-none opacity-90" />
+                            {/* Shine gradient - desktop only */}
+                            {isDesktop && (
+                              <>
+                                <div className="absolute inset-0 bg-gradient-to-tr from-white/70 via-transparent to-white/30 opacity-90 pointer-events-none rounded-full" />
+                                <div className="absolute -top-0.5 left-2 right-2 h-[38%] bg-gradient-to-b from-white/80 to-transparent rounded-t-full pointer-events-none opacity-90" />
+                              </>
+                            )}
 
-                            <div className="size-8 sm:size-10 md:size-12 lg:size-14 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
+                            {/* Skill Icon */}
+                            <div className="size-8 sm:size-12 md:size-16 lg:size-20 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
                               {!hasError ? (
                                 <img
                                   src={skill.logo}
@@ -437,6 +534,7 @@ export default function AboutSkills() {
                                     }))
                                   }
                                   className="w-full h-full object-contain filter drop-shadow-md"
+                                  loading="lazy"
                                 />
                               ) : (
                                 <div className="font-extrabold text-accent text-xs sm:text-base">
@@ -445,7 +543,8 @@ export default function AboutSkills() {
                               )}
                             </div>
 
-                            <span className="text-[10px] sm:text-xs lg:text-sm font-black text-text-primary text-center tracking-tight leading-none group-hover:text-accent transition-colors z-10">
+                            {/* Skill Name */}
+                            <span className="text-[10px] sm:text-sm md:text-base lg:text-lg font-black text-text-primary text-center tracking-tight leading-none group-hover:text-accent transition-colors z-10">
                               {skill.name}
                             </span>
                           </div>
