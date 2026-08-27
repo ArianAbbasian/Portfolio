@@ -143,8 +143,6 @@ export default function Hero() {
       return () => window.removeEventListener("mousemove", handleMouseMove);
     });
 
-    // MOBILE: NO deviceorientation - emojis stay static, only floating animation
-    // This removes the heavy accelerometer listener that was causing jank
 
     return () => {
       tl.kill();
