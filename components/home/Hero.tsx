@@ -101,6 +101,7 @@ export default function Hero() {
       animateBounded();
     });
 
+    // DESKTOP ONLY: Mouse move effect
     mm.add("(min-width: 600px)", () => {
       gsap.set(".hero-content-wrapper", {
         transformPerspective: 1000,
@@ -142,33 +143,8 @@ export default function Hero() {
       return () => window.removeEventListener("mousemove", handleMouseMove);
     });
 
-    mm.add("(max-width: 599px)", () => {
-      const handleOrientation = (e: DeviceOrientationEvent) => {
-        const { gamma, beta } = e;
-        if (!gamma || !beta) return;
-
-        const xMove = Math.min(Math.max(gamma, -25), 25);
-        const yMove = Math.min(Math.max(beta - 45, -25), 25);
-
-        gsap.to(glowRef.current, {
-          x: xMove * 1.2,
-          y: yMove * 1.2,
-          duration: 1,
-        });
-
-        elements.forEach((el, index) => {
-          gsap.to(el, {
-            xPercent: xMove * (0.2 + index * 0.1),
-            yPercent: yMove * (0.3 + index * 0.1),
-            duration: 0.5,
-          });
-        });
-      };
-
-      window.addEventListener("deviceorientation", handleOrientation);
-      return () =>
-        window.removeEventListener("deviceorientation", handleOrientation);
-    });
+    // MOBILE: NO deviceorientation - emojis stay static, only floating animation
+    // This removes the heavy accelerometer listener that was causing jank
 
     return () => {
       tl.kill();
