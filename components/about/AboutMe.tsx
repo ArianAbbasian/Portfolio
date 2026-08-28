@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,7 +68,7 @@ export default function AboutMe() {
           end: "bottom bottom",
           invalidateOnRefresh: true,
         },
-      }
+      },
     );
 
     return () => {
@@ -140,36 +140,124 @@ export default function AboutMe() {
   }
 
   // ══════════════════════════════════
-  // نسخه موبایل (جدید و بهینه)
+  // نسخه موبایل (چت استایل)
   // ══════════════════════════════════
+  return <MobileAboutMe slides={introSlides} isRTL={isRTL} />;
+}
+
+function MobileAboutMe({
+  slides,
+  isRTL,
+}: {
+  slides: IntroSlide[];
+  isRTL: boolean;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-rotate every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   return (
-    <section className="relative w-full px-6 py-16 bg-background-main overflow-hidden">
-      <div className="mx-auto max-w-3xl flex flex-col gap-10">
-        {introSlides.map((slide, idx) => (
+    <section
+      className="relative h-screen w-full overflow-hidden bg-background-main"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.045] blur-[110px]" />
+
+      {/* Header */}
+      <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-6 pt-6">
+        <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-text-muted">
+          INFO
+        </span>
+        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-text-muted">
+          {isRTL ? "آرین عباسیان" : "ARIAN ABBASIAN"}
+        </span>
+      </div>
+
+      {/* Vertical axis (decorative) */}
+      <div
+        className={`pointer-events-none absolute top-[20%] z-20 h-[60%] w-px bg-border/60 ${
+          isRTL ? "right-6" : "left-6"
+        }`}
+      />
+      <div
+        className={`pointer-events-none absolute top-[20%] z-20 h-14 w-px bg-accent ${
+          isRTL ? "right-6" : "left-6"
+        }`}
+      />
+
+      {/* Slider content */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <AnimatePresence mode="wait">
           <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: idx * 0.1 }}
-            className="text-center sm:text-start"
-            style={{ direction: isRTL ? "rtl" : "ltr" }}
+            key={currentIndex}
+            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: isRTL ? -30 : 30 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className={`w-full px-12 ${isRTL ? "pr-16 pl-7" : "pl-16 pr-7"}`}
           >
-            <div className="text-3xl sm:text-4xl font-black tracking-tight text-text-primary leading-tight">
-              {slide.segments.map((segment, segmentIndex) =>
+            {/* Chapter label */}
+            <div className="mb-8 flex items-center gap-3">
+              <span className="text-[10px] font-bold tracking-[0.28em] text-accent">
+                0{currentIndex + 1}
+              </span>
+              <span className="h-px w-8 bg-border" />
+              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-text-muted">
+                {currentIndex === 0
+                  ? "IDENTITY"
+                  : currentIndex === 1
+                    ? "MINDSET"
+                    : "PURPOSE"}
+              </span>
+            </div>
+
+            {/* Main statement */}
+            <div
+              className="max-w-[350px] text-[clamp(2rem,9vw,3rem)] font-black leading-[1.38] tracking-[-0.035em] text-text-primary"
+              style={{ textWrap: "balance" }}
+            >
+              {slides[currentIndex].segments.map((segment, segmentIndex) =>
                 segment.type === "highlight" ? (
-                  <span
-                    key={segmentIndex}
-                    className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent"
-                  >
+                  <span key={segmentIndex} className="text-accent">
                     {segment.content}
                   </span>
                 ) : (
                   <span key={segmentIndex}>{segment.content}</span>
-                )
+                ),
               )}
             </div>
+
+            {/* Bottom metadata */}
+            <div className="mt-12 flex items-center gap-4">
+              <span className="text-[9px] font-bold tracking-[0.2em] text-text-muted">
+                {String(currentIndex + 1).padStart(2, "0")} /{" "}
+                {String(slides.length).padStart(2, "0")}
+              </span>
+              <div className="h-px w-16 bg-border" />
+            </div>
           </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Dots indicator */}
+      <div className="absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 gap-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              index === currentIndex ? "w-8 bg-accent" : "w-2 bg-text-muted/40"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
       </div>
     </section>
