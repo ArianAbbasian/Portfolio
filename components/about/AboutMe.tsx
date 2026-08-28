@@ -153,20 +153,56 @@ function MobileAboutMe({
   isRTL: boolean;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const autoRotateRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto-rotate every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
+  // توقف خودکار هنگام لمس
+  const stopAutoRotate = () => {
+    if (autoRotateRef.current) {
+      clearInterval(autoRotateRef.current);
+      autoRotateRef.current = null;
+    }
+  };
+
+  // شروع خودکار
+  const startAutoRotate = () => {
+    stopAutoRotate();
+    autoRotateRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
     }, 3000);
+  };
 
-    return () => clearInterval(interval);
+  useEffect(() => {
+    startAutoRotate();
+    return () => stopAutoRotate();
   }, [slides.length]);
+
+  // Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    stopAutoRotate();
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const threshold = 50;
+
+    if (deltaX < -threshold) {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    } else if (deltaX > threshold) {
+      setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    }
+    touchStartX.current = null;
+    startAutoRotate();
+  };
 
   return (
     <section
       className="relative h-screen w-full overflow-hidden bg-background-main"
       dir={isRTL ? "rtl" : "ltr"}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Ambient background */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.045] blur-[110px]" />
@@ -193,16 +229,16 @@ function MobileAboutMe({
         }`}
       />
 
-      {/* Slider content */}
-      <div className="absolute inset-0 z-10 flex items-center">
+      {/* Content area - vertically centered to remove large empty space above */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center px-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: isRTL ? -30 : 30 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className={`w-full px-12 ${isRTL ? "pr-16 pl-7" : "pl-16 pr-7"}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className={`w-full ${isRTL ? "pr-16 pl-7" : "pl-16 pr-7"}`}
           >
             {/* Chapter label */}
             <div className="mb-8 flex items-center gap-3">
@@ -245,20 +281,26 @@ function MobileAboutMe({
             </div>
           </motion.div>
         </AnimatePresence>
-      </div>
 
-      {/* Dots indicator */}
-      <div className="absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 gap-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === currentIndex ? "w-8 bg-accent" : "w-2 bg-text-muted/40"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+        {/* Dots placed directly below the text */}
+        <div className="mt-6 flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                stopAutoRotate();
+                setCurrentIndex(index);
+                startAutoRotate();
+              }}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? "w-8 bg-accent"
+                  : "w-2 bg-text-muted/40"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
