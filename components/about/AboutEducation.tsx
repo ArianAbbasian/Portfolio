@@ -133,9 +133,9 @@ export default function AboutEducation() {
                       <div className="relative z-20 shrink-0">
                         <div
                           className={[
-                            "size-12 sm:size-14 rounded-full flex items-center justify-center p-2 bg-white transition-all duration-300 border-0 shadow-md",
+                            "size-12 sm:size-14 rounded-full flex items-center justify-center p-2 bg-white transition-all duration-300 border-0 shadow-md ring-2 ring-accent",
                             isCurrent
-                              ? "shadow-lg shadow-accent/25 ring-2 ring-accent/40 scale-105"
+                              ? "shadow-lg shadow-accent/25 ring-2 ring-accent scale-105"
                               : "shadow-sm",
                           ].join(" ")}
                         >
