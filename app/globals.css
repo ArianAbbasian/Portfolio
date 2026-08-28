@@ -425,20 +425,43 @@ html[dir="rtl"] body {
 }
 
 /* ═══════════════════════════════════════════════
-   HIDE SCROLLBAR COMPLETELY (Invisible Native Scroll)
+   HIDE ALL SCROLLBARS EXCEPT MAIN DOCUMENT
    ═══════════════════════════════════════════════ */
 
-html {
+/* مخفی کردن اسکرول‌بار در همه عناصر */
+* {
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE & Edge */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge */
+}
+
+/* فعال‌سازی مجدد فقط برای اسکرول‌بار اصلی (html) */
+html {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--accent) transparent;
+  -ms-overflow-style: auto;
 }
 
 html::-webkit-scrollbar {
-  display: none !important;
+  width: 6px;
+  height: 6px;
+  display: block !important;
 }
 
-::-webkit-scrollbar {
-  display: none !important;
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), #a855f7);
+  border-radius: 100px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-hover), #c084fc);
 }
 
 html.custom-cursor-active,
