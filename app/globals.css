@@ -135,9 +135,6 @@ html[dir="rtl"] body {
   .dark .seg-pill {
     background: rgba(10, 10, 16, 0.85) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow:
-      inset 0 1px 0px rgba(255, 255, 255, 0.18),
-      0 12px 40px rgba(0, 0, 0, 0.6) !important;
     backdrop-filter: blur(8px) saturate(227%) !important;
     -webkit-backdrop-filter: blur(8px) saturate(227%) !important;
   }
@@ -291,7 +288,7 @@ html[dir="rtl"] body {
     ) !important;
   }
 
-  /* ─── Top Glowing Indicator ─── */
+  /* ─── Top Glowing Indicator (Light Mode) ─── */
   .seg-top-glow {
     position: absolute;
     top: -5.5px;
@@ -299,14 +296,15 @@ html[dir="rtl"] body {
     transform: translateX(-50%);
     width: 28px;
     height: 3px;
-    background: rgba(255, 255, 255, 0.95) !important;
     border-radius: 100px;
-    filter: blur(0.5px) !important; /* Fixed: 'blur' corrected to 'filter' */
+    filter: blur(0.5px) !important;
+    background: var(--accent) !important;
     box-shadow:
-      0 0 6px 1.5px rgba(255, 255, 255, 0.9),
+      0 0 6px 1.5px var(--accent-glow),
       0 1px 3px rgba(0, 0, 0, 0.05) !important;
   }
 
+  /* ─── Top Glowing Indicator (Dark Mode) ─── */
   .dark .seg-top-glow {
     background: #ffffff !important;
     box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.85) !important;
