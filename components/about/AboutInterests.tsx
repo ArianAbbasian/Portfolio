@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/components/layout/Providers";
 import { useMounted } from "@/hooks/use-mounted";
 
@@ -41,6 +41,62 @@ const TrophyIcon = ({ className = "size-4" }: { className?: string }) => (
   </svg>
 );
 
+// کامپوننت ویدیو با پخش هوشمند فقط وقتی در دید باشد (مخصوص دسکتاپ)
+function AutoPlayVideo({
+  src,
+  poster,
+  className,
+}: {
+  src: string;
+  poster?: string;
+  className?: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // در صورت خطا (مثلاً مرورگر اجازه ندهد) هیچ اتفاقی نمی‌افتد
+            });
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      muted
+      playsInline
+      loop
+      preload="metadata"
+      controlsList="nodownload"
+      disablePictureInPicture
+      disableRemotePlayback
+      poster={poster}
+      src={src}
+      className={className}
+    />
+  );
+}
+
 const INTERESTS = [
   {
     id: "gaming",
@@ -62,6 +118,7 @@ const INTERESTS = [
     id: "football",
     type: "video",
     mediaSrc: "/video/football.mp4",
+    posterSrc: "/images/Interests/football-poster.jpg", // تصویر نمایشی برای موبایل
     iconType: "component",
     icon: TrophyIcon,
     badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
@@ -74,6 +131,14 @@ export default function AboutInterests() {
   const { resolvedTheme } = useTheme();
 
   const mounted = useMounted();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => setIsDesktop(window.innerWidth >= 768);
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";
@@ -128,22 +193,23 @@ export default function AboutInterests() {
                     delay: idx * 0.12,
                     ease: "easeOut",
                   }}
-                  className="group relative min-h-[400px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4 sm:p-5"
+                  className="group relative min-h-[400px] sm:min-h-[440px] rounded-3xl overflow-hidden border border-border/60 bg-white/70 dark:bg-white/[0.02] backdrop-blur-sm md:backdrop-blur-2xl shadow-xs hover:border-accent/40 hover:shadow-xl transition-all duration-500 flex flex-col justify-between p-4 sm:p-5"
                 >
                   <div className="absolute inset-0 z-0 overflow-hidden bg-black/20">
                     {item.type === "video" ? (
-                      <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
-                        controlsList="nodownload"
-                        disablePictureInPicture
-                        disableRemotePlayback
-                        src={item.mediaSrc}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
+                      isDesktop ? (
+                        <AutoPlayVideo
+                          src={item.mediaSrc}
+                          poster={item.posterSrc}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                      ) : (
+                        <img
+                          src={item.posterSrc}
+                          alt={t(`interests.items.${item.id}.title`)}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                      )
                     ) : (
                       <img
                         src={item.mediaSrc}
