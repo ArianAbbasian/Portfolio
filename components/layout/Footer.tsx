@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, Phone } from "lucide-react";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -15,26 +15,41 @@ export default function Footer() {
             {t("readyText")}
           </h2>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          {/* دکمه‌ها با چیدمان بهتر برای موبایل */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {/* ایمیل */}
             <motion.a
               href="mailto:ArianAbbasian013@gmail.com?subject=Project%20Inquiry"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center gap-2.5 rounded-full border border-accent/30 bg-white/60 dark:bg-white/5 px-7 py-3 text-sm font-bold text-text-primary backdrop-blur-xl transition-colors hover:border-accent hover:bg-white/90 dark:hover:bg-white/10 hover:text-accent   "
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-accent/30 bg-white/60 dark:bg-white/5 px-4 py-2.5 text-xs sm:px-7 sm:py-3 sm:text-sm font-bold text-text-primary backdrop-blur-xl transition-colors hover:border-accent hover:bg-white/90 dark:hover:bg-white/10 hover:text-accent"
             >
-              <Mail size={17} strokeWidth={2.2} />
+              <Mail size={16} strokeWidth={2.2} className="sm:size-[17px]" />
               {t("emailMe")}
             </motion.a>
 
+            {/* تلفن با direction ltr برای نمایش صحیح در فارسی */}
+            <motion.a
+              href="tel:+989991423690"
+              dir="ltr"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-accent/30 bg-white/60 dark:bg-white/5 px-4 py-2.5 text-xs sm:px-7 sm:py-3 sm:text-sm font-bold text-text-primary backdrop-blur-xl transition-colors hover:border-accent hover:bg-white/90 dark:hover:bg-white/10 hover:text-accent"
+            >
+              <Phone size={16} strokeWidth={2.2} className="sm:size-[17px]" />
+              {t("phoneNumber")}
+            </motion.a>
+
+            {/* تلگرام */}
             <motion.a
               href="https://t.me/Arian_Abbasian"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3 text-sm font-bold text-white shadow-[0_8px_30px_rgba(0,122,255,0.25)] transition-colors hover:bg-accent-hover hover:shadow-[0_12px_35px_rgba(0,122,255,0.35)]"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-xs sm:px-7 sm:py-3 sm:text-sm font-bold text-white shadow-[0_8px_30px_rgba(0,122,255,0.25)] transition-colors hover:bg-accent-hover hover:shadow-[0_12px_35px_rgba(0,122,255,0.35)]"
             >
-              <Send size={16} strokeWidth={2.2} />
+              <Send size={16} strokeWidth={2.2} className="sm:size-[17px]" />
               {t("telegramMe")}
             </motion.a>
           </div>
