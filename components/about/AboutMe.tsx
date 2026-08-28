@@ -188,9 +188,12 @@ function MobileAboutMe({
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     const threshold = 50;
 
-    if (deltaX < -threshold) {
+    const isNext = isRTL ? deltaX > threshold : deltaX < -threshold;
+    const isPrev = isRTL ? deltaX < -threshold : deltaX > threshold;
+
+    if (isNext) {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    } else if (deltaX > threshold) {
+    } else if (isPrev) {
       setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
     }
     touchStartX.current = null;
@@ -199,7 +202,7 @@ function MobileAboutMe({
 
   return (
     <section
-      className="relative h-screen w-full overflow-hidden bg-background-main"
+      className="relative w-full overflow-hidden bg-background-main py-16"
       dir={isRTL ? "rtl" : "ltr"}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
@@ -229,8 +232,8 @@ function MobileAboutMe({
         }`}
       />
 
-      {/* Content area - vertically centered to remove large empty space above */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center px-4">
+      {/* Content area - normal flow, no full-screen stretching */}
+      <div className="relative z-10 flex flex-col items-center px-4 pt-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -241,7 +244,7 @@ function MobileAboutMe({
             className={`w-full ${isRTL ? "pr-16 pl-7" : "pl-16 pr-7"}`}
           >
             {/* Chapter label */}
-            <div className="mb-8 flex items-center gap-3">
+            <div className="mb-4 flex items-center gap-3">
               <span className="text-[10px] font-bold tracking-[0.28em] text-accent">
                 0{currentIndex + 1}
               </span>
@@ -272,7 +275,7 @@ function MobileAboutMe({
             </div>
 
             {/* Bottom metadata */}
-            <div className="mt-12 flex items-center gap-4">
+            <div className="mt-6 flex items-center gap-4">
               <span className="text-[9px] font-bold tracking-[0.2em] text-text-muted">
                 {String(currentIndex + 1).padStart(2, "0")} /{" "}
                 {String(slides.length).padStart(2, "0")}
@@ -283,7 +286,7 @@ function MobileAboutMe({
         </AnimatePresence>
 
         {/* Dots placed directly below the text */}
-        <div className="mt-6 flex gap-2">
+        <div className="mt-4 flex gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
