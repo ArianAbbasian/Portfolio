@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations, useLocale } from "next-intl";
 import { PROJECTS_DATA, Project, ProjectLangData } from "@/constants/projects";
@@ -27,12 +27,15 @@ export default function ProjectModal({
   const [activeLightboxImage, setActiveLightboxImage] = useState<string | null>(
     null,
   );
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const mounted = useMounted();
+  const themeCheckTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     if (!isOpen) return;
 
+    // Check initial theme
     const checkTheme = () => {
       const htmlClass = document.documentElement.classList;
       const bodyClass = document.body.classList;
@@ -41,9 +44,23 @@ export default function ProjectModal({
       setIsDarkMode(hasDarkClass);
     };
 
-    checkTheme();
+    // Detect device type
+    const checkDevice = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
 
-    const observer = new MutationObserver(checkTheme);
+    checkTheme();
+    checkDevice();
+
+    // Throttled theme check (instead of instant MutationObserver)
+    const handleThemeChange = () => {
+      if (themeCheckTimeoutRef.current) {
+        clearTimeout(themeCheckTimeoutRef.current);
+      }
+      themeCheckTimeoutRef.current = setTimeout(checkTheme, 100);
+    };
+
+    const observer = new MutationObserver(handleThemeChange);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -52,6 +69,8 @@ export default function ProjectModal({
       attributes: true,
       attributeFilter: ["class"],
     });
+
+    window.addEventListener("resize", checkDevice);
 
     document.documentElement.style.setProperty(
       "overflow",
@@ -62,6 +81,10 @@ export default function ProjectModal({
 
     return () => {
       observer.disconnect();
+      if (themeCheckTimeoutRef.current) {
+        clearTimeout(themeCheckTimeoutRef.current);
+      }
+      window.removeEventListener("resize", checkDevice);
       document.documentElement.style.removeProperty("overflow");
       document.body.style.removeProperty("overflow");
     };
@@ -99,17 +122,22 @@ export default function ProjectModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 backdrop-blur-xl transition-colors duration-500 ${
+      transition={{ duration: 0.2 }}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 transition-colors duration-300 ${
         isDarkMode ? "bg-black/75" : "bg-zinc-900/25"
       }`}
-      style={{ transform: "translate3d(0, 0, 10000px)" }}
+      style={{
+        transform: "translate3d(0, 0, 10000px)",
+        backdropFilter: isDesktop ? "blur(12px)" : "blur(4px)",
+        WebkitBackdropFilter: isDesktop ? "blur(12px)" : "blur(4px)",
+      }}
     >
       <div className="absolute inset-0 cursor-default" onClick={onClose} />
 
       <motion.div
         initial={{ scale: 0.95, y: 15, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ type: "spring", damping: 30, stiffness: 220 }}
+        transition={{ type: "spring", damping: 35, stiffness: 250, duration: 0.4 }}
         className={`relative w-full max-w-6xl h-[85vh] overflow-x-hidden overflow-y-auto p-6 sm:p-10 md:p-12 border shadow-[0_50px_100px_rgba(0,0,0,0.5)] overscroll-contain rounded-3xl sm:rounded-[2.5rem] ${
           isDarkMode
             ? "bg-gradient-to-b from-zinc-900/90 to-zinc-950/95 border-white/[0.06] text-zinc-100 ring-1 ring-white/[0.05]"
@@ -122,17 +150,19 @@ export default function ProjectModal({
         `}
         style={{ direction: locale === "fa" ? "rtl" : "ltr" }}
       >
+        {/* Optimized Glow - reduce animation overhead */}
         <div
-          className="absolute top-[10%] left-1/4 -z-10 h-[250px] w-[500px] rounded-full blur-[130px] opacity-40 pointer-events-none animate-pulse"
+          className="absolute top-[10%] left-1/4 -z-10 h-[250px] w-[500px] rounded-full blur-[130px] opacity-30 sm:opacity-40 pointer-events-none"
           style={{
             backgroundColor: theme.glowColor,
-            animationDuration: "10s",
+            background: `radial-gradient(circle, ${theme.glowColor}, transparent)`,
           }}
         />
 
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className={`absolute top-6 ${locale === "fa" ? "left-6" : "right-6"} z-20 flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 active:scale-90 cursor-pointer ${
+          className={`absolute top-6 ${locale === "fa" ? "left-6" : "right-6"} z-20 flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 active:scale-90 cursor-pointer ${
             isDarkMode
               ? "border-white/[0.08] bg-white/[0.03] text-zinc-300 hover:bg-white hover:text-black"
               : "border-zinc-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-900 hover:text-white"
@@ -141,13 +171,14 @@ export default function ProjectModal({
           ✕
         </button>
 
+        {/* Header */}
         <div
           className={`mb-10 border-b pb-6 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
           <motion.span
             initial={{ opacity: 0, x: locale === "fa" ? 15 : -15 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.4 }}
             className={[
               "text-xs font-black uppercase tracking-wider block mb-2",
               theme.accent,
@@ -161,7 +192,7 @@ export default function ProjectModal({
               initial={{ filter: "blur(12px)", scale: 0.95, y: 15, opacity: 0 }}
               animate={{ filter: "blur(0px)", scale: 1, y: 0, opacity: 1 }}
               transition={{
-                duration: 0.9,
+                duration: 0.6,
                 delay: 0.1,
                 ease: [0.16, 1, 0.3, 1],
               }}
@@ -174,7 +205,7 @@ export default function ProjectModal({
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className={[
               "mt-4 flex flex-wrap gap-3 items-center text-xs font-bold",
               locale === "fa"
@@ -196,7 +227,9 @@ export default function ProjectModal({
           </motion.div>
         </div>
 
+        {/* Images Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 mb-12 items-start">
+          {/* Mobile Image */}
           <div
             onClick={() => setActiveLightboxImage(imgMobile)}
             className={[
@@ -204,15 +237,31 @@ export default function ProjectModal({
               theme.badgeBorder,
               isDarkMode ? "bg-zinc-900" : "bg-zinc-100",
             ].join(" ")}
+            style={{ willChange: "transform" }}
           >
             <img
               src={imgMobile}
               alt="Mobile View"
-              className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-700"
+              className="w-full h-full object-cover object-top"
+              style={{
+                transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              }}
+              onMouseEnter={(e) => {
+                if (isDesktop) {
+                  (e.currentTarget as HTMLImageElement).style.transform =
+                    "scale(1.03)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLImageElement).style.transform =
+                  "scale(1)";
+              }}
             />
           </div>
 
+          {/* Desktop Images */}
           <div className="md:col-span-8 flex flex-col gap-5 sm:gap-6 w-full">
+            {/* Main Image */}
             <div
               onClick={() => setActiveLightboxImage(img1)}
               className={[
@@ -220,14 +269,29 @@ export default function ProjectModal({
                 theme.badgeBorder,
                 isDarkMode ? "bg-zinc-900" : "bg-zinc-100",
               ].join(" ")}
+              style={{ willChange: "transform" }}
             >
               <img
                 src={img1}
                 alt="Desktop Main"
-                className="w-full h-full object-cover object-top hover:scale-[1.01] transition-transform duration-700"
+                className="w-full h-full object-cover object-top"
+                style={{
+                  transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  if (isDesktop) {
+                    (e.currentTarget as HTMLImageElement).style.transform =
+                      "scale(1.01)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.transform =
+                    "scale(1)";
+                }}
               />
             </div>
 
+            {/* Sub Images */}
             <div className="grid grid-cols-2 gap-5 sm:gap-6 w-full">
               <div
                 onClick={() => setActiveLightboxImage(img2)}
@@ -236,11 +300,26 @@ export default function ProjectModal({
                   theme.badgeBorder,
                   isDarkMode ? "bg-zinc-900" : "bg-zinc-100",
                 ].join(" ")}
+                style={{ willChange: "transform" }}
               >
                 <img
                   src={img2}
                   alt="Desktop Sub 1"
-                  className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
+                  className="w-full h-full object-cover object-top"
+                  style={{
+                    transition:
+                      "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (isDesktop) {
+                      (e.currentTarget as HTMLImageElement).style.transform =
+                        "scale(1.02)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.transform =
+                      "scale(1)";
+                  }}
                 />
               </div>
               <div
@@ -250,17 +329,33 @@ export default function ProjectModal({
                   theme.badgeBorder,
                   isDarkMode ? "bg-zinc-900" : "bg-zinc-100",
                 ].join(" ")}
+                style={{ willChange: "transform" }}
               >
                 <img
                   src={img3}
                   alt="Desktop Sub 2"
-                  className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
+                  className="w-full h-full object-cover object-top"
+                  style={{
+                    transition:
+                      "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (isDesktop) {
+                      (e.currentTarget as HTMLImageElement).style.transform =
+                        "scale(1.02)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.transform =
+                      "scale(1)";
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
 
+        {/* Challenge & Solution */}
         <div
           className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 border-t pt-10 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
@@ -268,7 +363,7 @@ export default function ProjectModal({
             <h3
               className={`text-lg sm:text-xl font-bold flex items-center gap-2 ${isDarkMode ? "text-zinc-100" : "text-zinc-900"}`}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+              <span className="h-1.5 w-1.5 rounded-full bg-red-500 flex-shrink-0" />
               {t("challenge")}
             </h3>
             <p
@@ -282,7 +377,7 @@ export default function ProjectModal({
             <h3
               className={`text-lg sm:text-xl font-bold flex items-center gap-2 ${isDarkMode ? "text-zinc-100" : "text-zinc-900"}`}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
               {t("solution")}
             </h3>
             <p
@@ -293,6 +388,7 @@ export default function ProjectModal({
           </div>
         </div>
 
+        {/* Technologies & Actions */}
         <div
           className={`mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t pt-8 ${isDarkMode ? "border-white/[0.06]" : "border-zinc-200"}`}
         >
@@ -317,14 +413,28 @@ export default function ProjectModal({
                 target="_blank"
                 className={[
                   "inline-flex items-center justify-center rounded-xl border border-border bg-white/60 dark:bg-white/5 px-5 py-3 text-xs sm:text-sm font-bold text-text-primary whitespace-nowrap cursor-pointer",
-                  "transition-all duration-300 ease-out",
+                  "transition-all duration-200 ease-out",
                   "gap-2 group/btn hover:gap-3 active:scale-95",
                   "hover:border-accent hover:text-accent dark:hover:border-accent dark:hover:text-accent",
                 ].join(" ")}
               >
                 {t("sourceCode")}
                 <span
-                  className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1 rotate-180" : "group-hover/btn:translate-x-1"}`}
+                  className={`text-base transition-transform duration-200`}
+                  style={{
+                    transform: "translateX(0)",
+                    transition: "transform 0.2s ease-out",
+                  }}
+                  onMouseEnter={(e) => {
+                    const span = e.currentTarget as HTMLSpanElement;
+                    span.style.transform = locale === "fa" 
+                      ? "translateX(-4px) rotateZ(180deg)" 
+                      : "translateX(4px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const span = e.currentTarget as HTMLSpanElement;
+                    span.style.transform = "translateX(0)";
+                  }}
                 >
                   →
                 </span>
@@ -336,14 +446,28 @@ export default function ProjectModal({
               target="_blank"
               className={[
                 "inline-flex items-center justify-center rounded-xl bg-foreground text-background px-6 py-3.5 text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap cursor-pointer",
-                "transition-all duration-300 ease-out",
-                "gap-2 group/btn hover:gap-3.5 active:scale-95",
+                "transition-all duration-200 ease-out",
+                "gap-2 group/btn hover:gap-3 active:scale-95",
                 theme.btnHover,
               ].join(" ")}
             >
               {t("launchLive")}
               <span
-                className={`text-base transition-transform duration-300 ${locale === "fa" ? "group-hover/btn:-translate-x-1.5 rotate-180" : "group-hover/btn:translate-x-1.5"}`}
+                className={`text-base transition-transform duration-200`}
+                style={{
+                  transform: "translateX(0)",
+                  transition: "transform 0.2s ease-out",
+                }}
+                onMouseEnter={(e) => {
+                  const span = e.currentTarget as HTMLSpanElement;
+                  span.style.transform = locale === "fa" 
+                    ? "translateX(-6px) rotateZ(180deg)" 
+                    : "translateX(6px)";
+                }}
+                onMouseLeave={(e) => {
+                  const span = e.currentTarget as HTMLSpanElement;
+                  span.style.transform = "translateX(0)";
+                }}
               >
                 →
               </span>
