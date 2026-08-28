@@ -212,6 +212,9 @@
     "resumeBtn": "Resume",
     "copyRight": "© 2026 Arian Abbasian. All rights reserved."
   },
+  "floatingContact": {
+    "label": "Contact Me"
+  },
   "notFound": {
     "title": "Page not found",
     "badge": "404 ERROR",

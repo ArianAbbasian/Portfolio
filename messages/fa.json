@@ -220,6 +220,9 @@
     "resumeBtn": "رزومه",
     "copyRight": "© ۲۰۲۶ آرین عباسیان. تمامی حقوق محفوظ است."
   },
+  "floatingContact": {
+    "label": "ارتباط با من"
+  },
   "notFound": {
     "title": "صفحه پیدا نشد",
     "badge": "خطای ۴۰۴",

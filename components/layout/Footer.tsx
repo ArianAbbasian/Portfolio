@@ -8,7 +8,7 @@ export default function Footer() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="relative mt-20 border-t border-border/40 px-6 py-14">
+    <footer id="contact" className="relative mt-20 border-t border-border/40 px-6 py-14">
       <div className="mx-auto max-w-5xl flex flex-col gap-12">
         <div className="flex flex-col items-center text-center gap-6">
           <h2 className="max-w-3xl text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-text-primary leading-snug">
