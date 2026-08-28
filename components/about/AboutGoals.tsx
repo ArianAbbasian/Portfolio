@@ -322,21 +322,27 @@ export default function AboutGoals() {
   const renderMobile = () => (
     <section className="relative px-6 py-12 select-none">
       <div className="mx-auto max-w-3xl flex flex-col gap-10">
-        {/* عنوان */}
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-3">
-            <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-sm">
-              <img src={iconSrc} alt="Goals Icon" className="w-full h-full object-contain" />
-            </div>
-            <h2 className="text-2xl font-black text-text-primary tracking-tight leading-tight">
-              {t("goals.title")}
-            </h2>
+        {/* عنوان با آیکون پس‌زمینه */}
+        <div className="relative">
+          <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
+            <img src={iconSrc} alt="" className="w-full h-full object-contain" />
           </div>
-          <p className="text-xs text-text-secondary leading-relaxed font-medium">
-            {t("goals.subtitle")}
-          </p>
+          <div className="relative z-10 flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-sm">
+                <img src={iconSrc} alt="Goals Icon" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-2xl font-black text-text-primary tracking-tight leading-tight">
+                {t("goals.title")}
+              </h2>
+            </div>
+            <p className="text-xs text-text-secondary leading-relaxed font-medium">
+              {t("goals.subtitle")}
+            </p>
+          </div>
         </div>
 
+        {/* بیانیه چشم‌انداز */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
