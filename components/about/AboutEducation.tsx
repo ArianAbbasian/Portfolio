@@ -1,11 +1,10 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useRef } from "react";
 import { useTheme } from "@/components/layout/Providers";
 import { useMounted } from "@/hooks/use-mounted";
-
 
 const EDUCATIONS = [
   {
@@ -13,7 +12,6 @@ const EDUCATIONS = [
     initial: "S",
     logoPath: "/images/logos/shamsipour.jpg",
     isCurrent: true,
-    activationThreshold: 0.05,
     skills: [
       "Software Engineering",
       "OS (Operating Systems)",
@@ -28,7 +26,6 @@ const EDUCATIONS = [
     initial: "K",
     logoPath: "/images/logos/karamoz.png",
     isCurrent: false,
-    activationThreshold: 0.5,
     skills: [
       "Networking",
       "Computer Science Basics",
@@ -45,21 +42,16 @@ export default function AboutEducation() {
   const { resolvedTheme } = useTheme();
 
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({});
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   const mounted = useMounted();
-
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 75%", "end 45%"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setScrollProgress(latest);
-  });
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const isRTL = locale === "fa";
   const isDark = mounted && resolvedTheme === "dark";
@@ -113,10 +105,7 @@ export default function AboutEducation() {
             />
 
             <motion.div
-              style={{
-                scaleY: scrollYProgress,
-                transformOrigin: "top",
-              }}
+              style={{ scaleY: lineScaleY, transformOrigin: "top" }}
               className={[
                 "absolute top-6 bottom-6 w-[2px] bg-accent shadow-[0_0_10px_var(--accent)] z-0",
                 isRTL ? "right-6 sm:right-7" : "left-6 sm:left-7",
@@ -125,20 +114,8 @@ export default function AboutEducation() {
 
             <div className="flex flex-col gap-10">
               {EDUCATIONS.map(
-                (
-                  {
-                    key,
-                    initial,
-                    logoPath,
-                    isCurrent,
-                    activationThreshold,
-                    skills,
-                  },
-                  idx,
-                ) => {
+                ({ key, initial, logoPath, isCurrent, skills }, idx) => {
                   const hasLogoError = logoErrors[key];
-                  const isReached =
-                    scrollProgress >= activationThreshold || isCurrent;
 
                   return (
                     <motion.div
@@ -157,7 +134,7 @@ export default function AboutEducation() {
                         <div
                           className={[
                             "size-12 sm:size-14 rounded-full flex items-center justify-center p-2 bg-white transition-all duration-300 border-0 shadow-md",
-                            isReached
+                            isCurrent
                               ? "shadow-lg shadow-accent/25 ring-2 ring-accent/40 scale-105"
                               : "shadow-sm",
                           ].join(" ")}
@@ -191,9 +168,9 @@ export default function AboutEducation() {
 
                       <div
                         className={[
-                          "flex-grow border rounded-2xl p-5 sm:p-6 backdrop-blur-2xl transition-all duration-500 shadow-xs",
+                          "flex-grow border rounded-2xl p-5 sm:p-6 backdrop-blur-sm md:backdrop-blur-2xl transition-all duration-500 shadow-xs",
                           "bg-white/70 dark:bg-white/[0.015]",
-                          isReached
+                          isCurrent
                             ? "border-accent/30 shadow-[0_10px_30px_rgba(0,122,255,0.05)]"
                             : "border-border/50 hover:border-accent/25 hover:shadow-sm",
                         ].join(" ")}
