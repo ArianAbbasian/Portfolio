@@ -51,18 +51,25 @@ export default function AboutGoals() {
   const { resolvedTheme } = useTheme();
 
   const [activeStation, setActiveStation] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const isRTL = locale === "fa";
-
   const mounted = useMounted();
 
   useEffect(() => {
+    const checkDevice = () => setIsDesktop(window.innerWidth >= 768);
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return; // فقط در دسکتاپ auto-rotate انجام می‌شود
     const interval = setInterval(() => {
       setActiveStation((prev) => (prev + 1) % STATIONS.length);
     }, 4500);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [isDesktop]);
 
   const isDark = mounted && resolvedTheme === "dark";
   const iconSrc = isDark ? "/icons/goals-white.svg" : "/icons/goals.svg";
@@ -70,7 +77,10 @@ export default function AboutGoals() {
   const trackPathD =
     "M 70,22 H 330 A 42,42 0 0 1 372,64 A 42,42 0 0 1 330,106 H 70 A 42,42 0 0 1 28,64 A 42,42 0 0 1 70,22 Z";
 
-  return (
+  // ══════════════════════════════════
+  // بخش دسکتاپ (نسخه اصلی)
+  // ══════════════════════════════════
+  const renderDesktop = () => (
     <>
       <style jsx global>{`
         @keyframes driveCircuit {
@@ -305,4 +315,49 @@ export default function AboutGoals() {
       </section>
     </>
   );
+
+  // ══════════════════════════════════
+  // بخش موبایل (نسخه ساده و بهینه)
+  // ══════════════════════════════════
+  const renderMobile = () => (
+    <section className="relative px-6 py-12 select-none">
+      <div className="mx-auto max-w-3xl flex flex-col gap-10">
+        {/* عنوان */}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-sm">
+              <img src={iconSrc} alt="Goals Icon" className="w-full h-full object-contain" />
+            </div>
+            <h2 className="text-2xl font-black text-text-primary tracking-tight leading-tight">
+              {t("goals.title")}
+            </h2>
+          </div>
+          <p className="text-xs text-text-secondary leading-relaxed font-medium">
+            {t("goals.subtitle")}
+          </p>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative border border-border/60 bg-white/70 dark:bg-white/[0.015] p-6 rounded-3xl shadow-lg overflow-hidden flex flex-col gap-4"
+        >
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+            </span>
+            <span className="text-xs font-bold text-accent tracking-wide">{t("goals.visionLabel")}</span>
+          </div>
+          <p className="text-sm text-text-primary leading-relaxed font-bold tracking-tight">
+            {t("goals.statement")}
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+
+  return isDesktop ? renderDesktop() : renderMobile();
 }
