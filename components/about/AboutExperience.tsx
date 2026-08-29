@@ -52,7 +52,6 @@ export default function AboutExperience() {
     offset: ["start 75%", "end 45%"],
   });
 
-  // Motion value برای خط پیشرفت – بدون re-render
   const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const isRTL = locale === "fa";
@@ -99,7 +98,6 @@ export default function AboutExperience() {
           </div>
 
           <div className="md:col-span-8 relative">
-            {/* خط پس‌زمینه */}
             <div
               className={[
                 "absolute top-6 bottom-6 w-[2px] bg-border/40 z-0",
@@ -107,7 +105,6 @@ export default function AboutExperience() {
               ].join(" ")}
             />
 
-            {/* خط پیشرفت – بدون re-render */}
             <motion.div
               style={{ scaleY: lineScaleY, transformOrigin: "top" }}
               className={[
