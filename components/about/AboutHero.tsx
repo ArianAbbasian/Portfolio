@@ -74,25 +74,16 @@ export default function AboutHero() {
                   onContextMenu={(e) => e.preventDefault()}
                 />
 
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  controlsList="nodownload"
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  onContextMenu={(e) => e.preventDefault()}
+                <img
+                  src="/video/charakter.webp"
+                  alt=""
+                  draggable={false}
                   className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
                   style={{
                     transform: "translate3d(0, 27px, 0)",
                     WebkitUserSelect: "none",
                   }}
-                >
-                  <source src="/video/charakter.webm" type="video/webm" />
-                  <source src="/video/charakter.mp4" type="video/mp4" />
-                </video>
+                />
               </div>
             </div>
           )}
