@@ -156,7 +156,6 @@ function MobileAboutMe({
   const touchStartX = useRef<number | null>(null);
   const autoRotateRef = useRef<NodeJS.Timeout | null>(null);
 
-  // توقف خودکار هنگام لمس
   const stopAutoRotate = () => {
     if (autoRotateRef.current) {
       clearInterval(autoRotateRef.current);
@@ -164,7 +163,6 @@ function MobileAboutMe({
     }
   };
 
-  // شروع خودکار
   const startAutoRotate = () => {
     stopAutoRotate();
     autoRotateRef.current = setInterval(() => {
@@ -177,7 +175,6 @@ function MobileAboutMe({
     return () => stopAutoRotate();
   }, [slides.length]);
 
-  // Swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     stopAutoRotate();
     touchStartX.current = e.touches[0].clientX;
@@ -207,10 +204,8 @@ function MobileAboutMe({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Ambient background */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.045] blur-[110px]" />
 
-      {/* Header */}
       <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-6 pt-6">
         <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-text-muted">
           INFO
@@ -220,7 +215,6 @@ function MobileAboutMe({
         </span>
       </div>
 
-      {/* Vertical axis (decorative) */}
       <div
         className={`pointer-events-none absolute top-[20%] z-20 h-[60%] w-px bg-border/60 ${
           isRTL ? "right-6" : "left-6"
@@ -232,7 +226,6 @@ function MobileAboutMe({
         }`}
       />
 
-      {/* Content area - normal flow, no full-screen stretching */}
       <div className="relative z-10 flex flex-col items-center px-4 pt-12">
         <AnimatePresence mode="wait">
           <motion.div
@@ -243,7 +236,6 @@ function MobileAboutMe({
             transition={{ duration: 0.2, ease: "easeOut" }}
             className={`w-full ${isRTL ? "pr-16 pl-7" : "pl-16 pr-7"}`}
           >
-            {/* Chapter label */}
             <div className="mb-4 flex items-center gap-3">
               <span className="text-[10px] font-bold tracking-[0.28em] text-accent">
                 0{currentIndex + 1}
@@ -258,7 +250,6 @@ function MobileAboutMe({
               </span>
             </div>
 
-            {/* Main statement */}
             <div
               className="max-w-[350px] text-[clamp(2rem,9vw,3rem)] font-black leading-[1.38] tracking-[-0.035em] text-text-primary"
               style={{ textWrap: "balance" }}
@@ -274,7 +265,6 @@ function MobileAboutMe({
               )}
             </div>
 
-            {/* Bottom metadata */}
             <div className="mt-6 flex items-center gap-4">
               <span className="text-[9px] font-bold tracking-[0.2em] text-text-muted">
                 {String(currentIndex + 1).padStart(2, "0")} /{" "}
@@ -285,7 +275,6 @@ function MobileAboutMe({
           </motion.div>
         </AnimatePresence>
 
-        {/* Dots placed directly below the text */}
         <div className="mt-4 flex gap-2">
           {slides.map((_, index) => (
             <button
