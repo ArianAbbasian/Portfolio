@@ -64,7 +64,7 @@ export default function AboutGoals() {
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) return; // فقط در دسکتاپ auto-rotate انجام می‌شود
+    if (!isDesktop) return;
     const interval = setInterval(() => {
       setActiveStation((prev) => (prev + 1) % STATIONS.length);
     }, 4500);
@@ -77,9 +77,6 @@ export default function AboutGoals() {
   const trackPathD =
     "M 70,22 H 330 A 42,42 0 0 1 372,64 A 42,42 0 0 1 330,106 H 70 A 42,42 0 0 1 28,64 A 42,42 0 0 1 70,22 Z";
 
-  // ══════════════════════════════════
-  // بخش دسکتاپ (نسخه اصلی)
-  // ══════════════════════════════════
   const renderDesktop = () => (
     <>
       <style jsx global>{`
@@ -316,13 +313,9 @@ export default function AboutGoals() {
     </>
   );
 
-  // ══════════════════════════════════
-  // بخش موبایل (نسخه ساده و بهینه)
-  // ══════════════════════════════════
   const renderMobile = () => (
     <section className="relative px-6 py-12 select-none">
       <div className="mx-auto max-w-3xl flex flex-col gap-10">
-        {/* عنوان با آیکون پس‌زمینه */}
         <div className="relative">
           <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
             <img src={iconSrc} alt="" className="w-full h-full object-contain" />
@@ -342,7 +335,6 @@ export default function AboutGoals() {
           </div>
         </div>
 
-        {/* بیانیه چشم‌انداز */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
