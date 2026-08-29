@@ -41,7 +41,6 @@ const TrophyIcon = ({ className = "size-4" }: { className?: string }) => (
   </svg>
 );
 
-// کامپوننت ویدیو با پخش هوشمند فقط وقتی در دید باشد (مخصوص دسکتاپ)
 function AutoPlayVideo({
   src,
   poster,
@@ -62,7 +61,6 @@ function AutoPlayVideo({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             video.play().catch(() => {
-              // در صورت خطا (مثلاً مرورگر اجازه ندهد) هیچ اتفاقی نمی‌افتد
             });
           } else {
             video.pause();
@@ -118,7 +116,7 @@ const INTERESTS = [
     id: "football",
     type: "video",
     mediaSrc: "/video/football.mp4",
-    posterSrc: "/images/Interests/football-poster.jpg", // تصویر نمایشی برای موبایل
+    posterSrc: "/images/Interests/football-poster.jpg",
     iconType: "component",
     icon: TrophyIcon,
     badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
