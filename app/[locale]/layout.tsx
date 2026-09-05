@@ -7,6 +7,7 @@ import { ThemeInitializer } from "@/components/layout/ThemeInitializer";
 import { CustomCursor } from "@/components/layout/CustomCursor";
 import LocaleHtml from "@/components/layout/LocaleHtml";
 import StructuredData from "@/components/structured-data";
+import FloatingContact from "@/components/layout/FloatingContact";
 
 const locales = ["en", "fa"];
 
@@ -38,6 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <NextIntlClientProvider locale={locale} messages={messages}>
         <Providers>
           <CustomCursor />
+          <FloatingContact />
           <Header />
           <div className="overflow-x-hidden w-full relative min-h-screen flex flex-col">
             <main className="flex-grow">{children}</main>
