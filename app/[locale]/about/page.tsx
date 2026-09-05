@@ -49,7 +49,7 @@ export async function generateMetadata({
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-background-main pb-32 pt-16 sm:pt-24 block relative">
+    <main className="min-h-screen bg-background-main pt-16 sm:pt-24 block relative">
       <AboutHero />
       <AboutMe />
       <div className="py-20">
@@ -65,7 +65,7 @@ export default function AboutPage() {
       <div className="py-20">
         <AboutInterests />
       </div>
-      <div className="py-20">
+      <div>
         <AboutGoals />
       </div>
     </main>
