@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { useEffect, useState } from "react";
 import { useMounted } from "@/hooks/use-mounted";
 
 export default function AboutHero() {
@@ -9,14 +8,6 @@ export default function AboutHero() {
   const locale = useLocale();
 
   const mounted = useMounted();
-  const [isIOS, setIsIOS] = useState(false);
-
-  useEffect(() => {
-    if (typeof navigator === "undefined") return;
-    const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
-    const iOS = /iPhone|iPad|iPod/.test(ua) && !(window as any).MSStream;
-    setIsIOS(iOS);
-  }, []);
 
   return (
     <section className="relative px-6 md:px-12 lg:px-16 pt-0 mb-10 sm:mb-12 lg:mb-[133px] select-none flex justify-center w-full">
@@ -83,29 +74,16 @@ export default function AboutHero() {
                   onContextMenu={(e) => e.preventDefault()}
                 />
 
-                {isIOS ? (
-                  <img
-                    src="/video/character-static.png"
-                    alt=""
-                    draggable={false}
-                    className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
-                    style={{
-                      transform: "translate3d(0, 27px, 0)",
-                      WebkitUserSelect: "none",
-                    }}
-                  />
-                ) : (
-                  <img
-                    src="/video/character.webp"
-                    alt=""
-                    draggable={false}
-                    className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
-                    style={{
-                      transform: "translate3d(0, 27px, 0)",
-                      WebkitUserSelect: "none",
-                    }}
-                  />
-                )}
+                <img
+                  src="/video/character.webp"
+                  alt=""
+                  draggable={false}
+                  className="w-[110%] h-[110%] object-contain object-bottom relative z-10 pointer-events-none select-none"
+                  style={{
+                    transform: "translate3d(0, 27px, 0)",
+                    WebkitUserSelect: "none",
+                  }}
+                />
               </div>
             </div>
           )}
