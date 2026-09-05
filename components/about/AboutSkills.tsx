@@ -221,7 +221,8 @@ export default function AboutSkills() {
       // Desktop: smooth scroll animation (ScrollTrigger)
       const trigger = skillsTriggerRef.current;
       const rect = trigger.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       const absoluteTriggerTop = rect.top + scrollTop;
       const totalScroll = trigger.offsetHeight - window.innerHeight;
       const targetProgress = (index + 0.5) / SKILL_CATEGORIES.length;
@@ -320,8 +321,12 @@ export default function AboutSkills() {
                   fill="none"
                   style={{
                     willChange: isDesktop ? "transform" : "auto",
-                    transform: !isDesktop ? `rotate(${gearRotation}deg)` : "none",
-                    transition: !isDesktop ? "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)" : "none",
+                    transform: !isDesktop
+                      ? `rotate(${gearRotation}deg)`
+                      : "none",
+                    transition: !isDesktop
+                      ? "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)"
+                      : "none",
                   }}
                 >
                   <circle
@@ -498,7 +503,7 @@ export default function AboutSkills() {
                         >
                           <div
                             className={[
-                              "size-24 sm:size-32 md:size-40 lg:size-48 rounded-full border flex flex-col items-center justify-center p-2.5 sm:p-4 md:p-5 lg:p-6 relative overflow-hidden",
+                              "size-28 sm:size-35 md:size-32 lg:size-42 rounded-full border flex flex-col items-center justify-center p-2.5 sm:p-4 md:p-5 lg:p-6 relative overflow-hidden",
                               "bg-white/80 dark:bg-white/[0.09] md:backdrop-blur-xl sm:backdrop-blur-lg backdrop-blur-sm",
                               "border-white/95 dark:border-white/20",
                               "hover:border-accent hover:bg-white/95 dark:hover:bg-white/[0.16]",
@@ -522,7 +527,7 @@ export default function AboutSkills() {
                             )}
 
                             {/* Skill Icon */}
-                            <div className="size-8 sm:size-12 md:size-16 lg:size-20 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
+                            <div className="size-12 sm:size-15 md:size-17 lg:size-18 flex items-center justify-center mb-1 transition-transform duration-200 group-hover:scale-105 z-10">
                               {!hasError ? (
                                 <img
                                   src={skill.logo}
