@@ -318,12 +318,20 @@ export default function AboutGoals() {
       <div className="mx-auto max-w-3xl flex flex-col gap-10">
         <div className="relative">
           <div className="absolute -top-4 -start-4 sm:-top-6 sm:-start-6 size-32 sm:size-40 opacity-10 dark:opacity-15 pointer-events-none select-none z-0">
-            <img src={iconSrc} alt="" className="w-full h-full object-contain" />
+            <img
+              src={iconSrc}
+              alt=""
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="relative z-10 flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <div className="size-12 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-border/80 dark:border-white/10 flex items-center justify-center p-2.5 shadow-xs shrink-0 backdrop-blur-sm">
-                <img src={iconSrc} alt="Goals Icon" className="w-full h-full object-contain" />
+                <img
+                  src={iconSrc}
+                  alt="Goals Icon"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h2 className="text-2xl font-black text-text-primary tracking-tight leading-tight">
                 {t("goals.title")}
@@ -347,7 +355,9 @@ export default function AboutGoals() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
             </span>
-            <span className="text-xs font-bold text-accent tracking-wide">{t("goals.visionLabel")}</span>
+            <span className="text-xs font-bold text-accent tracking-wide">
+              {t("goals.visionLabel")}
+            </span>
           </div>
           <p className="text-sm text-text-primary leading-relaxed font-bold tracking-tight">
             {t("goals.statement")}
