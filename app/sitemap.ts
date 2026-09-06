@@ -16,15 +16,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     for (const locale of locales) {
         for (const page of pages) {
+            const url = `${baseUrl}/${locale}${page.path}/`;
             entries.push({
-                url: `${baseUrl}/${locale}${page.path}`,
+                url,
                 lastModified: new Date(),
                 changeFrequency: page.changeFrequency as 'weekly' | 'monthly',
                 priority: page.priority,
                 alternates: {
                     languages: {
-                        en: `${baseUrl}/en${page.path}`,
-                        fa: `${baseUrl}/fa${page.path}`,
+                        en: `${baseUrl}/en${page.path}/`,
+                        fa: `${baseUrl}/fa${page.path}/`,
                     },
                 },
             });
