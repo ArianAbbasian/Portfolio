@@ -30,7 +30,7 @@ export default function ProjectModal({
   const [isDesktop, setIsDesktop] = useState(false);
 
   const mounted = useMounted();
-  const themeCheckTimeoutRef = useRef<NodeJS.Timeout>();
+  const themeCheckTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -137,7 +137,12 @@ export default function ProjectModal({
       <motion.div
         initial={{ scale: 0.95, y: 15, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ type: "spring", damping: 35, stiffness: 250, duration: 0.4 }}
+        transition={{
+          type: "spring",
+          damping: 35,
+          stiffness: 250,
+          duration: 0.4,
+        }}
         className={`relative w-full max-w-6xl h-[85vh] overflow-x-hidden overflow-y-auto p-6 sm:p-10 md:p-12 border shadow-[0_50px_100px_rgba(0,0,0,0.5)] overscroll-contain rounded-3xl sm:rounded-[2.5rem] ${
           isDarkMode
             ? "bg-gradient-to-b from-zinc-900/90 to-zinc-950/95 border-white/[0.06] text-zinc-100 ring-1 ring-white/[0.05]"
@@ -276,7 +281,8 @@ export default function ProjectModal({
                 alt="Desktop Main"
                 className="w-full h-full object-cover object-top"
                 style={{
-                  transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  transition:
+                    "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
                 }}
                 onMouseEnter={(e) => {
                   if (isDesktop) {
@@ -427,9 +433,10 @@ export default function ProjectModal({
                   }}
                   onMouseEnter={(e) => {
                     const span = e.currentTarget as HTMLSpanElement;
-                    span.style.transform = locale === "fa" 
-                      ? "translateX(-4px) rotateZ(180deg)" 
-                      : "translateX(4px)";
+                    span.style.transform =
+                      locale === "fa"
+                        ? "translateX(-4px) rotateZ(180deg)"
+                        : "translateX(4px)";
                   }}
                   onMouseLeave={(e) => {
                     const span = e.currentTarget as HTMLSpanElement;
@@ -460,9 +467,10 @@ export default function ProjectModal({
                 }}
                 onMouseEnter={(e) => {
                   const span = e.currentTarget as HTMLSpanElement;
-                  span.style.transform = locale === "fa" 
-                    ? "translateX(-6px) rotateZ(180deg)" 
-                    : "translateX(6px)";
+                  span.style.transform =
+                    locale === "fa"
+                      ? "translateX(-6px) rotateZ(180deg)"
+                      : "translateX(6px)";
                 }}
                 onMouseLeave={(e) => {
                   const span = e.currentTarget as HTMLSpanElement;
