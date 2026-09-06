@@ -25,16 +25,16 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `/${locale}/about`,
+      canonical: `/${locale}/about/`,
       languages: {
-        en: "/en/about",
-        fa: "/fa/about",
+        en: "/en/about/",
+        fa: "/fa/about/",
       },
     },
     openGraph: {
       title,
       description,
-      url: `/${locale}/about`,
+      url: `/${locale}/about/`,
       locale: isFa ? "fa_IR" : "en_US",
       alternateLocale: isFa ? "en_US" : "fa_IR",
       type: "profile",
