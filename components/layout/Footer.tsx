@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/30 pt-6 text-xs text-text-muted">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/30 pt-6 text-xs text-text-muted mb-5">
           <p>{t("copyRight")}</p>
 
           <div className="flex items-center gap-2">
