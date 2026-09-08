@@ -1,151 +1,287 @@
 # Arian Abbasian — Personal Portfolio
 
-A bilingual personal portfolio website built with Next.js, TypeScript, and Tailwind CSS.  
-It serves two purposes: to present Arian as a serious Frontend Developer to recruiters, and to attract business clients who need a professional website.
+A bilingual personal portfolio website built with **Next.js, TypeScript, and Tailwind CSS**.
 
-**Live site:** [arianabbasian.ir](https://arianabbasian.ir)
+The portfolio serves two main purposes:
+
+* Present Arian as a serious **Frontend Developer** to recruiters.
+* Attract **business clients** who need a professional, modern website.
+
+**Live Site:** [arianabbasian.ir](https://arianabbasian.ir)
 
 ---
 
 ## Features
 
-- Fully bilingual (English & Persian) with RTL support
-- Dark / light theme with no flash on load
-- Custom scrollbar and custom cursor (desktop only)
-- Responsive and performance‑conscious — heavy animations are split between desktop and mobile
-- Dynamic project showcase with horizontal scroll on desktop, vertical on mobile
-- Project modal with image gallery and lightbox
-- Smooth GSAP and Framer Motion animations, but carefully scoped
-- Structured data (Person + WebSite) for SEO
-- Floating contact button
-- Static export ready for any static host
+*  Fully bilingual (**English & Persian**) with RTL support
+*  Dark / light theme with no flash on initial load
+*  Custom scrollbar and custom cursor on desktop
+*  Fully responsive and performance-conscious
+*  Desktop and mobile layouts optimized separately for heavy animations
+*  Dynamic project showcase
+
+  * Horizontal scrolling on desktop
+  * Vertical layout on mobile
+*  Project modal with image gallery and lightbox
+*  Smooth GSAP and Framer Motion animations with carefully scoped usage
+*  Structured data for SEO (`Person` + `WebSite`)
+*  Floating contact button
+*  Static export ready for deployment on static hosting
+
+---
 
 ## Tech Stack
 
-- **Framework:** Next.js (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS v4
-- **Animation:** GSAP (ScrollTrigger) + Framer Motion
-- **Icons:** Lucide React
-- **i18n:** next-intl
-- **Fonts:** Satoshi (English), IranYekan (Persian) loaded locally
+| Category             | Technology                          |
+| -------------------- | ----------------------------------- |
+| Framework            | Next.js (App Router)                |
+| Language             | TypeScript                          |
+| Styling              | Tailwind CSS v4                     |
+| Animation            | GSAP (ScrollTrigger), Framer Motion |
+| Icons                | Lucide React                        |
+| Internationalization | next-intl                           |
+| English Font         | Satoshi                             |
+| Persian Font         | IranYekan                           |
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.17 or later
-- npm or yarn
+Make sure you have the following installed:
+
+* **Node.js 18.17 or later**
+* **npm** or **yarn**
 
 ### Installation
 
-Clone the repo and install dependencies:
+Clone the repository and install the dependencies:
 
-bash
+```bash
 git clone https://github.com/ArianAbbasian/portfolio.git
 cd portfolio
 npm install
-Development
-Run the dev server:
+```
 
-bash
+---
+
+## Development
+
+Run the development server:
+
+```bash
 npm run dev
-Open http://localhost:3000.
-The root path / redirects to /fa by default.
+```
 
-Build & Export
-The site is statically exported:
+Then open:
 
-bash
+```text
+http://localhost:3000
+```
+
+The root path `/` redirects to `/fa` by default.
+
+---
+
+## Build & Export
+
+The website is configured for **static export**.
+
+Build the project with:
+
+```bash
 npm run build
-The output will be in the out/ directory.
-Because output: 'export' is set, all pages are pre‑rendered at build time.
+```
 
-Project Structure
-text
+The generated static files will be available in:
+
+```text
+out/
+```
+
+Because `output: 'export'` is configured in `next.config.ts`, all pages are pre-rendered at build time.
+
+---
+
+## Project Structure
+
+```text
 portfolio/
 ├── app/
-│   ├── [locale]/          # locale‑scoped pages and layout
-│   ├── globals.css        # design tokens, utilities, custom CSS
-│   ├── layout.tsx         # root layout (fonts, metadata)
-│   ├── page.tsx           # root redirect component
-│   ├── robots.ts
-│   ├── sitemap.ts
-│   └── root-redirect.tsx  # client‑side redirect fallback
+│   ├── [locale]/              # Locale-scoped pages and layout
+│   ├── globals.css            # Design tokens, utilities, custom CSS
+│   ├── layout.tsx             # Root layout, fonts, metadata
+│   ├── page.tsx               # Root redirect component
+│   ├── robots.ts              # Robots metadata
+│   ├── sitemap.ts             # Sitemap generation
+│   └── root-redirect.tsx      # Client-side redirect fallback
+│
 ├── components/
-│   ├── about/             # all About page sections
-│   ├── home/              # Hero, Services, Projects
-│   ├── layout/            # Header, Footer, FloatingContact, etc.
-│   ├── projects/          # ProjectModal
-│   ├── ui/                # Lightbox
-│   └── structured-data.tsx
+│   ├── about/                 # About page sections
+│   ├── home/                  # Hero, Services, Projects
+│   ├── layout/                # Header, Footer, FloatingContact, etc.
+│   ├── projects/              # ProjectModal
+│   ├── ui/                    # Lightbox and shared UI
+│   └── structured-data.tsx     # Structured data
+│
 ├── constants/
-│   ├── projects.ts        # project data (bilingual)
-│   └── project-themes.ts  # per‑project color themes
-├── hooks/                 # useIsTouchDevice, useMounted
-├── i18n/                  # next-intl request config
-├── lib/                   # site config
-├── messages/              # en.json, fa.json
-├── public/                # images, fonts, videos, resume
+│   ├── projects.ts            # Bilingual project data
+│   └── project-themes.ts      # Per-project color themes
+│
+├── hooks/                     # Custom React hooks
+│   ├── useIsTouchDevice
+│   └── useMounted
+│
+├── i18n/                      # next-intl configuration
+├── lib/                       # Site configuration
+├── messages/                  # Translation files
+│   ├── en.json
+│   └── fa.json
+│
+├── public/                    # Images, fonts, videos, resume
 ├── next.config.ts
-├── proxy.ts               # next-intl middleware
+├── proxy.ts                   # next-intl middleware
 └── tsconfig.json
-Internationalization
-All user‑facing strings live in messages/en.json and messages/fa.json.
-The locale is determined by the URL segment (/en, /fa).
-RTL direction and lang attribute are set dynamically on the client via LocaleHtml to avoid a flash of wrong direction.
+```
 
-Both languages are written naturally, not word‑for‑word translations.
-This matters for tone and cultural appropriateness.
+---
 
-Performance Notes
-The site is built with mobile performance in mind. Some techniques used:
+## Internationalization
 
-Split rendering: components like AboutMe, AboutSkills, AboutGoals render completely different layouts for desktop and mobile. This avoids running heavy scroll‑driven animations on small screens.
+The website supports both **English** and **Persian**.
 
-Reduced backdrop‑filter on mobile: several components use backdrop-blur-sm on mobile and md:backdrop-blur-2xl on desktop.
+All user-facing strings are stored in:
 
-Video handling: videos only play when visible (IntersectionObserver) and are replaced by static images on mobile where appropriate.
+```text
+messages/en.json
+messages/fa.json
+```
 
-Motion values, not state: AboutEducation and AboutExperience use useTransform instead of useState + useMotionValueEvent to avoid React re‑renders during scroll.
+The active locale is determined by the URL:
 
-Custom scrollbar: only the main document scrollbar is visible; inner scrollbars are hidden to reduce visual noise and improve performance.
+```text
+/en
+/fa
+```
 
-Lazy loading: project images and skill icons use loading="lazy".
+RTL direction and the `lang` attribute are handled dynamically through `LocaleHtml` to prevent a flash of incorrect text direction during page load.
 
-SEO
-The site includes:
+Both languages are written naturally rather than being translated word-for-word. This keeps the tone, wording, and cultural context appropriate for each language.
 
-Metadata for each locale with alternates (hreflang) and canonical URLs
+---
 
-robots.txt and sitemap.xml
+## Performance
 
-Structured data (Person, WebSite)
+The website is built with **mobile performance** in mind.
 
-noindex on the root redirect page
+Several techniques are used to reduce unnecessary rendering and improve the overall experience.
 
-Clean, semantic HTML
+### Split Rendering
 
-A few known limitations: no og:image yet, and the root redirect is client‑side (a 301 from the hosting server is recommended). But overall the foundation is solid.
+Components such as:
 
-Deployment
-The site is deployed on a static host (cPanel).
-Since the build output is static, simply upload the contents of the out/ directory (or the build folder) to your server.
+* `AboutMe`
+* `AboutSkills`
+* `AboutGoals`
 
-For a 301 redirect from / to /fa, add this to .htaccess in the public root:
+use different layouts for desktop and mobile.
 
-apache
+This prevents heavy scroll-driven animations from running unnecessarily on smaller devices.
+
+### Reduced Backdrop Filters
+
+Backdrop blur effects are reduced on mobile:
+
+```text
+backdrop-blur-sm
+```
+
+while larger screens use:
+
+```text
+md:backdrop-blur-2xl
+```
+
+### Video Handling
+
+Videos are only played when they are visible using `IntersectionObserver`.
+
+Where appropriate, videos are replaced with static images on mobile devices.
+
+### Motion Values Instead of React State
+
+Components such as `AboutEducation` and `AboutExperience` use `useTransform` instead of combining `useState` with `useMotionValueEvent`.
+
+This reduces unnecessary React re-renders during scroll interactions.
+
+### Custom Scrollbar
+
+Only the main document scrollbar is visible.
+
+Inner scrollbars are hidden to reduce visual noise and unnecessary UI elements.
+
+### Lazy Loading
+
+Project images and skill icons use lazy loading where appropriate.
+
+---
+
+## SEO
+
+The website includes several SEO-focused features:
+
+* Locale-specific metadata
+* `hreflang` alternates
+* Canonical URLs
+* `robots.txt`
+* `sitemap.xml`
+* Structured data:
+
+  * `Person`
+  * `WebSite`
+* `noindex` on the root redirect page
+* Clean and semantic HTML
+
+### Known SEO Limitations
+
+There are currently a few known limitations:
+
+* No `og:image` has been implemented yet.
+* The root redirect is handled client-side.
+
+For production hosting, a server-side **301 redirect** from `/` to `/fa/` is recommended.
+
+---
+
+## Deployment
+
+The website is deployed as a static site on **cPanel hosting**.
+
+Since the project uses static export, deployment only requires uploading the contents of the `out/` directory to the server.
+
+### Recommended `.htaccess` Redirect
+
+To redirect the root path `/` to `/fa/` using a permanent HTTP 301 redirect, add the following to `.htaccess` in the public root:
+
+```apache
 RewriteEngine On
 RewriteRule ^$ /fa/ [R=301,L]
-Contact
-Email: ArianAbbasian013@gmail.com
+```
 
-Telegram: @Arian_Abbasian
+---
 
-LinkedIn: linkedin.com/in/arian-abbasian
+## Contact
 
-GitHub: github.com/ArianAbbasian
+* **Email:** [ArianAbbasian013@gmail.com](mailto:ArianAbbasian013@gmail.com)
+* **Telegram:** [@Arian_Abbasian](https://t.me/Arian_Abbasian)
+* **LinkedIn:** [linkedin.com/in/arian-abbasian](https://www.linkedin.com/in/arian-abbasian)
+* **GitHub:** [github.com/ArianAbbasian](https://github.com/ArianAbbasian)
 
-License
-This project is personal and not intended for public reuse.
-Feel free to browse the code, but please do not use it as a template without permission.
+---
+
+## License
+
+This project is a **personal portfolio** and is not intended for public reuse.
+
+You are welcome to browse and learn from the code, but please do not use this project as a template or redistribute it without permission.
