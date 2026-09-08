@@ -18,16 +18,16 @@ const satoshi = localFont({
 const iranYekan = localFont({
   src: [
     {
-      path: "../public/fonts/IranYekan/iranyekanwebregular.woff",
+      path: "../public/fonts/IranYekan/iranyekanwebregular.woff2",
       weight: "400",
     },
     {
-      path: "../public/fonts/IranYekan/iranyekanwebmedium.woff",
+      path: "../public/fonts/IranYekan/iranyekanwebmedium.woff2",
       weight: "500",
     },
-    { path: "../public/fonts/IranYekan/iranyekanwebbold.woff", weight: "700" },
+    { path: "../public/fonts/IranYekan/iranyekanwebbold.woff2", weight: "700" },
     {
-      path: "../public/fonts/IranYekan/iranyekanwebextrabold.woff",
+      path: "../public/fonts/IranYekan/iranyekanwebextrabold.woff2",
       weight: "800",
     },
   ],
