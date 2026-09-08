@@ -15,7 +15,10 @@ export default function RootRedirect() {
         <meta httpEquiv="refresh" content="0;url=/fa/" />
       </noscript>
 
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background-main">
+      <div
+        dir="rtl"
+        className="font-fa fixed inset-0 z-[9999] flex items-center justify-center bg-background-main"
+      >
         {/* subtle background glow */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[100px]" />
 
